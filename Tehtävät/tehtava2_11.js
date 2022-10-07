@@ -10,7 +10,7 @@ const objektienLista = [
 ];
 
 const parillinenArvot = (taulukko) => {
-  uusiObjektienLista = [];
+  let = uusiObjektienLista = [];
   taulukko.reduce((acc, arvo) => {
     if (Object.values(arvo) % 2 === 0) {
       return uusiObjektienLista.push(arvo);
@@ -21,3 +21,17 @@ const parillinenArvot = (taulukko) => {
   return uusiObjektienLista;
 };
 console.log(parillinenArvot(objektienLista));
+
+// better version
+const parillisetObjektit = (taulukko) => {
+  return taulukko.reduce((acc, item) => {
+    if (Object.values(item)[0] % 2 === 0) {
+      return acc.concat([item]); // use concat since we start we empty list
+      //return [...acc, item];
+    } else {
+      return acc;
+    }
+  }, []); // start with empty list. acc is empty list. Does not have to be defined seperately
+};
+
+console.log(parillisetObjektit(objektienLista));

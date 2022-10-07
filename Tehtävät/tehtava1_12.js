@@ -16,17 +16,15 @@ console.log(parillisetLuvut1());
 // reduce-funktio
 const parillisetLuvut2 = () => {
   let listaAlku = [];
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 0; i <= 100; i++) {
     listaAlku.push(i);
   }
-  let listaTulo = [];
-  let pariLuku = listaAlku.reduce((acc, luku) => {
+  return listaAlku.reduce((acc, luku) => {
     if (luku % 2 === 0) {
-      listaTulo.push(luku);
+      return acc.concat([luku]); // use concat since we start we empty list
     } else {
       return acc;
     }
-  });
-  return listaTulo;
+  }, []); // start with empty list. acc is empty list. Does not have to be defined seperately
 };
 console.log(parillisetLuvut2());

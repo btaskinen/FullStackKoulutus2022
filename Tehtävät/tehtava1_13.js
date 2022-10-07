@@ -16,7 +16,7 @@ console.log(parillisetLuvunSumma1());
 // reduce-funktio
 const parillisetLuvunSumma2 = () => {
   let lista = [];
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 1; i <= 1000; i++) {
     lista.push(i);
   }
   let summa = lista.reduce((acc, luku) => {
@@ -25,7 +25,7 @@ const parillisetLuvunSumma2 = () => {
     } else {
       return acc;
     }
-  });
+  }, 0);
   return summa;
 };
 

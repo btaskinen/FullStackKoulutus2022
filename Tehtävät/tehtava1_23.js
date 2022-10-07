@@ -14,11 +14,11 @@ const ajoKertaLaskuri = () => {
   let elementiLista = [];
 
   let i = 0;
-  let pituus = 0.3;
-  let leveys = 0.5;
-  let korkeus = 0.5;
+  let pituus = 3;
+  let leveys = 5;
+  let korkeus = 5;
   while (i < 50) {
-    let paino = pituus * leveys * korkeus;
+    let paino = pituus * leveys * korkeus * 2.5;
     elementiLista.push(paino);
     pituus += pituus * 0.02;
     leveys += leveys * 0.03;
@@ -27,7 +27,7 @@ const ajoKertaLaskuri = () => {
   }
   //console.log(elementiLista);
   const kokoPaino = elementiLista.reduce(
-    (previousValue, currentValue) => previousValue * currentValue
+    (previousValue, currentValue) => previousValue + currentValue
   );
   const ajoKerta = kokoPaino / 10500;
   return ajoKerta;

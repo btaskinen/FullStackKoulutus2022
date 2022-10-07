@@ -10,14 +10,12 @@ const objektienLista = [
 ];
 
 const avainElla = (taulukko) => {
-  uusiObjektienLista = [];
-  taulukko.reduce((acc, arvo) => {
+  return taulukko.reduce((acc, arvo) => {
     if (Object.keys(arvo)[0].includes("e", 1)) {
-      return uusiObjektienLista.push(arvo);
+      return acc.concat(arvo);
     } else {
       return acc;
     }
-  }, taulukko[0]);
-  return uusiObjektienLista;
+  }, []);
 };
 console.log(avainElla(objektienLista));
