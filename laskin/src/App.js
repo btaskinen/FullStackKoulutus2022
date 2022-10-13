@@ -3,24 +3,25 @@ import Nappain from "./Nappain";
 import { useState } from "react";
 
 let nappaimet = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "+",
-  "-",
-  "/",
-  "*",
-  "=",
   "AC",
   "C",
   "(",
   ")",
+  "7",
+  "8",
+  "9",
+  "/",
+  "4",
+  "5",
+  "6",
+  "*",
+  "1",
+  "2",
+  "3",
+  "-",
+  "0",
+  "=",
+  "+",
 ];
 
 function App() {
@@ -42,8 +43,10 @@ function App() {
       (teksti.slice(-1) == "+" ||
         teksti.slice(-1) == "-" ||
         teksti.slice(-1) == "*" ||
-        teksti.slice(-1) == "/") &&
-      (x == "+" || x == "-" || x == "*" || x == "/")
+        teksti.slice(-1) == "/" ||
+        teksti.slice(-1) == "(" ||
+        teksti.slice(-1) == ")") &&
+      (x == "+" || x == "-" || x == "*" || x == "/" || x == "(" || x == ")")
     ) {
       setTeksti("ERROR");
       return;
@@ -52,16 +55,20 @@ function App() {
   };
   return (
     <div>
-      <p>{teksti}</p>
+      <div className="main">
+        <p className="text-box">{teksti}</p>
 
-      {nappaimet.map((nappain, index) => (
-        <Nappain
-          key={index}
-          nappainPainettu={nappainPainettu}
-          nappain={nappain}
-        />
-        // key, nappainPainettu and nappain are props that are passed to the child component Nappain
-      ))}
+        <div className="keyboard">
+          {nappaimet.map((nappain, index) => (
+            <Nappain
+              key={index}
+              nappainPainettu={nappainPainettu}
+              nappain={nappain}
+            />
+            // key, nappainPainettu and nappain are props that are passed to the child component Nappain
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
