@@ -18,6 +18,7 @@ let nappaimet = [
   "*",
   "=",
   "AC",
+  "C",
   "(",
   ")",
 ];
@@ -31,6 +32,10 @@ function App() {
     }
     if (x == "AC") {
       setTeksti("");
+      return;
+    }
+    if (x == "C") {
+      setTeksti(teksti.slice(0, -1));
       return;
     }
     if (
