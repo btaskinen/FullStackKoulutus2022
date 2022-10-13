@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-// import "./App.css";
+import "./App.css";
 import Luokka from "./Luokka"; // imports the code from the file Luokka.js
 
 const App = () => {
