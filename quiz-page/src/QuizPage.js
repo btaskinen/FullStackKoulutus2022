@@ -4,11 +4,12 @@ import "./QuizPage.css";
 import "./Quizzes";
 import Quizzes from "./Quizzes";
 
-function QuizPage() {
+function QuizPage(props) {
+  const quiz = { props };
   return (
     <div>
       <header className="App-header">
-        <Quizzes />
+        <Quizzes quiz={quiz} />
       </header>
       <p className="QuizPage-main">
         Select the correct answer for each question. Submit your answers by

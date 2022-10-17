@@ -1,37 +1,16 @@
 import Questions from "./Questions";
 
-const Quizzes = () => {
-  let answer1 = {
-    answerOption: "It is",
-  };
-
-  let answer2 = {
-    answerOption: "It is not",
-  };
-
-  let question1 = {
-    questionText: "What is...?",
-    answers: [answer1, answer2],
-  };
-
-  let question2 = {
-    questionText: "When is...?",
-    answers: [answer1, answer2],
-  };
-
-  let question3 = {
-    questionText: "Which is...?",
-    answers: [answer1, answer2],
-  };
-
-  let quiz = {
-    quizName: "Quiz 1",
-    questions: [question1, question2, question3],
-  };
-
+const Quizzes = (props) => {
   return (
     <div>
-      <div>{quiz.quizName} </div>
+      <div>Quiz: {props.quiz.quizName}</div>
+      <input
+        type="text"
+        onChange={(event) => {
+          props.quizNumberChanger(event.target.value);
+        }}
+        value={props.quiz.quizName}
+      />
     </div>
   );
 };
