@@ -6,6 +6,7 @@ import QuizPage from "./QuizPage";
 import "./Checkboxes";
 import CheckBoxes from "./Checkboxes";
 import React, { useState } from "react";
+import Questions from "./Questions";
 
 function App() {
   let question1 = {
@@ -102,7 +103,9 @@ function App() {
         </p>
         <div class="flex-container">
           <div>
-            <div className="style-question">{/* <Questions /> */}</div>
+            <div className="style-question">
+              <Questions quiz={quizNumber} />
+            </div>
             <div className="style-answers">Answer 1</div>
             <div className="style-answers">Answer 2</div>
             <div className="style-answers">Answer 3</div>

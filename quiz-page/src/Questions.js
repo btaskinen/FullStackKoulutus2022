@@ -5,13 +5,20 @@ import Answers from "./Answers";
 import "./Quizzes";
 
 const Questions = (props) => {
+  console.log(props);
+  console.log(props.quiz.questions[0]);
   return (
     <div>
-      <div>{props.questions}</div>
       <div>
-        {props.questions.answers.map((answers) => (
-          <Answers answers={answers} />
+        Question:
+        {props.quiz.questions.map((questions) => (
+          <div>{props.quiz.question.questionText}</div>
         ))}
+      </div>
+      <div>
+        {/* {props.quiz.questions.answers.map((answers) => (
+          <Answers answers={answers} />
+        ))} */}
       </div>
     </div>
   );
