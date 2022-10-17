@@ -10,11 +10,14 @@ const objektienLista = [
 ];
 
 const uusiTaulukko = (taulukko) => {
-  taulukko.sort((a, b) => {
-    if (Object.keys(a) > Object.keys(b)) return 1;
-    if (Object.keys(a) < Object.keys(b)) return -1;
-  });
-  return taulukko;
+  viikonPaivat = ["ma", "ti", "ke", "to", "pe", "la", "su"];
+  uusiObjektienLista = [];
+  for (let i = 0; (i = viikonPaivat.length); i++) {
+    taulukko.reduce((acc, objekti) => {
+      if (Object.keys(objekti)[0] === viikonPaivat[i]) acc.push(objekti);
+    }, []);
+  }
+  return uusiObjektienLista;
 };
 
-console.log(objektienLista);
+console.log(uusiTaulukko(objektienLista));

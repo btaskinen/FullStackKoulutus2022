@@ -9,7 +9,7 @@ function Navbar() {
             <span>Quizzes</span>
             <ul className="quizzes-menu">
               <li>
-                <a href="">Quiz1</a>
+                <a href="">Quiz 1</a>
               </li>
               <li>
                 <a href="">Quiz2</a>
