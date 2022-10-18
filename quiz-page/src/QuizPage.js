@@ -8,10 +8,7 @@ function QuizPage(props) {
   return (
     <div>
       <header className="App-header">
-        <Quizzes
-          quiz={props.quiz}
-          quizNumberChanger={props.quizNumberChanger}
-        />
+        <Quizzes quiz={props.quiz} dispatch={props.dispatch} />
       </header>
       <p className="QuizPage-main">
         Select the correct answer for each question. Submit your answers by

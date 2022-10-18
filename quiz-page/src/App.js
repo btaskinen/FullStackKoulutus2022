@@ -8,6 +8,7 @@ import CheckBoxes from "./Checkboxes";
 import React, { useState } from "react";
 import Questions from "./Questions";
 import Navbar from "./Navbar";
+import { useReducer } from "react";
 
 function App() {
   let question1 = {
@@ -72,55 +73,34 @@ function App() {
 
   let quizzes = [quiz1, quiz2, quiz3];
 
-  const [quizNumber, setQuiz] = useState(quiz1);
+  function reducer(state, action) {
+    switch (action.type) {
+      case "QUIZ_NUMBER_CHANGER":
+        return { ...state, quizNumber: action.payload.quizNumber };
 
-  const quizNumberChanger = (quizName) => {
-    const quizNumberCopy = { ...quizNumber };
-    quizNumberCopy.quizName = quizName;
-    setQuiz(quizNumberCopy);
-  };
+      default:
+        throw new Error("Something went wrong!");
+    }
+  }
+
+  const [quiz, dispatch] = useReducer(reducer, quiz1);
+
+  // const [quizNumber, setQuiz] = useState(quiz1);
+
+  // const quizNumberChanger = (quizName) => {
+  //   const quizNumberCopy = { ...quizNumber };
+  //   quizNumberCopy.quizName = quizName;
+  //   setQuiz(quizNumberCopy);
+  // };
 
   return (
     <div>
       {/* passing array of quizzes and quizName of each Quiz to Navbar */}
       <Navbar quizzes={quizzes} quizName={quizzes.quizName} />
-      <QuizPage quiz={quiz1} quizNumberChanger={quizNumberChanger} />
+      <QuizPage quiz={quiz} dispatch={dispatch} />
       <div className="footer">This is the Footer</div>
     </div>
   );
 }
 
 export default App;
-
-// return (
-//   <div>
-//     {/* passing array of quizzes and quizName of each Quiz to Navbar */}
-//     <Navbar quizzes={quizzes} quizName={quizzes.quizName} />
-//     <div>
-//       <header className="App-header">
-//         <Quizzes quiz={quizNumber} quizNumberChanger={quizNumberChanger} />
-//       </header>
-//       <p className="QuizPage-main">
-//         Select the correct answer for each question. Submit your answers by
-//         clicking the "Submit Answers" button.
-//       </p>
-//       <div class="flex-container">
-//         <div>
-//           <div className="style-question">
-//             <Questions quiz={quizNumber} />
-//           </div>
-//           <div className="style-answers">Answer 1</div>
-//           <div className="style-answers">Answer 2</div>
-//           <div className="style-answers">Answer 3</div>
-//           <div className="style-answers">Answer 4</div>
-//         </div>
-//         <div className="style-question">Question 2</div>
-//         <div className="style-question">Question 3</div>
-//       </div>
-//       <p className="footer">This is the Footer</p>
-//       <div></div>
-//       {/* <QuizPage quiz={quiz1} /> */}
-//     </div>
-//     <div>{/* <QuizPage quiz={quiz1} /> */}</div>
-//   </div>
-// );
