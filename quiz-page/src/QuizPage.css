@@ -15,41 +15,42 @@
   flex-direction: column;
   background-color: rgb(184, 185, 185);
   min-height: 400px;
-  margin-bottom: 100px;
+  margin: 0 0 100px 10px;
+  padding: 20px;
+  width: fit-content;
 }
 
-.flex-container > div {
+/* .flex-container > div {
   background-color: #f1f1f1;
   width: flex;
   margin: 10px;
   text-align: center;
   line-height: 75px;
   font-size: 30px;
-}
+} */
 
 .style-question {
-  background-color: white;
-  min-height: 10vh;
+  background-color: rgb(44, 117, 84);
+  margin: 10px;
   display: flex;
   flex-direction: column;
   align-items: left;
-  padding-left: 10px;
+  padding: 0px;
   justify-content: left;
   text-align: left;
-  font-size: 10px + 2vmin;
+  font-size: 20px;
   font-weight: bold;
-  color: rgb(9, 9, 9);
+  color: white;
 }
 
 .style-answers {
   background-color: white;
-  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: left;
-  padding-left: 10px;
+  padding: 10px;
   justify-content: left;
   text-align: left;
-  font-size: 10px + 2vmin;
+  font-size: 14px;
   color: rgb(9, 9, 9);
 }

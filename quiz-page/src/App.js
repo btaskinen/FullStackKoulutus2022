@@ -11,48 +11,48 @@ import Navbar from "./Navbar";
 
 function App() {
   let question1 = {
-    questionText: "What is...?",
-    answers: ["It is", "It is not"],
+    questionText: "Question 1",
+    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
   };
 
   let question2 = {
-    questionText: "When is...?",
-    answers: ["answer1", "answer2"],
+    questionText: "Question 2",
+    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
   };
 
   let question3 = {
-    questionText: "Which is...?",
-    answers: ["answer1", "answer2"],
+    questionText: "Question 3",
+    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
   };
 
   let question4 = {
-    questionText: "What is...?",
-    answers: ["It is", "It is not"],
+    questionText: "Question 4",
+    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
   };
 
   let question5 = {
-    questionText: "When is...?",
-    answers: ["answer1", "answer2"],
+    questionText: "Question 5",
+    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
   };
 
   let question6 = {
-    questionText: "Which is...?",
-    answers: ["answer1", "answer2"],
+    questionText: "Question 6",
+    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
   };
 
   let question7 = {
-    questionText: "What is...?",
-    answers: ["It is", "It is not"],
+    questionText: "Question 7",
+    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
   };
 
   let question8 = {
-    questionText: "When is...?",
-    answers: ["answer1", "answer2"],
+    questionText: "Question 8",
+    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
   };
 
   let question9 = {
-    questionText: "Which is...?",
-    answers: ["answer1", "answer2"],
+    questionText: "Question 9",
+    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
   };
 
   let quiz1 = {
@@ -70,7 +70,7 @@ function App() {
     questions: [question7, question8, question9],
   };
 
-  let quizzes = ["Quiz 1", "Quiz 2", "Quiz 3"];
+  let quizzes = [quiz1, quiz2, quiz3];
 
   const [quizNumber, setQuiz] = useState(quiz1);
 
@@ -82,35 +82,45 @@ function App() {
 
   return (
     <div>
-      <Navbar quizzes={quizzes} />
-      <div>
-        <header className="App-header">
-          <Quizzes quiz={quizNumber} quizNumberChanger={quizNumberChanger} />
-        </header>
-        <p className="QuizPage-main">
-          Select the correct answer for each question. Submit your answers by
-          clicking the "Submit Answers" button.
-        </p>
-        <div class="flex-container">
-          <div>
-            <div className="style-question">
-              <Questions quiz={quizNumber} />
-            </div>
-            <div className="style-answers">Answer 1</div>
-            <div className="style-answers">Answer 2</div>
-            <div className="style-answers">Answer 3</div>
-            <div className="style-answers">Answer 4</div>
-          </div>
-          <div className="style-question">Question 2</div>
-          <div className="style-question">Question 3</div>
-        </div>
-        <p className="footer">This is the Footer</p>
-        <div></div>
-        {/* <QuizPage quiz={quiz1} /> */}
-      </div>
-      <div>{/* <QuizPage quiz={quiz1} /> */}</div>
+      {/* passing array of quizzes and quizName of each Quiz to Navbar */}
+      <Navbar quizzes={quizzes} quizName={quizzes.quizName} />
+      <QuizPage quiz={quiz1} quizNumberChanger={quizNumberChanger} />
+      <div className="footer">This is the Footer</div>
     </div>
   );
 }
 
 export default App;
+
+// return (
+//   <div>
+//     {/* passing array of quizzes and quizName of each Quiz to Navbar */}
+//     <Navbar quizzes={quizzes} quizName={quizzes.quizName} />
+//     <div>
+//       <header className="App-header">
+//         <Quizzes quiz={quizNumber} quizNumberChanger={quizNumberChanger} />
+//       </header>
+//       <p className="QuizPage-main">
+//         Select the correct answer for each question. Submit your answers by
+//         clicking the "Submit Answers" button.
+//       </p>
+//       <div class="flex-container">
+//         <div>
+//           <div className="style-question">
+//             <Questions quiz={quizNumber} />
+//           </div>
+//           <div className="style-answers">Answer 1</div>
+//           <div className="style-answers">Answer 2</div>
+//           <div className="style-answers">Answer 3</div>
+//           <div className="style-answers">Answer 4</div>
+//         </div>
+//         <div className="style-question">Question 2</div>
+//         <div className="style-question">Question 3</div>
+//       </div>
+//       <p className="footer">This is the Footer</p>
+//       <div></div>
+//       {/* <QuizPage quiz={quiz1} /> */}
+//     </div>
+//     <div>{/* <QuizPage quiz={quiz1} /> */}</div>
+//   </div>
+// );

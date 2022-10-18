@@ -5,11 +5,13 @@ import "./Quizzes";
 import Quizzes from "./Quizzes";
 
 function QuizPage(props) {
-  const quiz = { props };
   return (
     <div>
       <header className="App-header">
-        <Quizzes quiz={quiz} />
+        <Quizzes
+          quiz={props.quiz}
+          quizNumberChanger={props.quizNumberChanger}
+        />
       </header>
       <p className="QuizPage-main">
         Select the correct answer for each question. Submit your answers by
@@ -17,17 +19,11 @@ function QuizPage(props) {
       </p>
       <div class="flex-container">
         <div>
-          <div className="style-question">{/* <Questions /> */}</div>
-          <div className="style-answers">Answer 1</div>
-          <div className="style-answers">Answer 2</div>
-          <div className="style-answers">Answer 3</div>
-          <div className="style-answers">Answer 4</div>
+          <div className="style-question">
+            <Questions quiz={props.quiz} />
+          </div>
         </div>
-        <div className="style-question">Question 2</div>
-        <div className="style-question">Question 3</div>
       </div>
-      <p className="footer">This is the Footer</p>
-      <div></div>
     </div>
   );
 }

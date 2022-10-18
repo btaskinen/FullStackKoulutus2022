@@ -72,6 +72,7 @@
   float: left;
   display: block;
   color: white;
+  font-weight: bold;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
@@ -92,6 +93,7 @@
   border: none;
   outline: none;
   color: white;
+  font-weight: bold;
   padding: 14px 16px;
   background-color: inherit;
   font-family: inherit;
