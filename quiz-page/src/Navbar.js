@@ -11,7 +11,11 @@ const Navbar = (props) => {
           <button className="dropbtn">Quizzes</button>
           <div className="dropdown-content">
             {props.quizzes.map((quiz) => {
-              return <a href="#">{quiz.quizName}</a>;
+              return (
+                <button className="dropdown-buttons" href="#">
+                  {quiz.quizName}
+                </button>
+              );
             })}
           </div>
         </div>

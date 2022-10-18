@@ -5,6 +5,7 @@ import "./Quizzes";
 import Quizzes from "./Quizzes";
 
 function QuizPage(props) {
+  console.log(props);
   return (
     <div>
       <header className="App-header">

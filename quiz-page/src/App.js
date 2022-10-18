@@ -10,79 +10,83 @@ import Questions from "./Questions";
 import Navbar from "./Navbar";
 import { useReducer } from "react";
 
-function App() {
-  let question1 = {
-    questionText: "Question 1",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-  };
+let question1 = {
+  questionText: "Question 1",
+  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+};
 
-  let question2 = {
-    questionText: "Question 2",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-  };
+let question2 = {
+  questionText: "Question 2",
+  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+};
 
-  let question3 = {
-    questionText: "Question 3",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-  };
+let question3 = {
+  questionText: "Question 3",
+  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+};
 
-  let question4 = {
-    questionText: "Question 4",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-  };
+let question4 = {
+  questionText: "Question 4",
+  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+};
 
-  let question5 = {
-    questionText: "Question 5",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-  };
+let question5 = {
+  questionText: "Question 5",
+  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+};
 
-  let question6 = {
-    questionText: "Question 6",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-  };
+let question6 = {
+  questionText: "Question 6",
+  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+};
 
-  let question7 = {
-    questionText: "Question 7",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-  };
+let question7 = {
+  questionText: "Question 7",
+  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+};
 
-  let question8 = {
-    questionText: "Question 8",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-  };
+let question8 = {
+  questionText: "Question 8",
+  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+};
 
-  let question9 = {
-    questionText: "Question 9",
-    answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-  };
+let question9 = {
+  questionText: "Question 9",
+  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+};
 
-  let quiz1 = {
-    quizName: "Quiz 1",
-    questions: [question1, question2, question3],
-  };
+let quiz1 = {
+  quizName: "Quiz 1",
+  questions: [question1, question2, question3],
+};
 
-  let quiz2 = {
-    quizName: "Quiz 2",
-    questions: [question4, question5, question6],
-  };
+let quiz2 = {
+  quizName: "Quiz 2",
+  questions: [question4, question5, question6],
+};
 
-  let quiz3 = {
-    quizName: "Quiz 3",
-    questions: [question7, question8, question9],
-  };
+let quiz3 = {
+  quizName: "Quiz 3",
+  questions: [question7, question8, question9],
+};
 
-  let quizzes = [quiz1, quiz2, quiz3];
+let quizzes = [quiz1, quiz2, quiz3];
 
-  function reducer(state, action) {
-    switch (action.type) {
-      case "QUIZ_NUMBER_CHANGER":
-        return { ...state, quizNumber: action.payload.quizNumber };
+function reducer(quiz, action) {
+  switch (action.type) {
+    case "QUIZ_NUMBER_CHANGER":
+      return { ...quiz, quiz: action.payload.quiz };
+    case "QUESTION_CHANGER":
+      return { ...quiz, quiz: action.payload.quizNumber };
+    case "ANSWER_CHANGER":
+      return { ...quiz, quizNumber: action.payload.quizNumber };
 
-      default:
-        throw new Error("Something went wrong!");
-    }
+    default:
+      throw new Error("Something went wrong!");
   }
+}
 
+function App() {
   const [quiz, dispatch] = useReducer(reducer, quiz1);
 
   // const [quizNumber, setQuiz] = useState(quiz1);
