@@ -7,6 +7,7 @@ import "./Checkboxes";
 import CheckBoxes from "./Checkboxes";
 import React, { useState } from "react";
 import Questions from "./Questions";
+import Navbar from "./Navbar";
 
 function App() {
   let question1 = {
@@ -69,6 +70,8 @@ function App() {
     questions: [question7, question8, question9],
   };
 
+  let quizzes = ["Quiz 1", "Quiz 2", "Quiz 3"];
+
   const [quizNumber, setQuiz] = useState(quiz1);
 
   const quizNumberChanger = (quizName) => {
@@ -79,20 +82,7 @@ function App() {
 
   return (
     <div>
-      <div className="Navigation-bar">
-        <div className="dropdown">
-          <button className="dropbtn">Quizzes</button>
-          <div className="dropdown-content">
-            <a href="#">Quiz 1</a>
-            <a href="#">Quiz 2</a>
-            <a href="#">Quiz 3</a>
-          </div>
-        </div>
-        <a href="Help.asp">Help</a>
-        <div className="Float-right">
-          <a href="Quit.asp">Quit</a>
-        </div>
-      </div>
+      <Navbar quizzes={quizzes} />
       <div>
         <header className="App-header">
           <Quizzes quiz={quizNumber} quizNumberChanger={quizNumberChanger} />
