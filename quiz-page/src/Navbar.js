@@ -12,7 +12,16 @@ const Navbar = (props) => {
           <div className="dropdown-content">
             {props.quizzes.map((quiz) => {
               return (
-                <button className="dropdown-buttons" href="#">
+                <button
+                  className="dropdown-buttons"
+                  onClick={(event) =>
+                    props.dispatch({
+                      type: "QUIZ_CHANGER",
+                      payload: event.target.value,
+                    })
+                  }
+                  href="#"
+                >
                   {quiz.quizName}
                 </button>
               );

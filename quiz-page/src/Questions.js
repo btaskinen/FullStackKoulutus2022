@@ -10,7 +10,19 @@ const Questions = (props) => {
         {props.quiz.questions.map((question) => {
           return (
             <div>
-              <div className="style-question">{question.questionText}</div>
+              <div className="style-question">
+                {question.questionText}
+                <input
+                  type="text"
+                  onChange={(event) => {
+                    props.dispatch({
+                      type: "QUESTION_CHANGER",
+                      payload: event.target.value,
+                    });
+                  }}
+                  value={props.quiz.questions.questionText}
+                />
+              </div>
               <Answers answers={question.answers} />
             </div>
           );

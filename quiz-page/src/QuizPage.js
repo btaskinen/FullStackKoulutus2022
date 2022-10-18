@@ -18,7 +18,7 @@ function QuizPage(props) {
       <div class="flex-container">
         <div>
           <div className="style-question">
-            <Questions quiz={props.quiz} />
+            <Questions quiz={props.quiz} dispatch={props.dispatch} />
           </div>
         </div>
       </div>

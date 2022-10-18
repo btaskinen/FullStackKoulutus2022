@@ -75,9 +75,14 @@ let quizzes = [quiz1, quiz2, quiz3];
 function reducer(quiz, action) {
   switch (action.type) {
     case "QUIZ_NUMBER_CHANGER":
-      return { ...quiz, quiz: action.payload.quiz };
+      return { ...quiz, quizName: action.payload.quizName }; // the three dots make a copy of quiz
+    // case "QUIZ_CHANGER":
+    //   return { ...quiz, quiz: action.payload.quizNumber };
     case "QUESTION_CHANGER":
-      return { ...quiz, quiz: action.payload.quizNumber };
+      let questionText = action.payload.questionText;
+      let quizCopy = { ...quiz };
+      quizCopy.questions.questionText = questionText;
+      return quizCopy;
     case "ANSWER_CHANGER":
       return { ...quiz, quizNumber: action.payload.quizNumber };
 
@@ -100,7 +105,11 @@ function App() {
   return (
     <div>
       {/* passing array of quizzes and quizName of each Quiz to Navbar */}
-      <Navbar quizzes={quizzes} quizName={quizzes.quizName} />
+      <Navbar
+        quizzes={quizzes}
+        quizName={quizzes.quizName}
+        dispatch={dispatch}
+      />
       <QuizPage quiz={quiz} dispatch={dispatch} />
       <div className="footer">This is the Footer</div>
     </div>
