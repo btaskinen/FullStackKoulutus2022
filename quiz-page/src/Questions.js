@@ -10,18 +10,22 @@ const Questions = (props) => {
         {props.quiz.questions.map((question) => {
           return (
             <div>
-              <div className="style-question">
-                {question.questionText}
-                <input
-                  type="text"
-                  onChange={(event) => {
-                    props.dispatch({
-                      type: "QUESTION_CHANGER",
-                      payload: event.target.value,
-                    });
-                  }}
-                  value={question.questionText}
-                />
+              <div className="question-container">
+                {" "}
+                <div className="style-question">
+                  {question.questionText}
+                  <input
+                    className="question-text-field"
+                    type="text"
+                    onChange={(event) => {
+                      props.dispatch({
+                        type: "QUESTION_CHANGER",
+                        payload: event.target.value,
+                      });
+                    }}
+                    value={question.questionText}
+                  />
+                </div>
               </div>
               <Answers answers={question.answers} />
             </div>

@@ -1,10 +1,9 @@
-import Questions from "./Questions";
-
 const Quizzes = (props) => {
   return (
-    <div>
-      <div>{props.quiz.quizName}</div>
+    <div className="header">
+      <div className="quiz-title">{props.quiz.quizName}</div>
       <input
+        className="quiz-head-tex-field"
         type="text"
         onChange={(event) => {
           props.dispatch({

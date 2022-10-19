@@ -1,12 +1,7 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "./QuizPage";
-import Quizzes from "./Quizzes";
 import QuizPage from "./QuizPage";
 import "./Checkboxes";
-import CheckBoxes from "./Checkboxes";
-import React, { useState } from "react";
-import Questions from "./Questions";
 import Navbar from "./Navbar";
 import { useReducer } from "react";
 

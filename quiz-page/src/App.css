@@ -15,8 +15,7 @@
 
 .App-header {
   background-color: rgb(156, 156, 152);
-  min-height: 20vh;
-  padding-top: 30px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,6 +97,7 @@
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+  border-top-right-radius: 5px;
 }
 
 .Navigation-bar a:hover,
@@ -112,6 +112,7 @@
   min-width: 93.3px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  border-bottom-right-radius: 5px;
 }
 
 .dropdown-content button {
@@ -131,6 +132,7 @@
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+  border-end-end-radius: 5px;
 }
 
 .dropdown-content button:hover {
@@ -141,8 +143,25 @@
   display: block;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.quiz-title {
+  margin-right: 20px;
+}
+.quiz-head-tex-field {
+  height: 10px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  color: rgb(78, 76, 76);
+}
+
 body {
   color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .active {
