@@ -20,7 +20,7 @@ const Questions = (props) => {
                       payload: event.target.value,
                     });
                   }}
-                  value={props.quiz.questions.questionText}
+                  value={question.questionText}
                 />
               </div>
               <Answers answers={question.answers} />

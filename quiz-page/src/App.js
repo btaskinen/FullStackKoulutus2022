@@ -75,16 +75,16 @@ let quizzes = [quiz1, quiz2, quiz3];
 function reducer(quiz, action) {
   switch (action.type) {
     case "QUIZ_NUMBER_CHANGER":
-      return { ...quiz, quizName: action.payload.quizName }; // the three dots make a copy of quiz
+      return { ...quiz, quizName: action.payload }; // the three dots make a copy of quiz
     // case "QUIZ_CHANGER":
     //   return { ...quiz, quiz: action.payload.quizNumber };
     case "QUESTION_CHANGER":
-      let questionText = action.payload.questionText;
+      let questionText = action.payload;
       let quizCopy = { ...quiz };
       quizCopy.questions.questionText = questionText;
       return quizCopy;
     case "ANSWER_CHANGER":
-      return { ...quiz, quizNumber: action.payload.quizNumber };
+      return { ...quiz, quizNumber: action.payload };
 
     default:
       throw new Error("Something went wrong!");
