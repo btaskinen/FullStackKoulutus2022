@@ -81,14 +81,18 @@ function reducer(state, action) {
     //   return tilaKopio
     // }
 
-    case "QUESTION_CHANGER":
+    case "QUESTION_CHANGER": {
       let { questionText, questionIndex } = action.payload;
       let quizCopy = { ...state };
       quizCopy.questions[questionIndex].questionText = questionText;
       return quizCopy;
-    case "ANSWER_CHANGER":
-      return { ...state, quizNumber: action.payload };
-
+    }
+    case "ANSWER_CHANGER": {
+      let { questionIndex, answerText, answerIndex } = action.payload;
+      let quizCopy = { ...state };
+      quizCopy.question[questionIndex].answer[answerIndex] = answerText;
+      return quizCopy;
+    }
     default:
       throw new Error("Something went wrong!");
   }

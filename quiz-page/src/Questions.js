@@ -11,7 +11,6 @@ const Questions = (props) => {
           return (
             <div>
               <div className="question-container">
-                {" "}
                 <div className="style-question">
                   {question.questionText}
                   <input
@@ -30,7 +29,12 @@ const Questions = (props) => {
                   />
                 </div>
               </div>
-              <Answers answers={question.answers} />
+              <Answers
+                question={question}
+                answers={question.answers}
+                questionIndex={index}
+                dispatch={props.dispatch}
+              />
             </div>
           );
         })}
