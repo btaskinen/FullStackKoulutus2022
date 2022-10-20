@@ -1,3 +1,5 @@
+import "./App.css";
+
 const Quizzes = (props) => {
   return (
     <div className="header">

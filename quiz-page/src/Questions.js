@@ -1,5 +1,4 @@
 import "./App.css";
-import "./QuizPage.css";
 import Answers from "./Answers";
 import "./Quizzes";
 

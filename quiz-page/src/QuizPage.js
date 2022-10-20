@@ -1,6 +1,5 @@
 import "./App.css";
 import Questions from "./Questions";
-import "./QuizPage.css";
 import "./Quizzes";
 import Quizzes from "./Quizzes";
 
@@ -15,7 +14,7 @@ function QuizPage(props) {
         Select the correct answer for each question. Submit your answers by
         clicking the "Submit Answers" button.
       </p>
-      <div class="flex-container">
+      <div className="flex-container">
         <div>
           <div className="style-question">
             <Questions quiz={props.quiz} dispatch={props.dispatch} />

@@ -90,7 +90,7 @@ function reducer(state, action) {
     case "ANSWER_CHANGER": {
       let { questionIndex, answerText, answerIndex } = action.payload;
       let quizCopy = { ...state };
-      quizCopy.question[questionIndex].answer[answerIndex] = answerText;
+      quizCopy.questions[questionIndex].answers[answerIndex] = answerText;
       return quizCopy;
     }
     default:
