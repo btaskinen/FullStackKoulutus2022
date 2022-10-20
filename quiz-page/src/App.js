@@ -3,7 +3,7 @@ import "./QuizPage";
 import QuizPage from "./QuizPage";
 import "./Checkboxes";
 import Navbar from "./Navbar";
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 
 let question1 = {
   questionText: "Question 1",
@@ -65,22 +65,20 @@ let quiz3 = {
   questions: [question7, question8, question9],
 };
 
-let quizzes = [quiz1, quiz2, quiz3];
+let appData = {
+  quizzes: [quiz1, quiz2, quiz3],
+  saveData: false,
+  dataInitialized: false
+};
 
 function reducer(state, action) {
   switch (action.type) {
     case "QUIZ_NUMBER_CHANGER":
+      const stateCopy = {...state, saveData: true}
+      stateCopy.
       return { ...state, quizName: action.payload }; // the three dots make a copy of quiz
     // case "QUIZ_CHANGER":
     //   return { ...quiz, quiz: action.payload.quizNumber };
-
-    // case 'OPPILAAN_NIMI_MUUTTUI': {
-    //   console.log("Oppilaan nimi muuttui", action)
-    //   const tilaKopio = { ...state, tallennetaanko: true }
-    //   tilaKopio.koulut[action.payload.kouluIndex].luokat[action.payload.luokkaIndex].oppilaat[action.payload.oppilasIndex].nimi = action.payload.nimi
-    //   return tilaKopio
-    // }
-
     case "QUESTION_CHANGER": {
       let { questionText, questionIndex } = action.payload;
       let quizCopy = { ...state };
@@ -93,13 +91,38 @@ function reducer(state, action) {
       quizCopy.questions[questionIndex].answers[answerIndex] = answerText;
       return quizCopy;
     }
+    case "INITIATE_DATA": {
+      return { ...action.payload };
+    }
+    case "UPDATE_STORAGE": {
+      return { ...state, saveData: action.payload };
+    }
     default:
       throw new Error("Something went wrong!");
   }
 }
 
 function App() {
-  const [quiz, dispatch] = useReducer(reducer, quiz1);
+  const [appData, dispatch] = useReducer(reducer, appData);
+
+  useEffect(() => {
+    let quizData = localStorage.getItem("quizData");
+    if (quizData == null) {
+      console.log("Data was read from constant");
+      localStorage.setItem("quizData", JSON.stringify(quiz));
+      dispatch({ type: "INITIATE_DATA", payload: quiz });
+    } else {
+      console.log("Data was read from local storage");
+      dispatch({ type: "INITIATE_DATA", payload: JSON.parse(quiz) });
+    }
+  }, [quiz]);
+
+  useEffect(() => {
+    if (quiz.saveData === true) {
+      localStorage.setItem("quizData", JSON.stringify(quiz));
+      dispatch({ type: "UPDATE_STORAGE", payload: false });
+    }
+  }, [quiz.saveData]);
 
   // const [quizNumber, setQuiz] = useState(quiz1);
 
