@@ -67,19 +67,27 @@ let quiz3 = {
 
 let quizzes = [quiz1, quiz2, quiz3];
 
-function reducer(quiz, action) {
+function reducer(state, action) {
   switch (action.type) {
     case "QUIZ_NUMBER_CHANGER":
-      return { ...quiz, quizName: action.payload }; // the three dots make a copy of quiz
+      return { ...state, quizName: action.payload }; // the three dots make a copy of quiz
     // case "QUIZ_CHANGER":
     //   return { ...quiz, quiz: action.payload.quizNumber };
+
+    // case 'OPPILAAN_NIMI_MUUTTUI': {
+    //   console.log("Oppilaan nimi muuttui", action)
+    //   const tilaKopio = { ...state, tallennetaanko: true }
+    //   tilaKopio.koulut[action.payload.kouluIndex].luokat[action.payload.luokkaIndex].oppilaat[action.payload.oppilasIndex].nimi = action.payload.nimi
+    //   return tilaKopio
+    // }
+
     case "QUESTION_CHANGER":
-      let questionText = action.payload;
-      let quizCopy = { ...quiz };
-      quizCopy.questions.questionText = questionText;
+      let { questionText, questionIndex } = action.payload;
+      let quizCopy = { ...state };
+      quizCopy.questions[questionIndex].questionText = questionText;
       return quizCopy;
     case "ANSWER_CHANGER":
-      return { ...quiz, quizNumber: action.payload };
+      return { ...state, quizNumber: action.payload };
 
     default:
       throw new Error("Something went wrong!");

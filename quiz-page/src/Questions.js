@@ -7,7 +7,7 @@ const Questions = (props) => {
   return (
     <div>
       <div>
-        {props.quiz.questions.map((question) => {
+        {props.quiz.questions.map((question, index) => {
           return (
             <div>
               <div className="question-container">
@@ -20,7 +20,10 @@ const Questions = (props) => {
                     onChange={(event) => {
                       props.dispatch({
                         type: "QUESTION_CHANGER",
-                        payload: event.target.value,
+                        payload: {
+                          questionText: event.target.value,
+                          questionIndex: index,
+                        },
                       });
                     }}
                     value={question.questionText}

@@ -47,13 +47,15 @@
 
 .footer {
   position: fixed;
-  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 10px;
   left: 0;
   bottom: 0;
   width: 100%;
   background-color: rgb(44, 117, 84);
   color: white;
-  text-align: center;
 }
 
 .Navigation-bar {
