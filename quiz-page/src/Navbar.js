@@ -9,16 +9,19 @@ const Navbar = (props) => {
         <div className="dropdown">
           <button className="dropbtn">Quizzes</button>
           <div className="dropdown-content">
-            {props.quizzes.map((quiz) => {
+            {props.quizzes.map((quiz, index) => {
+              // console.log(quiz.quizName, index);
               return (
                 <button
                   className="dropdown-buttons"
-                  onClick={(event) =>
-                    props.dispatch({
-                      type: "QUIZ_CHANGER",
-                      payload: event.target.value,
-                    })
-                  }
+                  // onClick={(event) =>
+                  //   props.dispatch({
+                  //     type: "QUIZ_CHANGER",
+                  //     payload: {
+                  //       quizIndex: index,
+                  //     },
+                  //   })
+                  // }
                   href="#"
                 >
                   {quiz.quizName}
