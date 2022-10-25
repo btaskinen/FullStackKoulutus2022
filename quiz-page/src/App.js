@@ -140,13 +140,9 @@ function App() {
 
   return (
     <div>
-      {/* passing array of quizzes and quizName of each Quiz to Navbar */}
-      <Navbar
-        quizzes={appData.quizzes}
-        // quizName={appData.quizzes.quizName}
-        dispatch={dispatch}
-      />
-      {/* <QuizPage quiz={appData.quizzes} dispatch={dispatch} /> */}
+      {/* passing array of quizzes to Navbar */}
+      <Navbar quizzes={appData.quizzes} dispatch={dispatch} />
+      <QuizPage quizzes={appData.quizzes} quizIndex={0} dispatch={dispatch} />
       <div className="footer">This is the Footer</div>
     </div>
   );

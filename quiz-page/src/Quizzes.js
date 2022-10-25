@@ -1,9 +1,12 @@
 import "./App.css";
 
 const Quizzes = (props) => {
+  console.log(props);
   return (
     <div className="header">
-      <div className="quiz-title">{props.quiz.quizName}</div>
+      <div className="quiz-title">
+        {props.quizzes[props.quizIndex].quizName}
+      </div>
       <input
         className="quiz-head-tex-field"
         type="text"
@@ -13,7 +16,7 @@ const Quizzes = (props) => {
             payload: event.target.value,
           });
         }}
-        value={props.quiz.quizName}
+        value={props.quizzes[props.quizIndex].quizName}
       />
     </div>
   );

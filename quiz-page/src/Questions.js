@@ -3,10 +3,11 @@ import Answers from "./Answers";
 import "./Quizzes";
 
 const Questions = (props) => {
+  console.log(props.quizIndex);
   return (
     <div>
       <div>
-        {props.quiz.questions.map((question, index) => {
+        {props.quizzes[props.quizIndex].questions.map((question, index) => {
           return (
             <div>
               <div className="question-container">

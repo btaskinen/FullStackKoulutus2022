@@ -4,11 +4,15 @@ import "./Quizzes";
 import Quizzes from "./Quizzes";
 
 function QuizPage(props) {
-  console.log(props);
+  // console.log(props.quizIndex);
   return (
     <div>
       <header className="App-header">
-        <Quizzes quiz={props.quiz} dispatch={props.dispatch} />
+        <Quizzes
+          quizzes={props.quizzes}
+          quizIndex={props.quizIndex}
+          dispatch={props.dispatch}
+        />
       </header>
       <p className="QuizPage-main">
         Select the correct answer for each question. Submit your answers by
@@ -17,7 +21,11 @@ function QuizPage(props) {
       <div className="flex-container">
         <div>
           <div className="style-question">
-            <Questions quiz={props.quiz} dispatch={props.dispatch} />
+            <Questions
+              quizzes={props.quizzes}
+              quizIndex={props.quizIndex}
+              dispatch={props.dispatch}
+            />
           </div>
         </div>
       </div>
