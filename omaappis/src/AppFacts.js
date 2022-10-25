@@ -24,6 +24,8 @@ function reducer(state, action) {
     case "FACT_REQUESTED":
       console.log("FACT_REQUESTED");
       return { ...state, factRequested: true };
+    case "INTERVAL_INITIATED":
+      return {};
     default:
       throw new Error("Action.type kentän arvoa ei tunnistettu");
   }
@@ -60,8 +62,48 @@ function AppFacts() {
     }
     if (appData.factRequested === true) {
       getData(); // getData()-function only runs when factRequested is set to true
+      // setInterval(async () => {
+      //   try {
+      //     dispatch({ type: "FACT_FETCHING_INITIATED" });
+      //     let result = await axios("https://api.chucknorris.io/jokes/random");
+      //     console.log(result);
+      //     dispatch({
+      //       type: "FACT_FETCHED",
+      //       payload: { fact: result.data.value, factRequested: false }, // removed:
+      //     });
+      //     // console.log(result.data.categories);
+      //   } catch (error) {
+      //     console.log("The following error occured:", error);
+      //     dispatch({
+      //       type: "FACT_FETCHING_FAILED",
+      //       payload: { factRequested: false },
+      //     });
+      //   }
+      // }, 5000);
     }
   }, [appData.factRequested]); // useEffect only runs if factRequested changes
+
+  useEffect(() => {
+    if (appData.factFetchingInitiated === true)
+      setInterval(async () => {
+        try {
+          dispatch({ type: "FACT_FETCHING_INITIATED" });
+          let result = await axios("https://api.chucknorris.io/jokes/random");
+          console.log(result);
+          dispatch({
+            type: "FACT_FETCHED",
+            payload: { fact: result.data.value, factRequested: false }, // removed:
+          });
+          // console.log(result.data.categories);
+        } catch (error) {
+          console.log("The following error occured:", error);
+          dispatch({
+            type: "FACT_FETCHING_FAILED",
+            payload: { factRequested: false },
+          });
+        }
+      }, 10000);
+  }, [appData.factFetchingInitiated]);
 
   return (
     <div className="main-background">

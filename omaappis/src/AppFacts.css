@@ -2,7 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* background-image: url(Flames.jpeg); */
+  background-image: url(Flames.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100%;
   padding: 100px;
 }
@@ -11,6 +13,7 @@
   font-size: xx-large;
   font-weight: bolder;
   background-image: url(ChuckNorris.webp);
+  background-repeat: no-repeat;
   width: 600px;
   min-height: 250px;
   height: fit-content;
