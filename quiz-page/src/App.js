@@ -73,30 +73,27 @@ let appData = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "QUIZ_NUMBER_CHANGER":
-      // const stateCopy = { ...state, saveData: true };
-      // stateCopy.
-      let quixIndex = action.payload.quizIndex;
-      let dataCopy = { ...state };
-      dataCopy.quizzes[quixIndex] = quixIndex;
-      return dataCopy; // the three dots make a copy of quiz
+    case "QUIZ_NUMBER_CHANGER": {
+      console.log(action.payload);
+      let dataCopy = { ...state }; // the three dots make a copy of the state
+      dataCopy.quizzes[0].quizName = action.payload;
+      return dataCopy;
+    }
     // case "QUIZ_CHANGER":
     //   return { ...quiz, quiz: action.payload.quizNumber };
-    // case "QUESTION_CHANGER": {
-    //   let { questionText, questionIndex } = action.payload;
-    //   let dataCopy = { ...state };
-    //   dataCopy.quizzes[quizIndex].questions[questionIndex].questionText =
-    //     questionText;
-    //   return dataCopy;
-    // }
-    // case "ANSWER_CHANGER": {
-    //   let { questionIndex, answerText, answerIndex } = action.payload;
-    //   let quizCopy = { ...state };
-    //   dataCopy.quizzes[quizIndex].questions[questionIndex].answers[
-    //     answerIndex
-    //   ] = answerText;
-    //   return dataCopy;
-    // }
+    case "QUESTION_CHANGER": {
+      let { questionText, questionIndex } = action.payload;
+      let dataCopy = { ...state };
+      dataCopy.quizzes[0].questions[questionIndex].questionText = questionText;
+      return dataCopy;
+    }
+    case "ANSWER_CHANGER": {
+      let { questionIndex, answerText, answerIndex } = action.payload;
+      let dataCopy = { ...state };
+      dataCopy.quizzes[0].questions[questionIndex].answers[answerIndex] =
+        answerText;
+      return dataCopy;
+    }
     // case "INITIATE_DATA": {
     //   return { ...action.payload };
     // }

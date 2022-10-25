@@ -3,7 +3,7 @@ import Answers from "./Answers";
 import "./Quizzes";
 
 const Questions = (props) => {
-  console.log(props.quizIndex);
+  // console.log(props.quizIndex);
   return (
     <div>
       <div>

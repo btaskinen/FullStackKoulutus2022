@@ -1,7 +1,7 @@
 import "./App.css";
 
 const Quizzes = (props) => {
-  console.log(props);
+  // console.log(props);
   return (
     <div className="header">
       <div className="quiz-title">
