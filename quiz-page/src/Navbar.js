@@ -14,14 +14,16 @@ const Navbar = (props) => {
               return (
                 <button
                   className="dropdown-buttons"
-                  // onClick={(event) =>
-                  //   props.dispatch({
-                  //     type: "QUIZ_CHANGER",
-                  //     payload: {
-                  //       quizIndex: index,
-                  //     },
-                  //   })
-                  // }
+                  onClick={(event) => {
+                    console.log("quizIndex:", index);
+                    props.dispatch({
+                      type: "QUIZ_CHANGER",
+                      payload: {
+                        quizName: quiz,
+                        quizIndex: index,
+                      },
+                    });
+                  }}
                   href="#"
                 >
                   {quiz.quizName}

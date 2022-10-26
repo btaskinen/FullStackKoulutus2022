@@ -79,8 +79,17 @@ function reducer(state, action) {
       dataCopy.quizzes[0].quizName = action.payload;
       return dataCopy;
     }
-    // case "QUIZ_CHANGER":
-    //   return { ...quiz, quiz: action.payload.quizNumber };
+    case "QUIZ_CHANGER": {
+      let dataCopy = { ...state };
+      console.log(action.payload.quizIndex);
+      dataCopy.quizzes[action.payload.quizIndex].quizName =
+        action.payload.quizName;
+      console.log(
+        (dataCopy.quizzes[action.payload.quizIndex].quizName =
+          action.payload.quizName)
+      );
+      return dataCopy;
+    }
     case "QUESTION_CHANGER": {
       let { questionText, questionIndex } = action.payload;
       let dataCopy = { ...state };
@@ -92,6 +101,11 @@ function reducer(state, action) {
       let dataCopy = { ...state };
       dataCopy.quizzes[0].questions[questionIndex].answers[answerIndex] =
         answerText;
+      return dataCopy;
+    }
+    case "ADD_QUESTION": {
+      let dataCopy = { ...state };
+      dataCopy.quizzes[0].questions.push({ questionText: "New Question" });
       return dataCopy;
     }
     // case "INITIATE_DATA": {
@@ -106,7 +120,18 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, appData);
+  const [data, dispatch] = useReducer(reducer, { appData, quizIndex: 0 });
+
+  // useEffect(() => {
+  //   function selectQuiz() {
+  //     dispatch({
+  //       type: "QUIZ_CHANGER",
+  //       payload: appData,
+  //     });
+  //     // console.log(result.data.categories);
+  //   }
+  //   selectQuiz();
+  // });
 
   // useEffect(() => {
   //   let quizData = localStorage.getItem("quizData");
