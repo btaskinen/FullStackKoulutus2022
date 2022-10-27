@@ -35,6 +35,17 @@ const Questions = (props) => {
                 questionIndex={index}
                 dispatch={props.dispatch}
               />
+              <button
+                className="add-answer-button"
+                onClick={(event) => {
+                  props.dispatch({
+                    type: "ADD_ANSWER",
+                    payload: { questionIndex: index },
+                  });
+                }}
+              >
+                Add Answer
+              </button>
             </div>
           );
         })}

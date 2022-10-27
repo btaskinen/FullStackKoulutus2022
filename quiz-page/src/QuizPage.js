@@ -13,6 +13,16 @@ function QuizPage(props) {
           quizIndex={props.quizIndex}
           dispatch={props.dispatch}
         />
+        <button
+          className="add-quiz-button"
+          onClick={(event) => {
+            props.dispatch({
+              type: "ADD_QUIZ",
+            });
+          }}
+        >
+          Add New Quiz
+        </button>
       </header>
       <p className="QuizPage-main">
         Select the correct answer for each question. Submit your answers by
@@ -27,6 +37,16 @@ function QuizPage(props) {
               dispatch={props.dispatch}
             />
           </div>
+          <button
+            className="add-question-button"
+            onClick={(event) => {
+              props.dispatch({
+                type: "ADD_QUESTION",
+              });
+            }}
+          >
+            Add Question
+          </button>
         </div>
       </div>
     </div>

@@ -86,9 +86,9 @@ function reducer(state, action) {
     }
     case "QUIZ_CHANGER": {
       let dataCopy = { ...state };
-      console.log(dataCopy.quizData);
-      console.log(action.payload.quizIndex);
-      console.log(action.payload.quizName);
+      // console.log(dataCopy.quizData);
+      // console.log(action.payload.quizIndex);
+      // console.log(action.payload.quizName);
       dataCopy.quizIndex = action.payload.quizIndex;
       console.log(dataCopy);
       return dataCopy;
@@ -96,7 +96,7 @@ function reducer(state, action) {
     case "QUESTION_CHANGER": {
       let { questionText, questionIndex } = action.payload;
       let dataCopy = { ...state };
-      console.log(state.quizData);
+      // console.log(state.quizData);
       dataCopy.quizData.quizzes[dataCopy.quizIndex].questions[
         questionIndex
       ].questionText = questionText;
@@ -110,11 +110,30 @@ function reducer(state, action) {
       ].answers[answerIndex] = answerText;
       return dataCopy;
     }
+    case "ADD_QUIZ": {
+      let dataCopy = { ...state };
+      dataCopy.quizData.quizzes.push({
+        quizIndex: dataCopy.quizData.quizzes.length,
+        quizName: "New Quiz",
+        questions: [],
+      });
+      console.log(dataCopy);
+      return dataCopy;
+    }
     case "ADD_QUESTION": {
       let dataCopy = { ...state };
-      dataCopy.quizData.quizzes[0].questions.push({
+      dataCopy.quizData.quizzes[dataCopy.quizIndex].questions.push({
         questionText: "New Question",
+        answers: [],
       });
+      return dataCopy;
+    }
+    case "ADD_ANSWER": {
+      let { questionIndex } = action.payload;
+      let dataCopy = { ...state };
+      dataCopy.quizData.quizzes[dataCopy.quizIndex].questions[
+        questionIndex
+      ].answers.push("New Answer");
       return dataCopy;
     }
     // case "INITIATE_DATA": {
