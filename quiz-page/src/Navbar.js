@@ -3,6 +3,7 @@ import "./Answers";
 import "./Quizzes";
 
 const Navbar = (props) => {
+  console.log(props);
   return (
     <div>
       <div className="Navigation-bar">

@@ -65,7 +65,7 @@ let quiz3 = {
   questions: [question7, question8, question9],
 };
 
-let appData = {
+let quizData = {
   quizzes: [quiz1, quiz2, quiz3],
   // saveData: false,
   // dataInitialized: false,
@@ -120,7 +120,8 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [data, dispatch] = useReducer(reducer, { appData, quizIndex: 0 });
+  const [appData, dispatch] = useReducer(reducer, { quizData, quizIndex: 0 });
+  console.log(appData);
 
   // useEffect(() => {
   //   function selectQuiz() {
@@ -164,7 +165,11 @@ function App() {
     <div>
       {/* passing array of quizzes to Navbar */}
       <Navbar quizzes={appData.quizzes} dispatch={dispatch} />
-      <QuizPage quizzes={appData.quizzes} quizIndex={0} dispatch={dispatch} />
+      <QuizPage
+        quizzes={appData.quizzes}
+        quizIndex={appData.quizzes[quizIndex]}
+        dispatch={dispatch}
+      />
       <div className="footer">This is the Footer</div>
     </div>
   );
