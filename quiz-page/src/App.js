@@ -81,7 +81,7 @@ function reducer(state, action) {
     case "QUIZ_NUMBER_CHANGER": {
       console.log(action.payload);
       let dataCopy = { ...state }; // the three dots make a copy of the state
-      dataCopy.quizData.quizzes[0].quizName = action.payload;
+      dataCopy.quizData.quizzes[dataCopy.quizIndex].quizName = action.payload;
       return dataCopy;
     }
     case "QUIZ_CHANGER": {
@@ -96,16 +96,18 @@ function reducer(state, action) {
     case "QUESTION_CHANGER": {
       let { questionText, questionIndex } = action.payload;
       let dataCopy = { ...state };
-      dataCopy.quizData.quizzes[0].questions[questionIndex].questionText =
-        questionText;
+      console.log(state.quizData);
+      dataCopy.quizData.quizzes[dataCopy.quizIndex].questions[
+        questionIndex
+      ].questionText = questionText;
       return dataCopy;
     }
     case "ANSWER_CHANGER": {
       let { questionIndex, answerText, answerIndex } = action.payload;
       let dataCopy = { ...state };
-      dataCopy.quizData.quizzes[0].questions[questionIndex].answers[
-        answerIndex
-      ] = answerText;
+      dataCopy.quizData.quizzes[dataCopy.quizIndex].questions[
+        questionIndex
+      ].answers[answerIndex] = answerText;
       return dataCopy;
     }
     case "ADD_QUESTION": {
