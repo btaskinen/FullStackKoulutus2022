@@ -51,16 +51,19 @@ let question9 = {
 };
 
 let quiz1 = {
+  quizIndex: 0,
   quizName: "Quiz 1",
   questions: [question1, question2, question3],
 };
 
 let quiz2 = {
+  quizIndex: 1,
   quizName: "Quiz 2",
   questions: [question4, question5, question6],
 };
 
 let quiz3 = {
+  quizIndex: 2,
   quizName: "Quiz 3",
   questions: [question7, question8, question9],
 };
@@ -71,41 +74,45 @@ let quizData = {
   // dataInitialized: false,
 };
 
+// state = appData
 function reducer(state, action) {
+  // console.log(state);
   switch (action.type) {
     case "QUIZ_NUMBER_CHANGER": {
       console.log(action.payload);
       let dataCopy = { ...state }; // the three dots make a copy of the state
-      dataCopy.quizzes[0].quizName = action.payload;
+      dataCopy.quizData.quizzes[0].quizName = action.payload;
       return dataCopy;
     }
     case "QUIZ_CHANGER": {
       let dataCopy = { ...state };
+      console.log(dataCopy.quizData);
       console.log(action.payload.quizIndex);
-      dataCopy.quizzes[action.payload.quizIndex].quizName =
-        action.payload.quizName;
-      console.log(
-        (dataCopy.quizzes[action.payload.quizIndex].quizName =
-          action.payload.quizName)
-      );
+      console.log(action.payload.quizName);
+      dataCopy.quizIndex = action.payload.quizIndex;
+      console.log(dataCopy);
       return dataCopy;
     }
     case "QUESTION_CHANGER": {
       let { questionText, questionIndex } = action.payload;
       let dataCopy = { ...state };
-      dataCopy.quizzes[0].questions[questionIndex].questionText = questionText;
+      dataCopy.quizData.quizzes[0].questions[questionIndex].questionText =
+        questionText;
       return dataCopy;
     }
     case "ANSWER_CHANGER": {
       let { questionIndex, answerText, answerIndex } = action.payload;
       let dataCopy = { ...state };
-      dataCopy.quizzes[0].questions[questionIndex].answers[answerIndex] =
-        answerText;
+      dataCopy.quizData.quizzes[0].questions[questionIndex].answers[
+        answerIndex
+      ] = answerText;
       return dataCopy;
     }
     case "ADD_QUESTION": {
       let dataCopy = { ...state };
-      dataCopy.quizzes[0].questions.push({ questionText: "New Question" });
+      dataCopy.quizData.quizzes[0].questions.push({
+        questionText: "New Question",
+      });
       return dataCopy;
     }
     // case "INITIATE_DATA": {
@@ -121,7 +128,8 @@ function reducer(state, action) {
 
 function App() {
   const [appData, dispatch] = useReducer(reducer, { quizData, quizIndex: 0 });
-  console.log(appData);
+  console.log(quizData);
+  console.log(appData.quizIndex);
 
   // useEffect(() => {
   //   function selectQuiz() {
@@ -129,10 +137,9 @@ function App() {
   //       type: "QUIZ_CHANGER",
   //       payload: appData,
   //     });
-  //     // console.log(result.data.categories);
   //   }
   //   selectQuiz();
-  // });
+  // }, []);
 
   // useEffect(() => {
   //   let quizData = localStorage.getItem("quizData");
@@ -164,12 +171,14 @@ function App() {
   return (
     <div>
       {/* passing array of quizzes to Navbar */}
-      <Navbar quizzes={appData.quizzes} dispatch={dispatch} />
+      <Navbar quizzes={appData.quizData.quizzes} dispatch={dispatch} />{" "}
+      {/* why does it
+      wrok with quizData but not with appData? */}
       <QuizPage
-        quizzes={appData.quizzes}
-        quizIndex={appData.quizzes[quizIndex]}
+        quizzes={appData.quizData.quizzes}
+        quizIndex={appData.quizIndex}
         dispatch={dispatch}
-      />
+      />{" "}
       <div className="footer">This is the Footer</div>
     </div>
   );

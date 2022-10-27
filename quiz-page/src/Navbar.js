@@ -3,7 +3,7 @@ import "./Answers";
 import "./Quizzes";
 
 const Navbar = (props) => {
-  console.log(props);
+  // console.log(props);
   return (
     <div>
       <div className="Navigation-bar">
@@ -16,11 +16,11 @@ const Navbar = (props) => {
                 <button
                   className="dropdown-buttons"
                   onClick={(event) => {
-                    console.log("quizIndex:", index);
+                    // console.log("quizIndex:", index);
                     props.dispatch({
                       type: "QUIZ_CHANGER",
                       payload: {
-                        quizName: quiz,
+                        quizName: quiz.quizName,
                         quizIndex: index,
                       },
                     });
