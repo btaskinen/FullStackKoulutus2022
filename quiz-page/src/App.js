@@ -118,7 +118,7 @@ function reducer(state, action) {
         questions: [],
       });
       console.log(dataCopy);
-      return dataCopy;
+      return { dataCopy };
     }
     case "ADD_QUESTION": {
       let dataCopy = { ...state };
@@ -136,12 +136,12 @@ function reducer(state, action) {
       ].answers.push("New Answer");
       return dataCopy;
     }
-    // case "INITIATE_DATA": {
-    //   return { ...action.payload };
-    // }
-    // case "UPDATE_STORAGE": {
-    //   return { ...state, saveData: action.payload };
-    // }
+    case "INITIATE_DATA": {
+      return { ...action.payload, dataInitiated: true };
+    }
+    case "UPDATE_STORAGE": {
+      return { ...state, saveData: action.payload };
+    }
     default:
       throw new Error("Something went wrong!");
   }
@@ -152,34 +152,26 @@ function App() {
   console.log(quizData);
   console.log(appData.quizIndex);
 
-  // useEffect(() => {
-  //   function selectQuiz() {
-  //     dispatch({
-  //       type: "QUIZ_CHANGER",
-  //       payload: appData,
-  //     });
-  //   }
-  //   selectQuiz();
-  // }, []);
+  useEffect(() => {
+    let appData = localStorage.getItem("appData");
+    if (appData == null) {
+      console.log("Data was read from constant");
+      localStorage.setItem("appData", JSON.stringify(quizData));
+      dispatch({ type: "INITIATE_DATA", payload: quizData });
+    } else {
+      console.log("Data was read from local storage");
+      dispatch({ type: "INITIATE_DATA", payload: JSON.parse(appData) });
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   let quizData = localStorage.getItem("quizData");
-  //   if (quizData == null) {
-  //     console.log("Data was read from constant");
-  //     localStorage.setItem("quizData", JSON.stringify(appData));
-  //     dispatch({ type: "INITIATE_DATA", payload: appData });
-  //   } else {
-  //     console.log("Data was read from local storage");
-  //     dispatch({ type: "INITIATE_DATA", payload: JSON.parse(appData) });
-  //   }
-  // }, [appData]);
-
-  // useEffect(() => {
-  //   if (appData.saveData === true) {
-  //     localStorage.setItem("quizData", JSON.stringify(appData));
-  //     dispatch({ type: "UPDATE_STORAGE", payload: false });
-  //   }
-  // }, [appData.saveData]);
+  useEffect(() => {
+    if (appData.saveData === true) {
+      console.log("Quiz name needs to be saved");
+      console.log("Data:", appData);
+      localStorage.setItem("quizAppData", JSON.stringify(appData));
+      dispatch({ type: "UPDATE_STORAGE", payload: false });
+    }
+  }, [appData.saveData]);
 
   // const [quizNumber, setQuiz] = useState(quiz1);
 
@@ -193,8 +185,6 @@ function App() {
     <div>
       {/* passing array of quizzes to Navbar */}
       <Navbar quizzes={appData.quizData.quizzes} dispatch={dispatch} />{" "}
-      {/* why does it
-      wrok with quizData but not with appData? */}
       <QuizPage
         quizzes={appData.quizData.quizzes}
         quizIndex={appData.quizIndex}
