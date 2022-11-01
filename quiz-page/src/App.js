@@ -4,6 +4,7 @@ import QuizPage from "./QuizPage";
 import "./Checkboxes";
 import Navbar from "./Navbar";
 import { useReducer, useEffect } from "react";
+import axios from "axios";
 
 let question1 = {
   questionText: "Question 1",
@@ -118,7 +119,7 @@ function reducer(state, action) {
         questions: [],
       });
       console.log(dataCopy);
-      return { dataCopy };
+      return dataCopy;
     }
     case "ADD_QUESTION": {
       let dataCopy = { ...state };
@@ -136,8 +137,17 @@ function reducer(state, action) {
       ].answers.push("New Answer");
       return dataCopy;
     }
+    case "DOWNLOAD_STARTED":
+      console.log("DOWNLOAD_STARTED");
+      return { ...state, ...action.payload };
+    case "DOWNLOAD_SUCCEEDED":
+      console.log("DOWNLOAD_SUCCEEDED");
+      return { ...action.payload, downloadStarted: false, dataInitiated: true };
+    case "DOWNLOAD_FAILED":
+      console.log("DOWNLOAD_FAILED");
+      return { ...state, ...action.payload };
     case "INITIATE_DATA": {
-      return { ...action.payload, dataInitiated: true };
+      return { ...action.payload, dataInitiated: true, quizIndex: 0 };
     }
     case "UPDATE_STORAGE": {
       return { ...state, saveData: action.payload };
@@ -149,29 +159,66 @@ function reducer(state, action) {
 
 function App() {
   const [appData, dispatch] = useReducer(reducer, { quizData, quizIndex: 0 });
-  console.log(quizData);
+  console.log("Quiz Data:", quizData);
+  console.log("App Data", appData);
   console.log(appData.quizIndex);
 
-  useEffect(() => {
-    let appData = localStorage.getItem("appData");
-    if (appData == null) {
-      console.log("Data was read from constant");
-      localStorage.setItem("appData", JSON.stringify(quizData));
-      dispatch({ type: "INITIATE_DATA", payload: quizData });
-    } else {
-      console.log("Data was read from local storage");
-      dispatch({ type: "INITIATE_DATA", payload: JSON.parse(appData) });
-    }
-  }, []);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     try {
+  //       dispatch({
+  //         type: "DOWNLOAD_STARTED",
+  //         payload: { downloadStarted: true },
+  //       });
+  //       const result = await axios("http://localhost:8080");
+  //       console.log("result:", result);
+  //       dispatch({ type: "DOWNLOAD_SUCCEEDED", payload: result.data.data });
+  //     } catch (error) {
+  //       dispatch({
+  //         type: "DOWNLOAD_FAILED",
+  //         payload: { downloadFailed: true },
+  //       });
+  //     }
+  //   };
+  //   getData();
+  // }, []);
 
-  useEffect(() => {
-    if (appData.saveData === true) {
-      console.log("Quiz name needs to be saved");
-      console.log("Data:", appData);
-      localStorage.setItem("quizAppData", JSON.stringify(appData));
-      dispatch({ type: "UPDATE_STORAGE", payload: false });
-    }
-  }, [appData.saveData]);
+  // useEffect(() => {
+  //   const saveData = async () => {
+  //     try {
+  //       const result = await axios.post("http://localhost:8080", {
+  //         data: appData,
+  //       });
+  //       dispatch({ type: "UPDATE_STORAGE", payload: false });
+  //     } catch (error) {
+  //       console.log("Error:", error);
+  //     }
+  //   };
+  //   if (appData.saveData == true) {
+  //     saveData();
+  //   }
+  // }, [appData.saveData]);
+
+  // useEffect(() => {
+  //   let appData = localStorage.getItem("appData");
+  //   if (appData == null) {
+  //     console.log("Data was read from constant");
+  //     localStorage.setItem("appData", JSON.stringify(quizData));
+  //     dispatch({ type: "INITIATE_DATA", payload: quizData });
+  //   } else {
+  //     console.log("Data was read from local storage");
+  //     dispatch({ type: "INITIATE_DATA", payload: JSON.parse(appData) });
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (appData.saveData === true) {
+  //     console.log("Quiz name needs to be saved");
+  //     console.log("Data:", appData);
+  //     localStorage.setItem("quizAppData", JSON.stringify(appData));
+  //     dispatch({ type: "UPDATE_STORAGE", payload: false });
+  //   }
+  // }, [appData.saveData]);
 
   // const [quizNumber, setQuiz] = useState(quiz1);
 
@@ -184,12 +231,12 @@ function App() {
   return (
     <div>
       {/* passing array of quizzes to Navbar */}
-      <Navbar quizzes={appData.quizData.quizzes} dispatch={dispatch} />{" "}
+      <Navbar quizzes={appData.quizData.quizzes} dispatch={dispatch} />
       <QuizPage
         quizzes={appData.quizData.quizzes}
         quizIndex={appData.quizIndex}
         dispatch={dispatch}
-      />{" "}
+      />
       <div className="footer">This is the Footer</div>
     </div>
   );
