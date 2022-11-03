@@ -1,3 +1,4 @@
+const bodyparser = require("body-parser");
 const fs = require("fs");
 const express = require("express"); //Jos ei toimi, niin "npm install express"
 const cors = require("cors");
@@ -7,8 +8,11 @@ const port = 8080;
 app.use(cors()); //jos ei toimi, niin "npm install cors"
 app.use(express.json());
 
-let data = fs.readFileSync("./kouludata.json", { encoding: "utf8", flag: "r" });
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.json());
 
+// let data = fs.readFileSync("./kouludata.json", { encoding: "utf8", flag: "r" });
+let data;
 app.get("/", (req, res) => {
   //SELECT
   console.log("Data reqiested from server");
@@ -18,6 +22,7 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
   console.log("Data saved to server");
   data = req.body; //INSERT
+  console.log(req.body);
   //fs.writeFileSync('kouludata.json', JSON.stringify(req.body));
   res.send("Data saving succeeded");
 });
