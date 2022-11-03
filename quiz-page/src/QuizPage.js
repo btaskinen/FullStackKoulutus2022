@@ -48,6 +48,16 @@ function QuizPage(props) {
             Add Question
           </button>
         </div>
+        <button
+          onClick={(event) => {
+            props.dispatch({
+              type: "UPDATE_STORAGE",
+              payload: true,
+            });
+          }}
+        >
+          Save
+        </button>
       </div>
     </div>
   );

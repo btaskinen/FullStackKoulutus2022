@@ -72,7 +72,7 @@ let quiz3 = {
 let quizData = {
   quizzes: [quiz1, quiz2, quiz3],
   quizIndex: 0,
-  // saveData: false,
+  saveData: false,
   // dataInitialized: false,
 };
 
@@ -148,6 +148,7 @@ function reducer(state, action) {
       console.log("DOWNLOAD_FAILED");
       return { ...state, ...action.payload };
     case "INITIATE_DATA": {
+      console.log(action.payload);
       return { ...action.payload, dataInitiated: true, quizIndex: 0 };
     }
     case "UPDATE_STORAGE": {
@@ -204,8 +205,8 @@ function App() {
     let appData = localStorage.getItem("appData");
     if (appData == null) {
       console.log("Data was read from constant");
-      localStorage.setItem("appData", JSON.stringify(appData));
-      dispatch({ type: "INITIATE_DATA", payload: appData });
+      localStorage.setItem("appData", JSON.stringify(quizData));
+      dispatch({ type: "INITIATE_DATA", payload: quizData });
     } else {
       console.log("Data was read from local storage");
       dispatch({ type: "INITIATE_DATA", payload: JSON.parse(appData) });
@@ -216,7 +217,7 @@ function App() {
     if (appData.saveData === true) {
       console.log("Quiz name needs to be saved");
       console.log("Data:", appData);
-      localStorage.setItem("quizAppData", JSON.stringify(appData));
+      localStorage.setItem("appData", JSON.stringify(appData));
       dispatch({ type: "UPDATE_STORAGE", payload: false });
     }
   }, [appData.saveData]);
