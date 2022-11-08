@@ -14,9 +14,11 @@ const pool = new Pool({
   port: 5432,
 });
 
-app.use(cors()); //jos ei toimi, niin "npm install cors"
+app.use(cors());
+// next line is midleware needed so we can send json data as req.body
 app.use(express.json());
 
+// midleware to pass the data
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
@@ -30,7 +32,7 @@ let data;
 const addQuestion = (questionObject) => {
   values = [questionObject.quizId, questionObject.question];
   try {
-    dbpool.query(
+    pool.query(
       "INSERT INTO question (exam_id, question) VALUES ($1, $2) ",
       values
     );
