@@ -2,6 +2,7 @@ const bodyparser = require("body-parser");
 const fs = require("fs");
 const express = require("express"); //Jos ei toimi, niin "npm install express"
 const cors = require("cors");
+const quizRoutes = require("../src/quizdb/routes");
 
 const app = express();
 const port = 8080;
@@ -27,6 +28,8 @@ app.use(bodyparser.json());
 app.get("/", (req, res) => {
   res.send("Hello world!");
 });
+
+app.use("/quiz-page/quizdb", quizRoutes);
 
 app.listen(port, () => console.log(`App listening on port ${port}`));
 
