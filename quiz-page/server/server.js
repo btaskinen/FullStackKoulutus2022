@@ -2,17 +2,19 @@ const bodyparser = require("body-parser");
 const fs = require("fs");
 const express = require("express"); //Jos ei toimi, niin "npm install express"
 const cors = require("cors");
+
 const app = express();
 const port = 8080;
 
-const { Pool, Client } = require("pg");
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "postgres",
-  password: "admin",
-  port: 5432,
-});
+// 20221109 likely to be removed later
+// const { Pool, Client } = require("pg");
+// const pool = new Pool({
+//   user: "postgres",
+//   host: "localhost",
+//   database: "postgres",
+//   password: "admin",
+//   port: 5432,
+// });
 
 app.use(cors());
 // next line is midleware needed so we can send json data as req.body
@@ -21,6 +23,12 @@ app.use(express.json());
 // midleware to pass the data
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
+
+app.get("/", (req, res) => {
+  res.send("Hello world!");
+});
+
+app.listen(port, () => console.log(`App listening on port ${port}`));
 
 // let data = fs.readFileSync("./kouludata.json", { encoding: "utf8", flag: "r" });
 let data;
@@ -90,7 +98,3 @@ app.post('/', (req, res) => {
   res.send('Tais datan tallennus onnistua, kun tänne tultiin :)')
 })
  */
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
