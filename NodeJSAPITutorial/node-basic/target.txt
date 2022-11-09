@@ -1,0 +1,5 @@
+Hello!
+
+This changes!
+
+APIs emerged in the early days of computing, well before the personal computer. At the time, an API was typically used as a library for operating systems. The API was almost always local to the systems on which it operated, although it sometimes passed messages between mainframes. After nearly 30 years, APIs broke out of their local environments. By the early 2000s, they were becoming an important technology for the remote integration of data.
