@@ -32,4 +32,27 @@ router.delete(
   controller.deleteQuestion
 );
 
+// ------------------- MANIPULATING ANSWERS -------------------
+router.get(
+  "/quizzes/:quiz_id/question/*/answer",
+  controller.getAnswersByQuizId
+);
+router.get(
+  "/quizzes/:quiz_id/question/:question_id/answer/:answer_id",
+  controller.getAnswerByAnswerId
+);
+router.post(
+  "/quizzes/:quiz_id/question/:question_id/answer",
+  controller.addNewAnswer
+);
+// not working properly yet. Gives answer no mather question_id is linked to answer or not
+router.put(
+  "/quizzes/:quiz_id/question/:question_id/answer/:answer_id",
+  controller.updateAnswer
+);
+router.delete(
+  "/quizzes/:quiz_id/question/:question_id/answer/:answer_id",
+  controller.deleteAnswer
+);
+
 module.exports = router;

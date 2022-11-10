@@ -19,6 +19,20 @@ const updateQuestion =
 
 const deleteQuestion = "DELETE FROM question WHERE question_id = $1";
 
+// ---------------------------- ANSWER QUERIES -------------------------------
+const getAnswersByQuizId =
+  "SELECT * FROM answer JOIN question ON question.question_id = answer.question_id WHERE quiz_id = $1";
+
+const getAnswerByAnswerId = "SELECT * FROM answer WHERE answer_id = $1";
+
+const addNewAnswer =
+  "INSERT INTO answer (answer_text, question_id, correct_answer) VALUES ($1, $2, $3)";
+
+const updateAnswer =
+  "UPDATE answer SET answer_text = $1, correct_answer = $2 WHERE answer_id =$3";
+
+const deleteAnswer = "DELETE FROM answer WHERE answer_id = $1";
+
 module.exports = {
   getQuizzes,
   getQuizById,
@@ -30,4 +44,9 @@ module.exports = {
   addNewQuestion,
   updateQuestion,
   deleteQuestion,
+  getAnswersByQuizId,
+  getAnswerByAnswerId,
+  addNewAnswer,
+  updateAnswer,
+  deleteAnswer,
 };

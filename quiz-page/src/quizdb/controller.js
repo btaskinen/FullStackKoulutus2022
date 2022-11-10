@@ -113,7 +113,7 @@ const getQuestionByQuestionId = async (req, res) => {
     if (questionIdNotInDb) {
       res.send("No question found. Make sure question exists");
     }
-    res.status(500).json(results.rows);
+    res.status(200).json(results.rows);
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occured");
@@ -144,18 +144,18 @@ const updateQuestion = async (req, res) => {
     let resultsQuiz = await pool.query(queries.getQuizById, [quizId]);
     const quizIdNotInDb = !resultsQuiz.rows.length;
     if (quizIdNotInDb) {
-      res.send("Quiz not found. Make sure it exists");
+      res.status(404).send("Quiz not found. Make sure it exists");
     }
     let resultsQuestion = await pool.query(queries.getQuestionByQuestionId, [
       questionId,
     ]);
     const questionNotInDb = !resultsQuestion.rows.length;
     if (questionNotInDb) {
-      res.send("Question not found. Make sure it exists");
+      res.status(404).send("Question not found. Make sure it exists");
     }
     const questionText = req.body.question_text;
     await pool.query(queries.updateQuestion, [questionText, questionId]);
-    res.send("Question successfully updated");
+    res.status(200).send("Question successfully updated");
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occured");
@@ -169,17 +169,163 @@ const deleteQuestion = async (req, res) => {
     let resultsQuiz = await pool.query(queries.getQuizById, [quizId]);
     const quizIdNotInDb = !resultsQuiz.rows.length;
     if (quizIdNotInDb) {
-      res.send("Quiz not found. Make sure it exists");
+      res.status(404).send("Quiz not found. Make sure it exists");
     }
     let resultsQuestion = await pool.query(queries.getQuestionByQuestionId, [
       questionId,
     ]);
     const questionNotInDb = !resultsQuestion.rows.length;
     if (questionNotInDb) {
-      res.send("Question not found. Make sure it exists");
+      res.status(404).send("Question not found. Make sure it exists");
     }
     await pool.query(queries.deleteQuestion, [questionId]);
-    res.send("Question successfully deleted!");
+    res.status(204).send("Question successfully deleted!");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+  }
+};
+
+// -------------------- ANSWER RELATED FUNCTIONS ----------------------------
+// this works whether question ID is provided or not
+const getAnswersByQuizId = async (req, res) => {
+  try {
+    const quizId = parseInt(req.params.quiz_id);
+    let resultsQuiz = await pool.query(queries.getQuizById, [quizId]);
+    const quizIdNotInDb = !resultsQuiz.rows.length;
+    if (quizIdNotInDb) {
+      res.send("Quiz not found. Make sure it exists");
+    }
+    results = await pool.query(queries.getAnswersByQuizId, [quizId]);
+    res.status(200).json(results.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+  }
+};
+
+const getAnswerByAnswerId = async (req, res) => {
+  try {
+    const quizId = parseInt(req.params.quiz_id);
+    const questionId = parseInt(req.params.question_id);
+    const answerId = parseInt(req.params.answer_id);
+    let resultsQuiz = await pool.query(queries.getQuizById, [quizId]);
+    const quizIdNotInDb = !resultsQuiz.rows.length;
+    if (quizIdNotInDb) {
+      res.status(404).send("Quiz not found. Make sure it exists");
+    }
+    let resultsQuestion = await pool.query(queries.getQuestionByQuestionId, [
+      questionId,
+    ]);
+    const questionNotInDb = !resultsQuestion.rows.length;
+    if (questionNotInDb) {
+      res.status(404).send("Question not found. Make sure it exists");
+    }
+    resultsAnswer = await pool.query(queries.getAnswerByAnswerId, [answerId]);
+    const answerNotInDb = !resultsAnswer.rows.length;
+    if (answerNotInDb) {
+      res.status(404).send("Answer not found. Make sure it exists");
+    }
+    res.status(200).json(resultsAnswer.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+  }
+};
+
+const addNewAnswer = async (req, res) => {
+  try {
+    const quizId = parseInt(req.params.quiz_id);
+    const questionId = parseInt(req.params.question_id);
+    let resultsQuiz = await pool.query(queries.getQuizById, [quizId]);
+    const quizIdNotInDb = !resultsQuiz.rows.length;
+    if (quizIdNotInDb) {
+      res.status(404).send("Quiz not found. Make sure it exists");
+    }
+    let resultsQuestion = await pool.query(queries.getQuestionByQuestionId, [
+      questionId,
+    ]);
+    const questionNotInDb = !resultsQuestion.rows.length;
+    if (questionNotInDb) {
+      res.status(404).send("Question not found. Make sure it exists");
+    }
+    const { answer_text, correct_answer } = req.body;
+    await pool.query(queries.addNewAnswer, [
+      answer_text,
+      questionId,
+      correct_answer,
+    ]);
+    res.status(201).send("Answer successfully added!");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+  }
+};
+
+const updateAnswer = async (req, res) => {
+  try {
+    const quizId = parseInt(req.params.quiz_id);
+    const questionId = parseInt(req.params.question_id);
+    const answerId = parseInt(req.params.answer_id);
+    let resultsQuiz = await pool.query(queries.getQuizById, [quizId]);
+    const quizIdNotInDb = !resultsQuiz.rows.length;
+    if (quizIdNotInDb) {
+      res.status(404).send("Quiz not found. Make sure it exists");
+    }
+    let resultsQuestion = await pool.query(queries.getQuestionByQuestionId, [
+      questionId,
+    ]);
+    const questionNotInDb = !resultsQuestion.rows.length;
+    if (questionNotInDb) {
+      res.status(404).send("Question not found. Make sure it exists");
+    }
+    let resultsAnswer = await pool.query(queries.getAnswerByAnswerId, [
+      answerId,
+    ]);
+    const answerNotInDb = !resultsAnswer.rows.length;
+    if (answerNotInDb) {
+      res.status(404).send("Answer not found. Make sure it exists");
+    }
+    const { answer_text, correct_answer } = req.body;
+    await pool.query(queries.updateAnswer, [
+      answer_text,
+      correct_answer,
+      answerId,
+    ]);
+    res.status(201).send("Answer successfully updated!");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+  }
+};
+
+const deleteAnswer = async (req, res) => {
+  try {
+    const quizId = parseInt(req.params.quiz_id);
+    const questionId = parseInt(req.params.question_id);
+    const answerId = parseInt(req.params.answer_id);
+    let resultsQuiz = await pool.query(queries.getQuizById, [quizId]);
+    const quizIdNotInDb = !resultsQuiz.rows.length;
+    if (quizIdNotInDb) {
+      res.status(404).send("Quiz not found. Make sure it exists");
+    }
+    let resultsQuestion = await pool.query(queries.getQuestionByQuestionId, [
+      questionId,
+    ]);
+    const questionNotInDb = !resultsQuestion.rows.length;
+    if (questionNotInDb) {
+      res.status(404).send("Question not found. Make sure it exists");
+    }
+    let resultsAnswer = await pool.query(queries.getAnswerByAnswerId, [
+      answerId,
+    ]);
+    const answerNotInDb = !resultsAnswer.rows.length;
+    if (answerNotInDb) {
+      res.status(404).send("Answer not found. Make sure it exists");
+    }
+    await pool.query(queries.deleteAnswer, [answerId]);
+    console.log("Answer has been successfully deleted");
+    res.status(204).send("Answer has been successfully deleted"); // this is not displayed in POSTMAN, why? Console.log workds
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occured");
@@ -197,4 +343,9 @@ module.exports = {
   addNewQuestion,
   updateQuestion,
   deleteQuestion,
+  getAnswersByQuizId,
+  getAnswerByAnswerId,
+  addNewAnswer,
+  updateAnswer,
+  deleteAnswer,
 };
