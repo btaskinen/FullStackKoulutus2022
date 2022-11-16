@@ -33,6 +33,10 @@ const updateAnswer =
 
 const deleteAnswer = "DELETE FROM answer WHERE answer_id = $1";
 
+// ---------------------- Authentication -------------------------
+
+const userLogin = "SELECT * FROM users WHERE user_email = $1";
+
 module.exports = {
   getQuizzes,
   getQuizById,
@@ -49,4 +53,5 @@ module.exports = {
   addNewAnswer,
   updateAnswer,
   deleteAnswer,
+  userLogin,
 };

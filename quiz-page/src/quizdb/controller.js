@@ -3,6 +3,7 @@
 const { removeStudent } = require("../../../RESTAPI/src/student/queries");
 const pool = require("./db");
 const queries = require("./queries");
+const jwt = require("jsonwebtoken");
 
 // -------------------- QUIZ RELATED FUNCTIONS ----------------------------
 // getting all the quizzes that are stored in the db
@@ -332,6 +333,49 @@ const deleteAnswer = async (req, res) => {
   }
 };
 
+// ---------------------- Authentication -------------------------
+
+// user login
+const userLogin = async (req, res) => {
+  let { email, password } = req.body;
+
+  let existingUser;
+
+  try {
+    existingUser = await pool.query(queries.userLogin, [email]);
+    console.log(existingUser.rows[0].password);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+  }
+  if (!existingUser || existingUser.rows[0].password != password) {
+    res.status(401).send("Incorrect Password");
+  }
+  let token;
+  // creating jwt token
+  try {
+    token = jwt.sign(
+      {
+        userId: existingUser.rows[0].user_id,
+        userEmail: existingUser.rows[0].user_email,
+      },
+      "secretkeyappearshere",
+      { expiresIn: "5m" }
+    );
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+  }
+  res.status(201).json({
+    success: true,
+    data: {
+      userId: existingUser.rows[0].user_id,
+      userEmail: existingUser.rows[0].user_email,
+      token: token,
+    },
+  });
+};
+
 module.exports = {
   getQuizzes,
   getQuizById,
@@ -348,4 +392,5 @@ module.exports = {
   addNewAnswer,
   updateAnswer,
   deleteAnswer,
+  userLogin,
 };

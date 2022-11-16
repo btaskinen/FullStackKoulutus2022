@@ -10,7 +10,7 @@ app.use(cors());
 // next line is midleware needed so we can send json data as req.body
 app.use(express.json());
 
-// midleware to pass the data
+// middleware to pass the data
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
@@ -18,6 +18,7 @@ app.get("/", (req, res) => {
   res.send("Hello world!");
 });
 
-app.use("/quiz-page/quizdb", quizRoutes);
+// route middleware
+app.use("/api/quiz-page/", quizRoutes);
 
 app.listen(port, () => console.log(`App listening on port ${port}`));

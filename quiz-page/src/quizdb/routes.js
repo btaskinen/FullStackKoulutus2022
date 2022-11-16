@@ -55,4 +55,8 @@ router.delete(
   controller.deleteAnswer
 );
 
+// ---------------------- Authentication -------------------------
+
+router.post("/users/login", controller.userLogin);
+
 module.exports = router;
