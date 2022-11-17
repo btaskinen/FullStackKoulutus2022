@@ -4,6 +4,11 @@ const { removeStudent } = require("../../../RESTAPI/src/student/queries");
 const pool = require("./db");
 const queries = require("./queries");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const {
+  registerValidation,
+  loginValidation,
+} = require("../../server/validation");
 
 // -------------------- QUIZ RELATED FUNCTIONS ----------------------------
 // getting all the quizzes that are stored in the db
@@ -333,47 +338,100 @@ const deleteAnswer = async (req, res) => {
   }
 };
 
-// ---------------------- Authentication -------------------------
+// ---------------------- AUTHENTICATION -------------------------
 
 // user login
-const userLogin = async (req, res) => {
-  let { email, password } = req.body;
+const userLogin = async (req, res, next) => {
+  const { user_email, password } = req.body;
+  const { error } = loginValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
   let existingUser;
 
   try {
-    existingUser = await pool.query(queries.userLogin, [email]);
-    console.log(existingUser.rows[0].password);
+    existingUser = await pool.query(queries.userLogin, [user_email]);
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occured");
+    return next();
   }
-  if (!existingUser || existingUser.rows[0].password != password) {
+  // check if email exists in db
+  if (!existingUser.rows[0]) {
+    res.status(401).send("User with this email does not exist");
+    return next();
+  }
+  // check if password is correct
+  const validPassword = await bcrypt.compare(
+    password,
+    existingUser.rows[0].password
+  );
+  if (!validPassword) {
     res.status(401).send("Incorrect Password");
+    return next();
   }
-  let token;
+
   // creating jwt token
+  let token;
   try {
     token = jwt.sign(
       {
         userId: existingUser.rows[0].user_id,
         userEmail: existingUser.rows[0].user_email,
       },
-      "secretkeyappearshere",
+      process.env.TOKEN_SECRET,
       { expiresIn: "5m" }
     );
+    res.header("Authorization", token).send(token);
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occured");
   }
-  res.status(201).json({
-    success: true,
-    data: {
-      userId: existingUser.rows[0].user_id,
-      userEmail: existingUser.rows[0].user_email,
-      token: token,
-    },
-  });
+  // res.status(201).json({
+  //   success: true,
+  //   data: {
+  //     userId: existingUser.rows[0].user_id,
+  //     userEmail: existingUser.rows[0].user_email,
+  //     token: token,
+  //   },
+  // });
+};
+
+const userRegister = async (req, res, next) => {
+  const { user_name, user_email, admin, password } = req.body;
+  // validate data
+  const { error } = registerValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+  try {
+    // Hash passwords
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const newUser = await pool.query(queries.userRegister, [
+      user_name,
+      user_email,
+      admin,
+      hashedPassword,
+    ]);
+    console.log(newUser);
+    res.status(201).send("You hav been registered!");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(`An error occured: ${error.detail}`);
+    return next();
+  }
+};
+
+// ---------------------- AUTHORIZATION --------------------------
+const accessResources = (req, res) => {
+  try {
+    res.status(200).json({
+      title: "Admin Resources",
+      description: "Resources to handle Quizzes",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(`An error occured: ${error.detail}`);
+    return next();
+  }
 };
 
 module.exports = {
@@ -393,4 +451,6 @@ module.exports = {
   updateAnswer,
   deleteAnswer,
   userLogin,
+  userRegister,
+  accessResources,
 };

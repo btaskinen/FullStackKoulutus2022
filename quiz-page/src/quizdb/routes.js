@@ -2,6 +2,7 @@
 
 const { Router } = require("express");
 const controller = require("./controller");
+const { tokenVerification } = require("../../server/authorization");
 
 const router = Router();
 
@@ -55,8 +56,13 @@ router.delete(
   controller.deleteAnswer
 );
 
-// ---------------------- Authentication -------------------------
+// ---------------------- AUTHENTICATION -------------------------
 
 router.post("/users/login", controller.userLogin);
+
+router.post("/users/register", controller.userRegister);
+
+// ---------------------- AUTHORIZATION --------------------------
+router.get("/accessResources", tokenVerification, controller.accessResources);
 
 module.exports = router;

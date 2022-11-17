@@ -37,6 +37,9 @@ const deleteAnswer = "DELETE FROM answer WHERE answer_id = $1";
 
 const userLogin = "SELECT * FROM users WHERE user_email = $1";
 
+const userRegister =
+  "INSERT INTO users (user_name, user_email, admin, password) VALUES ($1, $2, $3, $4)";
+
 module.exports = {
   getQuizzes,
   getQuizById,
@@ -54,4 +57,5 @@ module.exports = {
   updateAnswer,
   deleteAnswer,
   userLogin,
+  userRegister,
 };

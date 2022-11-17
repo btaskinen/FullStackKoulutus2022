@@ -7,6 +7,7 @@ const app = express();
 const port = 8080;
 
 app.use(cors());
+
 // next line is midleware needed so we can send json data as req.body
 app.use(express.json());
 
@@ -14,11 +15,11 @@ app.use(express.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
+// route middleware
+app.use("/api/quiz-page/", quizRoutes);
+
 app.get("/", (req, res) => {
   res.send("Hello world!");
 });
-
-// route middleware
-app.use("/api/quiz-page/", quizRoutes);
 
 app.listen(port, () => console.log(`App listening on port ${port}`));
