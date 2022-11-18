@@ -4,7 +4,7 @@ const cors = require("cors");
 const quizRoutes = require("../src/quizdb/routes");
 const https = require("https");
 const fs = require("fs");
-const nodemailer = require("nodemailer"); // to send email from the server
+// const nodemailer = require("nodemailer"); // to send email from the server
 
 const app = express();
 const port = 8080;
