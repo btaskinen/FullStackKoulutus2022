@@ -26,6 +26,7 @@ app.use("/api/quiz-page/", quizRoutes);
 
 // app.listen(port, () => console.log(`App listening on port ${port}`));
 
+// https server, created according to https://adamtheautomator.com/https-nodejs/
 https
   .createServer(
     {

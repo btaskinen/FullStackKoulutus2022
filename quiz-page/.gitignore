@@ -19,6 +19,11 @@
 .env.production.local
 .env
 
+#keys
+cert.pem
+csr.pem
+key.pem
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
