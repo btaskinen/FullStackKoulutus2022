@@ -40,6 +40,8 @@ const userLogin = "SELECT * FROM users WHERE user_email = $1";
 const userRegister =
   "INSERT INTO users (user_name, user_email, admin, password) VALUES ($1, $2, $3, $4)";
 
+const isAdminQuerry = "SELECT * FROM users WHERE user_email = $1";
+
 module.exports = {
   getQuizzes,
   getQuizById,
@@ -58,4 +60,5 @@ module.exports = {
   deleteAnswer,
   userLogin,
   userRegister,
+  isAdminQuerry,
 };

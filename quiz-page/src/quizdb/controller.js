@@ -381,7 +381,14 @@ const userLogin = async (req, res, next) => {
       process.env.TOKEN_SECRET,
       { expiresIn: "5m" }
     );
-    res.header("Authorization", token).send(token);
+    res.header("Authorization", token).send({
+      success: true,
+      data: {
+        userId: existingUser.rows[0].user_id,
+        userEmail: existingUser.rows[0].user_email,
+        token: token,
+      },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occured");
