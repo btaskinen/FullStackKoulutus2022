@@ -1,0 +1,28 @@
+Tehtävä 2.8
+Selitä lyhyesti miten miten JavaScriptin sort-funktio toimii ja mitä tarkoittaa parametrina annettava compare-funktio.
+
+JavaScriptin sort-funktio järjestää taulukon elementit. Järjestäminen tapahtuu merkkijonon perustella. sort-funktio vaihtaa ensi kaikki elementit merkkijonoksi ja sen jälkeen funktio järjestää elementit. Siksi jos järjestään numero-taulukko, järjestys ei ole numeroiden määrän mukainen. Alkuperäinen taulukko on muutettu. Sort-funktio ei alusta uutta taulukko.
+
+Compare-funktio tarvitaan, jos haluan järjestää esimerkiksi numerot tai ei aakkosjärjestyksen mukaan.
+
+Compare-funktio toimii näin:
+a = nykyinen arvo
+b = seuraava arvo
+jos return < 0: pitää järjestyksen a, b
+jos return > 0: vaihtaa järjestyksen b, a
+
+// Esimerkki nouseva järjestys
+lista.sort((a, b)) => {
+    if (a > b)
+        return 1;
+    if (a < b)
+        return -1;
+});
+
+// Esimerkki laskeva järjestys
+lista.sort((a, b)) => {
+    if (a > b)
+        return -1;
+    if (a < b)
+        return 1;
+});
