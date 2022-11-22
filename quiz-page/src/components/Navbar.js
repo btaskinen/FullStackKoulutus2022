@@ -1,6 +1,8 @@
 import "./Navbar.css";
+import "./QuizDropdown";
 import "./Answers";
 import "./Quizzes";
+import QuizDropdown from "./QuizDropdown";
 
 const Navbar = (props) => {
   // console.log(props);
@@ -10,28 +12,14 @@ const Navbar = (props) => {
         <div className="dropdown">
           <button className="dropbtn">Quizzes</button>
           <div className="dropdown-content">
-            {props.quizzes.map((quiz, index) => {
-              // console.log(quiz.quizName, index);
-
-              return (
-                <button
-                  className="dropdown-buttons"
-                  onClick={(event) => {
-                    // console.log("quizIndex:", index);
-                    props.dispatch({
-                      type: "QUIZ_CHANGER",
-                      payload: {
-                        quizName: quiz.quizName,
-                        quizIndex: index,
-                      },
-                    });
-                  }}
-                  href="#"
-                >
-                  {quiz.quizName}
-                </button>
-              );
-            })}
+            {props.quizzes.map((quiz, index) => (
+              <QuizDropdown
+                key={index}
+                quiz={quiz}
+                quizIndex={index}
+                dispatch={props.dispatch}
+              />
+            ))}
           </div>
         </div>
         <a href="Help.asp">Help</a>
