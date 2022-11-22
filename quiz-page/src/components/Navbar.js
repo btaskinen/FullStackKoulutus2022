@@ -24,7 +24,9 @@ const Navbar = (props) => {
         </div>
         <a href="Help.asp">Help</a>
         <div className="Float-right">
-          <a href="Quit.asp">Quit</a>
+          <a href="Login.asp">Login</a>
+          <a href="Register.asp">Register</a>
+          <a href="Quit.asp">Logout</a>
         </div>
       </div>
     </div>

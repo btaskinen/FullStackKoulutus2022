@@ -3,9 +3,10 @@ import "./components/QuizPage";
 import QuizPage from "./components/QuizPage";
 import "./components/Checkboxes";
 import Navbar from "./components/Navbar";
-import { useReducer, useEffect } from "react";
+import { useState, useReducer, useEffect } from "react";
 import axios from "axios";
 import Footer from "./components/Footer";
+import LoginPage from "./components/LoginPage";
 
 let question1 = {
   questionText: "Question 1",
@@ -145,7 +146,7 @@ function reducer(state, action) {
       console.log("DOWNLOAD_STARTED");
       return { ...state, ...action.payload };
     case "DOWNLOAD_SUCCEEDED":
-      console.log("DOWNLOAD_SUCCEEDED");
+      console.log("DOWNLOAD_SUCCEEDED", action.payload);
       return { ...action.payload, downloadStarted: false, dataInitiated: true };
     case "DOWNLOAD_FAILED":
       console.log("DOWNLOAD_FAILED");
@@ -162,86 +163,86 @@ function reducer(state, action) {
 }
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
   const [appData, dispatch] = useReducer(reducer, quizData);
   console.log("Quiz Data:", quizData);
   console.log("App Data", appData);
   console.log(appData.quizIndex);
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     try {
-  //       dispatch({
-  //         type: "DOWNLOAD_STARTED",
-  //         payload: { downloadStarted: true },
-  //       });
-  //       const result = await axios("http://localhost:8080");
-  //       console.log("result:", result);
-  //       dispatch({ type: "DOWNLOAD_SUCCEEDED", payload: result.data.data });
-  //     } catch (error) {
-  //       dispatch({
-  //         type: "DOWNLOAD_FAILED",
-  //         payload: { downloadFailed: true },
-  //       });
-  //     }
-  //   };
-  //   getData();
-  // }, []);
-
-  // useEffect(() => {
-  //   const saveData = async () => {
-  //     try {
-  //       const result = await axios.post("http://localhost:8080", {
-  //         data: appData,
-  //       });
-  //       dispatch({ type: "UPDATE_STORAGE", payload: false });
-  //     } catch (error) {
-  //       console.log("Error:", error);
-  //     }
-  //   };
-  //   if (appData.saveData == true) {
-  //     saveData();
-  //   }
-  // }, [appData.saveData]);
-
+  // connects to server, but don't have access, since not logged in
   useEffect(() => {
-    let appData = localStorage.getItem("appData");
-    if (appData == null) {
-      console.log("Data was read from constant");
-      localStorage.setItem("appData", JSON.stringify(quizData));
-      dispatch({ type: "INITIATE_DATA", payload: quizData });
-    } else {
-      console.log("Data was read from local storage");
-      dispatch({ type: "INITIATE_DATA", payload: JSON.parse(appData) });
-    }
+    const getData = async () => {
+      try {
+        dispatch({
+          type: "DOWNLOAD_STARTED",
+          payload: { downloadStarted: true },
+        });
+        const result = await axios.get(
+          "https://localhost:8080/api/quiz-page/quizzes"
+        );
+        console.log("result:", result);
+        dispatch({ type: "DOWNLOAD_SUCCEEDED", payload: result.data.data });
+      } catch (error) {
+        dispatch({
+          type: "DOWNLOAD_FAILED",
+          payload: { downloadFailed: true },
+        });
+      }
+    };
+    getData();
   }, []);
 
   useEffect(() => {
+    const saveData = async () => {
+      try {
+        const result = await axios.post("https://localhost:8080", {
+          data: appData,
+        });
+        dispatch({ type: "UPDATE_STORAGE", payload: false });
+      } catch (error) {
+        console.log("Error:", error);
+      }
+    };
     if (appData.saveData === true) {
-      console.log("data was saved");
-      console.log("Quiz name needs to be saved");
-      console.log("Data:", appData);
-      localStorage.setItem("appData", JSON.stringify(appData));
-      dispatch({ type: "UPDATE_STORAGE", payload: false });
+      saveData();
     }
   }, [appData.saveData]);
 
-  // const [quizNumber, setQuiz] = useState(quiz1);
+  // Getting and Saving app data to localStorage
+  // useEffect(() => {
+  //   let appData = localStorage.getItem("appData");
+  //   if (appData == null) {
+  //     console.log("Data was read from constant");
+  //     localStorage.setItem("appData", JSON.stringify(quizData));
+  //     dispatch({ type: "INITIATE_DATA", payload: quizData });
+  //   } else {
+  //     console.log("Data was read from local storage");
+  //     dispatch({ type: "INITIATE_DATA", payload: JSON.parse(appData) });
+  //   }
+  // }, []);
 
-  // const quizNumberChanger = (quizName) => {
-  //   const quizNumberCopy = { ...quizNumber };
-  //   quizNumberCopy.quizName = quizName;
-  //   setQuiz(quizNumberCopy);
-  // };
+  // useEffect(() => {
+  //   if (appData.saveData === true) {
+  //     console.log("data was saved");
+  //     console.log("Quiz name needs to be saved");
+  //     console.log("Data:", appData);
+  //     localStorage.setItem("appData", JSON.stringify(appData));
+  //     dispatch({ type: "UPDATE_STORAGE", payload: false });
+  //   }
+  // }, [appData.saveData]);
 
   return (
     <div>
-      {/* passing array of quizzes to Navbar */}
       <Navbar quizzes={appData.quizzes} dispatch={dispatch} />
-      <QuizPage
-        quizzes={appData.quizzes}
-        quizIndex={appData.quizIndex}
-        dispatch={dispatch}
-      />
+      {!isLoggedIn && <LoginPage />}
+      {isLoggedIn && (
+        <QuizPage
+          quizzes={appData.quizzes}
+          quizIndex={appData.quizIndex}
+          dispatch={dispatch}
+        />
+      )}
       <Footer />
     </div>
   );

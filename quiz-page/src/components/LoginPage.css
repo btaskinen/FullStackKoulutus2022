@@ -1,0 +1,60 @@
+body {
+  background-color: rgb(184, 185, 185);
+}
+
+h1 {
+  color: black;
+  margin: 20px;
+}
+
+p {
+  color: black;
+  margin: 25px;
+  font-size: 20px;
+}
+
+.login-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.login-text-field {
+  height: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  color: rgb(78, 76, 76);
+  border: 1px solid rgb(78, 76, 76);
+  font-size: 20px;
+}
+
+.button-container {
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-button {
+  background-color: rgb(44, 117, 84);
+  width: 100px;
+  border-radius: 5px;
+  border: none;
+  margin: 15px;
+  padding: 5px;
+  color: white;
+  border: none;
+  font-size: 18px;
+}
