@@ -1,10 +1,11 @@
 import "./App.css";
-import "./QuizPage";
-import QuizPage from "./QuizPage";
-import "./Checkboxes";
-import Navbar from "./Navbar";
+import "./components/QuizPage";
+import QuizPage from "./components/QuizPage";
+import "./components/Checkboxes";
+import Navbar from "./components/Navbar";
 import { useReducer, useEffect } from "react";
 import axios from "axios";
+import Footer from "./components/Footer";
 
 let question1 = {
   questionText: "Question 1",
@@ -96,6 +97,7 @@ function reducer(state, action) {
       return dataCopy;
     }
     case "QUESTION_CHANGER": {
+      console.log("Payload:", action.payload);
       let { questionText, questionIndex } = action.payload;
       let dataCopy = { ...state };
       // console.log(state.quizData);
@@ -105,6 +107,7 @@ function reducer(state, action) {
       return dataCopy;
     }
     case "ANSWER_CHANGER": {
+      console.log("Answer payload", action.payload);
       let { questionIndex, answerText, answerIndex } = action.payload;
       let dataCopy = { ...state };
       dataCopy.quizzes[dataCopy.quizIndex].questions[questionIndex].answers[
@@ -239,7 +242,7 @@ function App() {
         quizIndex={appData.quizIndex}
         dispatch={dispatch}
       />
-      <div className="footer">This is the Footer</div>
+      <Footer />
     </div>
   );
 }

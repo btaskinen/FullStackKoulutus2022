@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.quiz-title {
+  margin-right: 20px;
+}
+.quiz-head-tex-field {
+  height: 10px;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+  color: rgb(78, 76, 76);
+}

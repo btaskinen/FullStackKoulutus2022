@@ -1,0 +1,80 @@
+.Navigation-bar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(44, 117, 84);
+  /* position: fixed; */
+  top: 0;
+  width: 100%;
+}
+
+.Navigation-bar a {
+  float: left;
+  display: block;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: bold;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+  border-top-right-radius: 5px;
+}
+
+.Navigation-bar a:hover,
+.dropdown:hover .dropbtn {
+  background-color: rgb(156, 156, 152);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 93.3px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-bottom-right-radius: 5px;
+}
+
+.dropdown-content button {
+  width: 100%; /*this makes the butten the same width as container*/
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  font-size: 16px;
+
+  border: none;
+  outline: none;
+  color: black;
+  font-weight: bold;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+  border-end-end-radius: 5px;
+}
+
+.dropdown-content button:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}

@@ -1,10 +1,10 @@
-import "./App.css";
+import "../App.css";
+import "./QuizPage.css";
 import Questions from "./Questions";
 import "./Quizzes";
 import Quizzes from "./Quizzes";
 
 function QuizPage(props) {
-  // console.log(props.quizIndex);
   return (
     <div>
       <header className="App-header">
@@ -30,12 +30,17 @@ function QuizPage(props) {
       </p>
       <div className="flex-container">
         <div>
-          <div className="style-question">
-            <Questions
-              quizzes={props.quizzes}
-              quizIndex={props.quizIndex}
-              dispatch={props.dispatch}
-            />
+          <div className="question-contianer">
+            {props.quizzes[props.quizIndex].questions.map((question, index) => (
+              <Questions
+                key={index}
+                quizzes={props.quizzes}
+                quizIndex={props.quizIndex}
+                question={question}
+                questionIndex={index}
+                dispatch={props.dispatch}
+              />
+            ))}
           </div>
           <button
             className="add-question-button"
@@ -49,6 +54,7 @@ function QuizPage(props) {
           </button>
         </div>
         <button
+          className="save-button"
           onClick={(event) => {
             props.dispatch({
               type: "UPDATE_STORAGE",

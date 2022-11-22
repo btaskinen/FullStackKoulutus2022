@@ -1,4 +1,4 @@
-import "./App.css";
+import "./Quizzes.css";
 
 const Quizzes = (props) => {
   // console.log(props);

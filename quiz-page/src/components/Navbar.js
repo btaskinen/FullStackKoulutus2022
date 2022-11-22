@@ -1,4 +1,4 @@
-import "./App.css";
+import "./Navbar.css";
 import "./Answers";
 import "./Quizzes";
 
