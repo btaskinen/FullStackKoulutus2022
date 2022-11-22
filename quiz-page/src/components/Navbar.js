@@ -12,6 +12,7 @@ const Navbar = (props) => {
           <div className="dropdown-content">
             {props.quizzes.map((quiz, index) => {
               // console.log(quiz.quizName, index);
+
               return (
                 <button
                   className="dropdown-buttons"

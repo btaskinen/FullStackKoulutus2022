@@ -151,7 +151,6 @@ function reducer(state, action) {
       console.log("DOWNLOAD_FAILED");
       return { ...state, ...action.payload };
     case "INITIATE_DATA": {
-      console.log(action.payload);
       return { ...action.payload, dataInitiated: true, quizIndex: 0 };
     }
     case "UPDATE_STORAGE": {
@@ -218,6 +217,7 @@ function App() {
 
   useEffect(() => {
     if (appData.saveData === true) {
+      console.log("data was saved");
       console.log("Quiz name needs to be saved");
       console.log("Data:", appData);
       localStorage.setItem("appData", JSON.stringify(appData));

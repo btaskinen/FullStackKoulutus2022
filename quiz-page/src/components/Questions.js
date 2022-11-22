@@ -4,7 +4,6 @@ import Answers from "./Answers";
 import "./Quizzes";
 
 const Questions = (props) => {
-  console.log("Question Props", props);
   return (
     <div>
       <div className="style-question">
@@ -42,7 +41,7 @@ const Questions = (props) => {
         onClick={(event) => {
           props.dispatch({
             type: "ADD_ANSWER",
-            payload: { questionIndex: props.index },
+            payload: { questionIndex: props.questionIndex },
           });
         }}
       >
