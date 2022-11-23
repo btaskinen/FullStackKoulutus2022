@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import { useState, useReducer, useEffect } from "react";
 import axios from "axios";
 import Footer from "./components/Footer";
-import LoginPage from "./components/LoginPage";
+import StartPage from "./components/StartPage";
 
 let question1 = {
   questionText: "Question 1",
@@ -163,14 +163,14 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [appData, dispatch] = useReducer(reducer, quizData);
   console.log("Quiz Data:", quizData);
   console.log("App Data", appData);
   console.log(appData.quizIndex);
 
-  // connects to server, but don't have access, since not logged in
+  // testing app without authorization required (middleware removed in routes)
   useEffect(() => {
     const getData = async () => {
       try {
@@ -182,7 +182,7 @@ function App() {
           "https://localhost:8080/api/quiz-page/quizzes"
         );
         console.log("result:", result);
-        dispatch({ type: "DOWNLOAD_SUCCEEDED", payload: result.data.data });
+        dispatch({ type: "DOWNLOAD_SUCCEEDED", payload: result });
       } catch (error) {
         dispatch({
           type: "DOWNLOAD_FAILED",
@@ -234,15 +234,21 @@ function App() {
 
   return (
     <div>
-      <Navbar quizzes={appData.quizzes} dispatch={dispatch} />
-      {!isLoggedIn && <LoginPage />}
-      {isLoggedIn && (
+      {!isLoggedIn && (
+        <StartPage
+          isLoggedIn={isLoggedIn}
+          quizzes={appData.quizzes}
+          dispatch={dispatch}
+        />
+      )}
+      {/* {isLoggedIn && <MainPage />} */}
+      {/* {isLoggedIn && (
         <QuizPage
           quizzes={appData.quizzes}
           quizIndex={appData.quizIndex}
           dispatch={dispatch}
         />
-      )}
+      )} */}
       <Footer />
     </div>
   );

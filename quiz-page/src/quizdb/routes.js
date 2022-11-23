@@ -12,6 +12,7 @@ router.get("/", (req, res) => {
 
 // ------------------- MANIPULATING QUIZZES -------------------
 router.get("/quizzes", tokenVerification, controller.getQuizzes);
+// router.get("/quizzes", controller.getQuizzes);
 router.get("/quizzes/:quiz_id", tokenVerification, controller.getQuizById);
 router.post("/quizzes", tokenVerification, isAdmin, controller.addNewQuiz);
 router.put(
