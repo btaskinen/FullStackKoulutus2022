@@ -26,7 +26,12 @@ const StartPage = (props) => {
           loginHandler={props.loginHandler}
         />
       )}
-      {register && <RegisterPage registerHandler={registerHandler} />}
+      {register && (
+        <RegisterPage
+          registerHandler={registerHandler}
+          loginHandler={props.loginHandler}
+        />
+      )}
     </div>
   );
 };

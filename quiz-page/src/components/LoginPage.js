@@ -1,5 +1,5 @@
 import "./LoginPage.css";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import axios from "axios";
 
 const LoginPage = (props) => {
@@ -24,15 +24,11 @@ const LoginPage = (props) => {
     }
   };
 
-  const submitHandler = (event) => {
-    // event.preventDefault();
+  const submitHandler = () => {
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    if (props.isLoggedin) {
-    } else {
-      loginUser(enteredEmail, enteredPassword);
-    }
+    loginUser(enteredEmail, enteredPassword);
   };
 
   return (
