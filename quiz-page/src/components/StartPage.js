@@ -1,14 +1,15 @@
 import "./StartPage.css";
 import Navbar from "./Navbar";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
+import axios from "axios";
 
 const StartPage = (props) => {
-  const [wantRegister, setwantRegister] = useState(false);
+  const [register, setRegister] = useState(false);
 
   const registerHandler = () => {
-    setwantRegister((current) => !current);
+    setRegister((current) => !current);
   };
 
   return (
@@ -19,8 +20,13 @@ const StartPage = (props) => {
         dispatch={props.dispatch}
         registerHandler={registerHandler}
       />
-      {!wantRegister && <LoginPage registerHandler={registerHandler} />}
-      {wantRegister && <RegisterPage registerHandler={registerHandler} />}
+      {!register && (
+        <LoginPage
+          registerHandler={registerHandler}
+          loginHandler={props.loginHandler}
+        />
+      )}
+      {register && <RegisterPage registerHandler={registerHandler} />}
     </div>
   );
 };

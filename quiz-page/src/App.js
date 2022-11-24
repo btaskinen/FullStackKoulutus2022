@@ -170,6 +170,10 @@ function App() {
   console.log("App Data", appData);
   console.log(appData.quizIndex);
 
+  const loginHandler = () => {
+    setIsLoggedIn((current) => !current);
+  };
+
   // testing app without authorization required (middleware removed in routes)
   useEffect(() => {
     const getData = async () => {
@@ -239,16 +243,17 @@ function App() {
           isLoggedIn={isLoggedIn}
           quizzes={appData.quizzes}
           dispatch={dispatch}
+          loginHandler={loginHandler}
         />
       )}
       {/* {isLoggedIn && <MainPage />} */}
-      {/* {isLoggedIn && (
+      {isLoggedIn && (
         <QuizPage
           quizzes={appData.quizzes}
           quizIndex={appData.quizIndex}
           dispatch={dispatch}
         />
-      )} */}
+      )}
       <Footer />
     </div>
   );

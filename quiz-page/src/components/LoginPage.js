@@ -1,7 +1,40 @@
 import "./LoginPage.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import axios from "axios";
 
 const LoginPage = (props) => {
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+
+  const loginUser = async (email, password) => {
+    try {
+      const result = await axios.post(
+        `https://localhost:8080/api/quiz-page//users/login`,
+        {
+          user_email: email,
+          password: password,
+        }
+      );
+      const token = result.data.data.token;
+      if (token) {
+        props.loginHandler();
+      }
+    } catch (result) {
+      alert(result.response.data);
+    }
+  };
+
+  const submitHandler = (event) => {
+    // event.preventDefault();
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    if (props.isLoggedin) {
+    } else {
+      loginUser(enteredEmail, enteredPassword);
+    }
+  };
+
   return (
     <div>
       <div className="login-main">
@@ -14,6 +47,7 @@ const LoginPage = (props) => {
               className="login-text-field"
               type="text"
               placeholder="User Name"
+              ref={emailInputRef}
             />
           </div>
           <div>
@@ -22,10 +56,13 @@ const LoginPage = (props) => {
               className="login-text-field"
               type="text"
               placeholder="Password"
+              ref={passwordInputRef}
             />
           </div>
           <div className="button-container">
-            <button className="login-button">Login</button>
+            <button className="login-button" onClick={submitHandler}>
+              Login
+            </button>
             <button className="login-button" onClick={props.registerHandler}>
               Register
             </button>
