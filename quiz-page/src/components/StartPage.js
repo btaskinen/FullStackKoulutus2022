@@ -1,9 +1,8 @@
 import "./StartPage.css";
 import Navbar from "./Navbar";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
-import axios from "axios";
 
 const StartPage = (props) => {
   const [register, setRegister] = useState(false);

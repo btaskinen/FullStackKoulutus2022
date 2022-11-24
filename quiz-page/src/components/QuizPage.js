@@ -1,12 +1,20 @@
 import "../App.css";
 import "./QuizPage.css";
+import Navbar from "./Navbar";
 import Questions from "./Questions";
 import "./Quizzes";
 import Quizzes from "./Quizzes";
 
 function QuizPage(props) {
+  console.log(props);
   return (
     <div>
+      <Navbar
+        isLoggedIn={props.isLoggedIn}
+        quizzes={props.quizzes}
+        dispatch={props.dispatch}
+        registerHandler={props.registerHandler}
+      />
       <header className="App-header">
         <Quizzes
           quizzes={props.quizzes}

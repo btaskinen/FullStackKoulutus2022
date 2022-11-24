@@ -1,0 +1,19 @@
+body {
+  background-color: rgb(184, 185, 185);
+}
+
+h1 {
+  color: black;
+  margin: 20px;
+}
+
+p {
+  color: black;
+  margin: 25px;
+  font-size: 20px;
+}
+
+.quiz-container {
+  display: flex;
+  align-content: center;
+}

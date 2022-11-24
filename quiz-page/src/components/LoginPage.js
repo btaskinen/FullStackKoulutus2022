@@ -18,6 +18,7 @@ const LoginPage = (props) => {
       const token = result.data.data.token;
       if (token) {
         props.loginHandler();
+        localStorage.setItem("loginToken", token);
       }
     } catch (result) {
       alert(result.response.data);

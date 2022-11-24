@@ -2,11 +2,11 @@ import "./App.css";
 import "./components/QuizPage";
 import QuizPage from "./components/QuizPage";
 import "./components/Checkboxes";
-import Navbar from "./components/Navbar";
 import { useState, useReducer, useEffect } from "react";
 import axios from "axios";
 import Footer from "./components/Footer";
 import StartPage from "./components/StartPage";
+import MainPage from "./components/MainPage";
 
 let question1 = {
   questionText: "Question 1",
@@ -164,6 +164,7 @@ function reducer(state, action) {
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [appData, dispatch] = useReducer(reducer, quizData);
   console.log("Quiz Data:", quizData);
@@ -246,14 +247,22 @@ function App() {
           loginHandler={loginHandler}
         />
       )}
-      {/* {isLoggedIn && <MainPage />} */}
       {isLoggedIn && (
+        <MainPage
+          isAdmin={isAdmin}
+          quizzes={appData.quizzes}
+          isLoggedIn={isLoggedIn}
+          loginHandler={loginHandler}
+        />
+      )}
+      {/* {isLoggedIn && (
         <QuizPage
+          isLoggedIn={isLoggedIn}
           quizzes={appData.quizzes}
           quizIndex={appData.quizIndex}
           dispatch={dispatch}
         />
-      )}
+      )} */}
       <Footer />
     </div>
   );

@@ -19,7 +19,7 @@ const RegisterPage = (props) => {
         }
       );
       alert(result.data);
-      props.loginHandler(); // or use registerHandler to go back to login page to get token
+      props.registerHandler();
     } catch (result) {
       alert(result.response.data);
     }
