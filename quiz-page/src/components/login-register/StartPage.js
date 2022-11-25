@@ -1,5 +1,5 @@
 import "./StartPage.css";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 import { useState } from "react";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";

@@ -1,7 +1,7 @@
 import "./MainPage.css";
 import Navbar from "./Navbar";
-import MainPageUser from "./MainPageUser";
-import MainPageAdmin from "./MainPageAdmin";
+import UserMainPage from "./user-components/UserMainPage";
+import AdminMainPage from "./admin-components/AdminMainPage";
 
 function MainPage(props) {
   return (
@@ -11,8 +11,8 @@ function MainPage(props) {
         quizzes={props.quizzes}
         dispatch={props.dispatch}
       />
-      {!props.isAdmin && <MainPageUser quizzes={props.quizzes} />}
-      {props.isAdmin && <MainPageAdmin quizzes={props.quizzes} />}
+      {!props.isAdmin && <UserMainPage quizzes={props.quizzes} />}
+      {props.isAdmin && <AdminMainPage quizzes={props.quizzes} />}
     </div>
   );
 }

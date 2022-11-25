@@ -1,4 +1,4 @@
-import "./Answers.css";
+import "./AdminAnswers.css";
 
 const Answers = (props) => {
   return (

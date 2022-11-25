@@ -1,9 +1,9 @@
-import "../App.css";
-import "./Questions.css";
-import Answers from "./Answers";
-import "./Quizzes";
+import "../../App.css";
+import "./AdminQuestions.css";
+import AdminAnswers from "./AdminAnswers";
+import "../Quizzes";
 
-const Questions = (props) => {
+const AdminQuestions = (props) => {
   return (
     <div>
       <div className="style-question">
@@ -25,7 +25,7 @@ const Questions = (props) => {
       </div>
       <div className="answer-container">
         {props.question.answers.map((answer, index) => (
-          <Answers
+          <AdminAnswers
             key={index}
             question={props.question}
             answer={answer}
@@ -51,4 +51,4 @@ const Questions = (props) => {
   );
 };
 
-export default Questions;
+export default AdminQuestions;

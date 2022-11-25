@@ -5,7 +5,7 @@ import "./components/Checkboxes";
 import { useState, useReducer, useEffect } from "react";
 import axios from "axios";
 import Footer from "./components/Footer";
-import StartPage from "./components/StartPage";
+import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
 
 let question1 = {

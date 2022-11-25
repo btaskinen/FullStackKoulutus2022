@@ -1,6 +1,6 @@
 import "./Navbar.css";
 import "./QuizDropdown";
-import "./Answers";
+import "./admin-components/AdminAnswers";
 import "./Quizzes";
 import QuizDropdown from "./QuizDropdown";
 

@@ -1,7 +1,7 @@
 import "../App.css";
 import "./QuizPage.css";
 import Navbar from "./Navbar";
-import Questions from "./Questions";
+import AdminQuestions from "./admin-components/AdminQuestions";
 import "./Quizzes";
 import Quizzes from "./Quizzes";
 
@@ -40,7 +40,7 @@ function QuizPage(props) {
         <div>
           <div className="question-contianer">
             {props.quizzes[props.quizIndex].questions.map((question, index) => (
-              <Questions
+              <AdminQuestions
                 key={index}
                 quizzes={props.quizzes}
                 quizIndex={props.quizIndex}

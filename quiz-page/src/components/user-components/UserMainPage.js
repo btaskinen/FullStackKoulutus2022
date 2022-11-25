@@ -1,7 +1,7 @@
-import "./MainPageUser.css";
-import QuizButton from "./QuizButton";
+import "./UserMainPage.css";
+import QuizButton from "../QuizButton";
 
-const MainPageUser = (props) => {
+const UserMainPage = (props) => {
   console.log(props);
 
   return (
@@ -17,4 +17,4 @@ const MainPageUser = (props) => {
   );
 };
 
-export default MainPageUser;
+export default UserMainPage;
