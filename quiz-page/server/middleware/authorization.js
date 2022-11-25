@@ -1,8 +1,8 @@
 // authorization middleware. Add to routes that need to be protected
 
 const jwt = require("jsonwebtoken");
-const pool = require("../src/quizdb/db");
-const queries = require("../src/quizdb/queries");
+const pool = require("../quizdb/db");
+const queries = require("../quizdb/queries");
 
 // this middleware is for access where the user needs to be logged in
 const tokenVerification = (req, res, next) => {

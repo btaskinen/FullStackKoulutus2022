@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 const {
   registerValidation,
   loginValidation,
-} = require("../../server/validation");
+} = require("../middleware/validation");
 
 // -------------------- QUIZ RELATED FUNCTIONS ----------------------------
 // getting all the quizzes that are stored in the db

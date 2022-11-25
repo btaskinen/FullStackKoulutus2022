@@ -1,7 +1,7 @@
 const bodyparser = require("body-parser");
 const express = require("express");
 const cors = require("cors");
-const quizRoutes = require("../src/quizdb/routes");
+const quizRoutes = require("./quizdb/routes");
 const https = require("https");
 const fs = require("fs");
 // const nodemailer = require("nodemailer"); // to send email from the server
@@ -31,8 +31,8 @@ app.use("/api/quiz-page/", quizRoutes);
 https
   .createServer(
     {
-      key: fs.readFileSync("key.pem"),
-      cert: fs.readFileSync("cert.pem"),
+      key: fs.readFileSync("key.pem"), //key.pem
+      cert: fs.readFileSync("cert.pem"), //
     },
     app
   )

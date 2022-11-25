@@ -20,6 +20,7 @@
 .env
 
 #keys
+/keys
 cert.pem
 csr.pem
 key.pem

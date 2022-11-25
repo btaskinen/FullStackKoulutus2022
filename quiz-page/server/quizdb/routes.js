@@ -2,7 +2,7 @@
 
 const { Router } = require("express");
 const controller = require("./controller");
-const { tokenVerification, isAdmin } = require("../../server/authorization");
+const { tokenVerification, isAdmin } = require("../middleware/authorization");
 
 const router = Router();
 
