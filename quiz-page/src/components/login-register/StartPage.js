@@ -4,6 +4,7 @@ import { useState } from "react";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import axios from "axios";
+import { Routes, Route } from "react-router-dom";
 
 const StartPage = (props) => {
   const [register, setRegister] = useState(false);
@@ -33,26 +34,43 @@ const StartPage = (props) => {
 
   return (
     <div>
-      <Navbar
-        isLoggedin={props.isLoggedin}
-        quizzes={props.quizzes}
-        dispatch={props.dispatch}
-        registerHandler={registerHandler}
-      />
-      {!register && (
-        <LoginPage
-          registerHandler={registerHandler}
-          loginHandler={props.loginHandler}
-          loginUser={loginUser}
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <Navbar
+              isLoggedin={props.isLoggedin}
+              quizzes={props.quizzes}
+              dispatch={props.dispatch}
+              registerHandler={registerHandler}
+            />
+          }
         />
-      )}
-      {register && (
-        <RegisterPage
-          registerHandler={registerHandler}
-          loginHandler={props.loginHandler}
-          loginUser={loginUser}
+        <Route
+          path="/login"
+          element={
+            !register && (
+              <LoginPage
+                registerHandler={registerHandler}
+                loginHandler={props.loginHandler}
+                loginUser={loginUser}
+              />
+            )
+          }
         />
-      )}
+        <Route
+          path="/register"
+          element={
+            register && (
+              <RegisterPage
+                registerHandler={registerHandler}
+                loginHandler={props.loginHandler}
+                loginUser={loginUser}
+              />
+            )
+          }
+        />
+      </Routes>
     </div>
   );
 };

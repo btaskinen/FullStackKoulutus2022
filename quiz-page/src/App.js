@@ -3,6 +3,7 @@ import "./components/QuizPage";
 import QuizPage from "./components/QuizPage";
 import "./components/Checkboxes";
 import { useState, useReducer, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
@@ -239,22 +240,35 @@ function App() {
 
   return (
     <div>
-      {!isLoggedIn && (
-        <StartPage
-          isLoggedIn={isLoggedIn}
-          quizzes={appData.quizzes}
-          dispatch={dispatch}
-          loginHandler={loginHandler}
+      <Routes>
+        <Route
+          path="/*"
+          element={
+            !isLoggedIn && (
+              <StartPage
+                isLoggedIn={isLoggedIn}
+                quizzes={appData.quizzes}
+                dispatch={dispatch}
+                loginHandler={loginHandler}
+              />
+            )
+          }
         />
-      )}
-      {isLoggedIn && (
-        <MainPage
-          isAdmin={isAdmin}
-          quizzes={appData.quizzes}
-          isLoggedIn={isLoggedIn}
-          loginHandler={loginHandler}
+        <Route
+          path="/*"
+          exact
+          element={
+            isLoggedIn && (
+              <MainPage
+                isAdmin={isAdmin}
+                quizzes={appData.quizzes}
+                isLoggedIn={isLoggedIn}
+                loginHandler={loginHandler}
+              />
+            )
+          }
         />
-      )}
+      </Routes>
       {/* {isLoggedIn && (
         <QuizPage
           isLoggedIn={isLoggedIn}
