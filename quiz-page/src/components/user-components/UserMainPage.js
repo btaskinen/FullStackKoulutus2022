@@ -4,7 +4,6 @@ import QuizButton from "../QuizButton";
 import UserQuizPage from "./UserQuizPage";
 
 const UserMainPage = (props) => {
-  console.log(props);
   const [quizSelected, setQuizSelected] = useState(false);
   const [selectedQuizId, setSelectedQuizId] = useState(0);
 

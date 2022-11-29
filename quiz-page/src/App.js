@@ -178,25 +178,31 @@ function App() {
   // testing app without authorization required (middleware removed in routes)
   useEffect(() => {
     const getData = async () => {
-      try {
-        dispatch({
-          type: "DOWNLOAD_STARTED",
-          payload: { downloadStarted: true },
-        });
-        const result = await axios.get(
-          "https://localhost:8080/api/quiz-page/quizzes"
-        );
-        console.log("result:", result);
-        dispatch({ type: "DOWNLOAD_SUCCEEDED", payload: result });
-      } catch (error) {
-        dispatch({
-          type: "DOWNLOAD_FAILED",
-          payload: { downloadFailed: true },
-        });
+      if (isLoggedIn) {
+        const token = localStorage.getItem("loginToken");
+        try {
+          dispatch({
+            type: "DOWNLOAD_STARTED",
+            payload: { downloadStarted: true },
+          });
+          const result = await axios.get(
+            "https://localhost:8080/api/quiz-page/quizzes",
+            {
+              headers: { Authorization: token },
+            }
+          );
+          console.log("result:", result);
+          dispatch({ type: "DOWNLOAD_SUCCEEDED", payload: result });
+        } catch (error) {
+          dispatch({
+            type: "DOWNLOAD_FAILED",
+            payload: { downloadFailed: true },
+          });
+        }
       }
     };
     getData();
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const saveData = async () => {
