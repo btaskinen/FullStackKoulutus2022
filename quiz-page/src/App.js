@@ -8,74 +8,96 @@ import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
 
-let question1 = {
-  questionText: "Question 1",
-  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-};
+// let question1 = {
+//   questionText: "Question 1",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
 
-let question2 = {
-  questionText: "Question 2",
-  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-};
+// let question2 = {
+//   questionText: "Question 2",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
 
-let question3 = {
-  questionText: "Question 3",
-  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-};
+// let question3 = {
+//   questionText: "Question 3",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
 
-let question4 = {
-  questionText: "Question 4",
-  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-};
+// let question4 = {
+//   questionText: "Question 4",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
 
-let question5 = {
-  questionText: "Question 5",
-  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-};
+// let question5 = {
+//   questionText: "Question 5",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
 
-let question6 = {
-  questionText: "Question 6",
-  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-};
+// let question6 = {
+//   questionText: "Question 6",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
 
-let question7 = {
-  questionText: "Question 7",
-  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-};
+// let question7 = {
+//   questionText: "Question 7",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
 
-let question8 = {
-  questionText: "Question 8",
-  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-};
+// let question8 = {
+//   questionText: "Question 8",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
 
-let question9 = {
-  questionText: "Question 9",
-  answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-};
+// let question9 = {
+//   questionText: "Question 9",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
 
-let quiz1 = {
-  quizIndex: 0,
-  quizName: "Quiz 1",
-  questions: [question1, question2, question3],
-};
+// let quiz1 = {
+//   quizIndex: 0,
+//   quizName: "Quiz 1",
+//   questions: [question1, question2, question3],
+// };
 
-let quiz2 = {
-  quizIndex: 1,
-  quizName: "Quiz 2",
-  questions: [question4, question5, question6],
-};
+// let quiz2 = {
+//   quizIndex: 1,
+//   quizName: "Quiz 2",
+//   questions: [question4, question5, question6],
+// };
 
-let quiz3 = {
-  quizIndex: 2,
-  quizName: "Quiz 3",
-  questions: [question7, question8, question9],
-};
+// let quiz3 = {
+//   quizIndex: 2,
+//   quizName: "Quiz 3",
+//   questions: [question7, question8, question9],
+// };
+
+// let quizData = {
+//   quizzes: [quiz1, quiz2, quiz3],
+//   quizIndex: 0,
+//   saveData: false,
+//   // dataInitialized: false,
+// };
 
 let quizData = {
-  quizzes: [quiz1, quiz2, quiz3],
+  data: [
+    {
+      quiz_date: "2022-12-01",
+      quiz_description: "dummy quiz 1",
+      quiz_id: 0,
+      quiz_name: "dummy quiz 1",
+      quiz_validity: false,
+    },
+    {
+      quiz_date: "2022-12-01",
+      quiz_description: "dummy quiz 2",
+      quiz_id: 1,
+      quiz_name: "dummy quiz 2",
+      quiz_validity: false,
+    },
+  ],
   quizIndex: 0,
+  quizSelected: false,
   saveData: false,
-  // dataInitialized: false,
 };
 
 // state = appData
@@ -94,6 +116,7 @@ function reducer(state, action) {
       // console.log(action.payload.quizIndex);
       // console.log(action.payload.quizName);
       dataCopy.quizIndex = action.payload.quizIndex;
+      dataCopy.quizSelected = action.payload.quizSelected;
       console.log(dataCopy);
       return dataCopy;
     }
@@ -147,7 +170,12 @@ function reducer(state, action) {
       return { ...state, ...action.payload };
     case "DOWNLOAD_SUCCEEDED":
       console.log("DOWNLOAD_SUCCEEDED", action.payload);
-      return { ...action.payload, downloadStarted: false, dataInitiated: true };
+      return {
+        ...action.payload,
+        downloadStarted: false,
+        dataInitiated: true,
+        quizIndex: 0,
+      };
     case "DOWNLOAD_FAILED":
       console.log("DOWNLOAD_FAILED");
       return { ...state, ...action.payload };
@@ -167,9 +195,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   const [appData, dispatch] = useReducer(reducer, quizData);
-  console.log("Quiz Data:", quizData);
   console.log("App Data", appData);
-  console.log(appData.quizIndex);
 
   const loginHandler = () => {
     setIsLoggedIn((current) => !current);
@@ -178,14 +204,13 @@ function App() {
   const logoutHandler = () => {
     localStorage.removeItem("loginToken");
     setIsLoggedIn(false);
-    console.log("Logout", isLoggedIn, localStorage.getItem("loginToken"));
   };
 
   // testing app without authorization required (middleware removed in routes)
   useEffect(() => {
     const getData = async () => {
       if (isLoggedIn) {
-        const token = localStorage.getItem("Token");
+        const token = localStorage.getItem("loginToken");
         try {
           dispatch({
             type: "DOWNLOAD_STARTED",
@@ -254,7 +279,7 @@ function App() {
       {!isLoggedIn && (
         <StartPage
           isLoggedIn={isLoggedIn}
-          quizzes={appData.quizzes}
+          appData={appData}
           dispatch={dispatch}
           loginHandler={loginHandler}
         />
@@ -262,10 +287,11 @@ function App() {
       {isLoggedIn && (
         <MainPage
           isAdmin={isAdmin}
-          quizzes={appData.quizzes}
+          appData={appData}
           isLoggedIn={isLoggedIn}
           loginHandler={loginHandler}
           logoutHandler={logoutHandler}
+          dispatch={dispatch}
         />
       )}
       {/* {isLoggedIn && (

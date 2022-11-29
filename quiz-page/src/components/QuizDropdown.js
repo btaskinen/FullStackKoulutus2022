@@ -9,14 +9,15 @@ const QuizDropdown = (props) => {
         props.dispatch({
           type: "QUIZ_CHANGER",
           payload: {
-            quizName: props.quiz.quizName,
-            quizIndex: props.quizIndex,
+            quizName: props.quizName,
+            quizIndex: props.index,
+            quizSelected: true,
           },
         });
       }}
       href="#"
     >
-      {props.quiz.quizName}
+      {props.quizName}
     </button>
   );
 };

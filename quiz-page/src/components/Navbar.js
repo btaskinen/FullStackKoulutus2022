@@ -12,11 +12,12 @@ const Navbar = (props) => {
           <div className="dropdown">
             <button className="dropbtn">Quizzes</button>
             <div className="dropdown-content">
-              {props.quizzes.map((quiz, index) => (
+              {props.appData.data.map((quiz, index) => (
                 <QuizDropdown
-                  key={index}
-                  quiz={quiz}
-                  quizIndex={index}
+                  key={props.appData.data[index].quiz_id}
+                  quizName={props.appData.data[index].quiz_name}
+                  quizId={props.appData.data[index].quiz_id}
+                  index={index}
                   dispatch={props.dispatch}
                 />
               ))}
@@ -40,6 +41,7 @@ const Navbar = (props) => {
             </a>
           )}
         </div>
+        {/* {props.isLoggedIn && <p>Logged in as</p>} */}
       </div>
     </div>
   );

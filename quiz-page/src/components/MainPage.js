@@ -8,15 +8,15 @@ function MainPage(props) {
     <div>
       <Navbar
         isLoggedIn={props.isLoggedIn}
-        quizzes={props.quizzes}
+        appData={props.appData}
         dispatch={props.dispatch}
         logoutHandler={props.logoutHandler}
       />
       {!props.isAdmin && (
-        <UserMainPage quizzes={props.quizzes} dispatch={props.dispatch} />
+        <UserMainPage appData={props.appData} dispatch={props.dispatch} />
       )}
       {props.isAdmin && (
-        <AdminMainPage quizzes={props.quizzes} dispatch={props.dispatch} />
+        <AdminMainPage appData={props.appData} dispatch={props.dispatch} />
       )}
     </div>
   );

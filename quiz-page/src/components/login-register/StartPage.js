@@ -35,7 +35,7 @@ const StartPage = (props) => {
     <div>
       <Navbar
         isLoggedin={props.isLoggedin}
-        quizzes={props.quizzes}
+        appData={props.appData}
         dispatch={props.dispatch}
         registerHandler={registerHandler}
       />

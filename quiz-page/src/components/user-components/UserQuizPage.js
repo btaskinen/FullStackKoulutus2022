@@ -4,10 +4,11 @@ import UserQuestions from "./UserQuestions";
 
 function UserQuizPage(props) {
   console.log(props);
+  console.log("Quiz Name", props.appData.data);
   return (
     <div>
       <header className="App-header">
-        <h1>Quiz: {props.quizzes[props.selectedQuizId].quizName}</h1>
+        <h1>Quiz: {props.appData.data[props.appData.quizIndex].quiz_name}</h1>
       </header>
       <p className="QuizPage-main">
         Select the correct answer for each question. Submit your answers by
@@ -15,8 +16,8 @@ function UserQuizPage(props) {
       </p>
       <div className="flex-container">
         <div>
-          <div className="question-contianer">
-            {props.quizzes[props.selectedQuizId].questions.map(
+          {/* <div className="question-contianer">
+            {props.appData.data[props.appData.quizIndex].questions.map(
               (question, index) => (
                 <UserQuestions
                   key={index}
@@ -28,7 +29,7 @@ function UserQuizPage(props) {
                 />
               )
             )}
-          </div>
+          </div> */}
         </div>
         <div>
           <button
