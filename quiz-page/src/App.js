@@ -175,11 +175,17 @@ function App() {
     setIsLoggedIn((current) => !current);
   };
 
+  const logoutHandler = () => {
+    localStorage.removeItem("loginToken");
+    setIsLoggedIn(false);
+    console.log("Logout", isLoggedIn, localStorage.getItem("loginToken"));
+  };
+
   // testing app without authorization required (middleware removed in routes)
   useEffect(() => {
     const getData = async () => {
       if (isLoggedIn) {
-        const token = localStorage.getItem("loginToken");
+        const token = localStorage.getItem("Token");
         try {
           dispatch({
             type: "DOWNLOAD_STARTED",
@@ -259,6 +265,7 @@ function App() {
           quizzes={appData.quizzes}
           isLoggedIn={isLoggedIn}
           loginHandler={loginHandler}
+          logoutHandler={logoutHandler}
         />
       )}
       {/* {isLoggedIn && (

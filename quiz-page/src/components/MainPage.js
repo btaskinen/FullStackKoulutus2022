@@ -10,6 +10,7 @@ function MainPage(props) {
         isLoggedIn={props.isLoggedIn}
         quizzes={props.quizzes}
         dispatch={props.dispatch}
+        logoutHandler={props.logoutHandler}
       />
       {!props.isAdmin && (
         <UserMainPage quizzes={props.quizzes} dispatch={props.dispatch} />
