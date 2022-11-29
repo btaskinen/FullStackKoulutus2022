@@ -11,8 +11,12 @@ function MainPage(props) {
         quizzes={props.quizzes}
         dispatch={props.dispatch}
       />
-      {!props.isAdmin && <UserMainPage quizzes={props.quizzes} />}
-      {props.isAdmin && <AdminMainPage quizzes={props.quizzes} />}
+      {!props.isAdmin && (
+        <UserMainPage quizzes={props.quizzes} dispatch={props.dispatch} />
+      )}
+      {props.isAdmin && (
+        <AdminMainPage quizzes={props.quizzes} dispatch={props.dispatch} />
+      )}
     </div>
   );
 }
