@@ -1,5 +1,6 @@
 import "./LoginPage.css";
 import { useRef } from "react";
+import { Route, Navigate } from "react-router-dom";
 
 const LoginPage = (props) => {
   const emailInputRef = useRef(null);
@@ -41,6 +42,11 @@ const LoginPage = (props) => {
     }
   };
 
+  const routeChanger = () => {
+    console.log("ROUTE CHANGER");
+    <Route path="login" element={<Navigate to="register" />} />;
+  };
+
   return (
     <div>
       <div className="login-main">
@@ -74,7 +80,7 @@ const LoginPage = (props) => {
             <button className="login-button" onClick={submitHandler}>
               Login
             </button>
-            <button className="login-button" onClick={props.registerHandler}>
+            <button className="login-button" onClick={routeChanger}>
               Register
             </button>
           </div>

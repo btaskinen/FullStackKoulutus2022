@@ -104,7 +104,15 @@ const RegisterPage = (props) => {
               <button className="login-button" onClick={submitHandler}>
                 Register
               </button>
-              <button className="login-button" onClick={props.registerHandler}>
+              <button
+                className="login-button"
+                onClick={() => {
+                  props.dispatch({
+                    type: "CHANGE_PATH",
+                    payload: "login",
+                  });
+                }}
+              >
                 Cancle
               </button>
             </div>

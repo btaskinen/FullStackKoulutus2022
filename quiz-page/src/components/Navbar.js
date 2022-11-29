@@ -25,17 +25,17 @@ const Navbar = (props) => {
         )}
         {!props.isLoggedIn && (
           <div>
-            <a href="/StartPage">Login</a>
-            <a href="/StartPage/Register" onClick={props.registerHandler}>
+            <a href="/Login">Login</a>
+            <a href="/Register" onClick={props.registerHandler}>
               Register
             </a>
           </div>
         )}
         <div className="Float-right">
           {props.isLoggedIn && <a href="/AdminMode">Admin Mode</a>}
-          <a href="Help.asp">Help</a>
+          <a href="/Help">Help</a>
           {props.isLoggedIn && (
-            <a href="/StartPage" onClick={props.loginHandler}>
+            <a href="/Login" onClick={props.loginHandler}>
               Logout
             </a>
           )}

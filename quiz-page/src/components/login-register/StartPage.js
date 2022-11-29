@@ -7,8 +7,6 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 
 const StartPage = (props) => {
-  const [register, setRegister] = useState(false);
-
   const loginUser = async (email, password) => {
     try {
       const result = await axios.post(
@@ -28,46 +26,31 @@ const StartPage = (props) => {
     }
   };
 
-  const registerHandler = () => {
-    setRegister((current) => !current);
-  };
+  // const pathCheck = props.path === "login";
+  // console.log("pathCheck", pathCheck, !pathCheck);
+  // console.log("path", props.path);
 
   return (
     <div>
       <Routes>
         <Route
-          path="/login"
+          path="login"
           element={
-            <Navbar
-              isLoggedin={props.isLoggedin}
-              quizzes={props.quizzes}
+            <LoginPage
+              loginHandler={props.loginHandler}
+              loginUser={loginUser}
               dispatch={props.dispatch}
-              registerHandler={registerHandler}
             />
           }
         />
         <Route
-          path="/login"
+          path="register"
           element={
-            !register && (
-              <LoginPage
-                registerHandler={registerHandler}
-                loginHandler={props.loginHandler}
-                loginUser={loginUser}
-              />
-            )
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            register && (
-              <RegisterPage
-                registerHandler={registerHandler}
-                loginHandler={props.loginHandler}
-                loginUser={loginUser}
-              />
-            )
+            <RegisterPage
+              loginHandler={props.loginHandler}
+              loginUser={loginUser}
+              dispatch={props.dispatch}
+            />
           }
         />
       </Routes>

@@ -5,6 +5,7 @@ import "./components/Checkboxes";
 import { useState, useReducer, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
@@ -77,6 +78,7 @@ let quizData = {
   quizIndex: 0,
   saveData: false,
   // dataInitialized: false,
+  path: "login",
 };
 
 // state = appData
@@ -158,6 +160,12 @@ function reducer(state, action) {
     case "UPDATE_STORAGE": {
       return { ...state, saveData: action.payload };
     }
+    case "CHANGE_PATH": {
+      console.log("CHANGE PATH PAYLOAD:", action.payload);
+      let dataCopy = { ...state };
+      dataCopy.path = action.payload;
+      return dataCopy;
+    }
     default:
       throw new Error("Something went wrong!");
   }
@@ -165,6 +173,7 @@ function reducer(state, action) {
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [register, setRegister] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
   const [appData, dispatch] = useReducer(reducer, quizData);
@@ -174,6 +183,10 @@ function App() {
 
   const loginHandler = () => {
     setIsLoggedIn((current) => !current);
+  };
+
+  const registerHandler = () => {
+    setRegister((current) => !current);
   };
 
   // testing app without authorization required (middleware removed in routes)
@@ -240,6 +253,12 @@ function App() {
 
   return (
     <div>
+      <Navbar
+        isLoggedin={isLoggedIn}
+        quizzes={appData.quizzes}
+        dispatch={dispatch}
+        registerHandler={registerHandler}
+      />
       <Routes>
         <Route
           path="/*"
@@ -250,6 +269,9 @@ function App() {
                 quizzes={appData.quizzes}
                 dispatch={dispatch}
                 loginHandler={loginHandler}
+                registerHandler={registerHandler}
+                register={register}
+                path={appData.path}
               />
             )
           }
