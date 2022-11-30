@@ -145,6 +145,14 @@ function reducer(state, action) {
 
       return dataCopy;
     }
+    case "GET_ANSWERS": {
+      let dataCopy = { ...state };
+      let { questionId, quizId } = action.payload;
+      getData(`quizzes/${quizId}/question/${questionId}/answer`).then(
+        (result) => dataCopy.answers.push(result)
+      );
+      return dataCopy;
+    }
     case "QUESTION_CHANGER": {
       console.log("Payload:", action.payload);
       let { questionText, questionIndex } = action.payload;

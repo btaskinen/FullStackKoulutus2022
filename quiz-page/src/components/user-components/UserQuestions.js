@@ -2,18 +2,19 @@ import "../../App.css";
 import "./UserQuestions.css";
 import UserAnswers from "./UserAnswers";
 import "../Quizzes";
-import { useSate } from "react";
+import { useState, useEffect } from "react";
 import getData from "../../utilities/requestFunctions";
 
 const UserQuestions = (props) => {
-  const answerArray = getData(
-    `quizzes/${props.quizId}/question/${props.questionId}/answer`
-  );
-   
-  };
-  // (result) => (dataCopy.questionsAnswers = result)
+  const [answers, setAnswers] = useState([]);
 
-  console.log("ANSWERS", answerArray);
+  useEffect(() => {
+    getData(`quizzes/${props.quizId}/question/${props.questionId}/answer`).then(
+      (result) => setAnswers(result)
+    );
+  }, [props.questionId, props.quizId]);
+
+  console.log(answers);
 
   return (
     <div>
@@ -22,7 +23,7 @@ const UserQuestions = (props) => {
       )} */}
       <div className="style-question">{props.question.question_text}</div>
       <div className="answer-container">
-        {answerArray.map((answer, index) => (
+        {answers.map((answer, index) => (
           <UserAnswers
             key={answer.answer_id}
             question={props.question}

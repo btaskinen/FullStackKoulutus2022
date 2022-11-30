@@ -19,8 +19,15 @@ function UserQuizPage(props) {
         <div>
           <div className="question-contianer">
             {props.appData.questionsAnswers.map((question, index) => {
-              // if (!questionArray.includes(question.question_id)) {
-              //   questionArray.push(question.question_id);
+              // put dispatch "GET_ANSWERS" here
+              // props.dispatch({
+              //   type: "GET_ANSWERS",
+              //   payload: {
+              //     questionId: question.question_id,
+              //     quizId: question.quiz_id,
+              //   },
+              // });
+
               return (
                 <UserQuestions
                   key={question.question_id}
@@ -28,6 +35,7 @@ function UserQuizPage(props) {
                   question={question}
                   questionId={question.question_id}
                   dispatch={props.dispatch}
+                  appData={props.appData}
                 />
               );
             })}
