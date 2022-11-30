@@ -197,12 +197,16 @@ const deleteQuestion = async (req, res) => {
 const getAnswersByQuizId = async (req, res) => {
   try {
     const quizId = parseInt(req.params.quiz_id);
+    const questionId = parseInt(req.params.question_id);
     let resultsQuiz = await pool.query(queries.getQuizById, [quizId]);
     const quizIdNotInDb = !resultsQuiz.rows.length;
     if (quizIdNotInDb) {
       res.send("Quiz not found. Make sure it exists");
     }
-    results = await pool.query(queries.getAnswersByQuizId, [quizId]);
+    results = await pool.query(queries.getAnswersByQuizId, [
+      quizId,
+      questionId,
+    ]);
     res.status(200).json(results.rows);
   } catch (error) {
     console.log(error);

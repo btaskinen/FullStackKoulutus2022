@@ -2,7 +2,9 @@
 
 // ---------------------------- QUIZ QUERIES ------------------------------------
 const getQuizzes = "SELECT * FROM quizzes";
-const getQuizById = "SELECT * FROM quizzes WHERE quiz_id = $1";
+// const getQuizById = "SELECT * FROM quizzes WHERE quiz_id = $1";
+const getQuizById =
+  "SELECT quiz_id, question.question_id, question_text, answer_id, answer_text, correct_answer FROM question INNER JOIN answer ON question.question_id = answer.question_id WHERE question.quiz_id = $1";
 const addNewQuiz =
   "INSERT INTO quizzes (quiz_name, quiz_description, quiz_date, quiz_validity) VALUES ($1,$2,$3,$4)";
 const updateQuiz =
@@ -21,7 +23,7 @@ const deleteQuestion = "DELETE FROM question WHERE question_id = $1";
 
 // ---------------------------- ANSWER QUERIES -------------------------------
 const getAnswersByQuizId =
-  "SELECT * FROM answer JOIN question ON question.question_id = answer.question_id WHERE quiz_id = $1";
+  "SELECT * FROM answer JOIN question ON question.question_id = answer.question_id WHERE quiz_id = $1 AND answer.question_id =$2";
 
 const getAnswerByAnswerId = "SELECT * FROM answer WHERE answer_id = $1";
 

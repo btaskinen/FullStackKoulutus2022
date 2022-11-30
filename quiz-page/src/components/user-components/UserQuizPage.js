@@ -1,10 +1,11 @@
 import "../../App.css";
 import "./UserQuizPage.css";
 import UserQuestions from "./UserQuestions";
+import axios from "axios";
+
+// let questionArray = [];
 
 function UserQuizPage(props) {
-  console.log(props);
-  console.log("Quiz Name", props.appData.data);
   return (
     <div>
       <header className="App-header">
@@ -16,20 +17,21 @@ function UserQuizPage(props) {
       </p>
       <div className="flex-container">
         <div>
-          {/* <div className="question-contianer">
-            {props.appData.data[props.appData.quizIndex].questions.map(
-              (question, index) => (
+          <div className="question-contianer">
+            {props.appData.questionsAnswers.map((question, index) => {
+              // if (!questionArray.includes(question.question_id)) {
+              //   questionArray.push(question.question_id);
+              return (
                 <UserQuestions
-                  key={index}
-                  quizzes={props.quizzes}
-                  selectedQuizId={props.selectedQuizId}
+                  key={question.question_id}
+                  quizId={question.quiz_id}
                   question={question}
-                  questionIndex={index}
+                  questionId={question.question_id}
                   dispatch={props.dispatch}
                 />
-              )
-            )}
-          </div> */}
+              );
+            })}
+          </div>
         </div>
         <div>
           <button

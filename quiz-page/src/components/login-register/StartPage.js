@@ -11,7 +11,7 @@ const StartPage = (props) => {
   const loginUser = async (email, password) => {
     try {
       const result = await axios.post(
-        `https://localhost:8080/api/quiz-page//users/login`,
+        `https://localhost:8080/api/quiz-page/users/login`,
         {
           user_email: email,
           password: password,

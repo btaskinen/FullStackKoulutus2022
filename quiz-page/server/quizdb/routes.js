@@ -14,6 +14,7 @@ router.get("/", (req, res) => {
 router.get("/quizzes", tokenVerification, controller.getQuizzes);
 // router.get("/quizzes", controller.getQuizzes);
 router.get("/quizzes/:quiz_id", tokenVerification, controller.getQuizById);
+// router.get("/quizzes/:quiz_id", controller.getQuizById);
 router.post("/quizzes", tokenVerification, isAdmin, controller.addNewQuiz);
 router.put(
   "/quizzes/:quiz_id",
@@ -60,7 +61,7 @@ router.delete(
 
 // ------------------- MANIPULATING ANSWERS -------------------
 router.get(
-  "/quizzes/:quiz_id/question/*/answer",
+  "/quizzes/:quiz_id/question/:question_id/answer",
   tokenVerification,
   controller.getAnswersByQuizId
 );

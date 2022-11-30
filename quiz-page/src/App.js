@@ -7,6 +7,7 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
+import getData from "./utilities/requestFunctions";
 
 // let question1 = {
 //   questionText: "Question 1",
@@ -116,8 +117,32 @@ function reducer(state, action) {
       // console.log(action.payload.quizIndex);
       // console.log(action.payload.quizName);
       dataCopy.quizIndex = action.payload.quizIndex;
-      dataCopy.quizSelected = action.payload.quizSelected;
-      console.log(dataCopy);
+      console.log("QUIZ CHANGER DATA", dataCopy);
+      // const getData = async (url) => {
+      //   //quizId
+      //   console.log("GETTING THE QUESTIONS");
+      //   try {
+      //     const result = await axios.get(
+      //       `https://localhost:8080/api/quiz-page/${url}`,
+      //       {
+      //         headers: { Authorization: localStorage.getItem("loginToken") },
+      //       }
+      //     );
+      //     dataCopy.questions = result.data;
+      //     console.log("DATA with Questions", dataCopy.questions);
+      //     // dispatch({ type: "LOAD_QUESTION_ANSWER", payload: result.data });
+      //   } catch (result) {
+      //     console.log(result);
+      //     alert(result.message);
+      //   }
+      //   // dataCopy.quizSelected = action.payload.quizSelected;
+      // };
+      getData(`quizzes/${dataCopy.data[dataCopy.quizIndex].quiz_id}/question`)
+        .then((result) => (dataCopy.questionsAnswers = result))
+        .then(() => (dataCopy.quizSelected = action.payload.quizSelected));
+
+      // `https://localhost:8080/api/quiz-page/quizzes/${dataCopy.data[dataCopy.quizIndex].quiz_id}/question`
+
       return dataCopy;
     }
     case "QUESTION_CHANGER": {
@@ -233,7 +258,6 @@ function App() {
               headers: { Authorization: token },
             }
           );
-          console.log("result:", result);
           dispatch({ type: "DOWNLOAD_SUCCEEDED", payload: result });
         } catch (error) {
           dispatch({
