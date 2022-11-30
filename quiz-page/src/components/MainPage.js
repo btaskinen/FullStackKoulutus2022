@@ -12,6 +12,9 @@ function MainPage(props) {
         dispatch={props.dispatch}
         logoutHandler={props.logoutHandler}
       />
+      <div className="display-loggedin-user">
+        You are logged in as {props.appData.loggedinUser}
+      </div>
       {!props.isAdmin && (
         <UserMainPage appData={props.appData} dispatch={props.dispatch} />
       )}

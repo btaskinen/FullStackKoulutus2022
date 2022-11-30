@@ -165,17 +165,28 @@ function reducer(state, action) {
       ].answers.push("New Answer");
       return dataCopy;
     }
+    case "LOGGEDIN_USER": {
+      console.log("LOGGEDIN_USER", action.payload);
+      let dataCopy = { ...state };
+      dataCopy.loggedinUser = action.payload;
+      return dataCopy;
+    }
     case "DOWNLOAD_STARTED":
       console.log("DOWNLOAD_STARTED");
       return { ...state, ...action.payload };
     case "DOWNLOAD_SUCCEEDED":
       console.log("DOWNLOAD_SUCCEEDED", action.payload);
-      return {
-        ...action.payload,
-        downloadStarted: false,
-        dataInitiated: true,
-        quizIndex: 0,
-      };
+      let dataCopy = { ...state };
+      dataCopy.data = action.payload.data;
+      dataCopy.downloadStarted = false;
+      dataCopy.dataInitiated = true;
+      return dataCopy;
+    // return {
+    //   ...action.payload,
+    //   downloadStarted: false,
+    //   dataInitiated: true,
+    //   quizIndex: 0,
+    // };
     case "DOWNLOAD_FAILED":
       console.log("DOWNLOAD_FAILED");
       return { ...state, ...action.payload };
