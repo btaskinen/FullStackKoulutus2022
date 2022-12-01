@@ -1,11 +1,39 @@
 import "./UserMainPage.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QuizButton from "../QuizButton";
 import UserQuizPage from "./UserQuizPage";
 import axios from "axios";
+import getData from "../../utilities/requestFunctions";
 
 const UserMainPage = (props) => {
-  console.log("QUIZ SELECTED", props.appData.quizSelected);
+  const [questionsDownloaded, setQuestionsDownloaded] = useState(false);
+
+  useEffect(() => {
+    // setQuestionsDownloaded(false); // for when changing quizzes does not change questions
+    console.log("RUNNING USE EFFECT");
+    console.log("QUIZ SELECTED", props.appData.quizSelected);
+    console.log("QUIZ INDEX", props.appData.quizIndex);
+    if (props.appData.quizSelected) {
+      console.log("RUNNING USE EFFECT INSIDE IF");
+      getData(
+        `quizzes/${
+          props.appData.data[props.appData.quizIndex].quiz_id
+        }/question`
+      ).then(
+        (result) => {
+          console.log("GET QUESTIONS RESULT", result);
+          props.dispatch({
+            type: "DOWNLOADES_QUESTIONS",
+            payload: {
+              questions: result,
+            },
+          });
+          setQuestionsDownloaded(true);
+        }
+        // .then(setQuestionsDownloaded(true))
+      );
+    }
+  }, [props.appData.quizIndex]);
 
   return (
     <div>
@@ -27,7 +55,7 @@ const UserMainPage = (props) => {
           </div>
         </div>
       )}
-      {props.appData.quizSelected && (
+      {questionsDownloaded && (
         <UserQuizPage appData={props.appData} dispatch={props.dispatch} />
       )}
     </div>

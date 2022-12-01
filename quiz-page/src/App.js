@@ -111,6 +111,12 @@ function reducer(state, action) {
       dataCopy.quizzes[dataCopy.quizIndex].quizName = action.payload;
       return dataCopy;
     }
+    case "QUIZ_SELECTED": {
+      let dataCopy = { ...state };
+      dataCopy.quizSelected = action.payload.quizSelected;
+      dataCopy.quizIndex = action.payload.quizIndex;
+      return dataCopy;
+    }
     case "QUIZ_CHANGER": {
       let dataCopy = { ...state };
       // console.log(dataCopy.quizData);
@@ -137,20 +143,23 @@ function reducer(state, action) {
       //   }
       //   // dataCopy.quizSelected = action.payload.quizSelected;
       // };
-      getData(`quizzes/${dataCopy.data[dataCopy.quizIndex].quiz_id}/question`)
-        .then((result) => (dataCopy.questionsAnswers = result))
-        .then(() => (dataCopy.quizSelected = action.payload.quizSelected));
+      // useEffect =
+      //   (() => {
+      //     getData(
+      //       `quizzes/${dataCopy.data[dataCopy.quizIndex].quiz_id}/question`
+      //     )
+      //       .then((result) => (dataCopy.questionsAnswers = result))
+      //       .then(() => (dataCopy.quizSelected = action.payload.quizSelected));
 
-      // `https://localhost:8080/api/quiz-page/quizzes/${dataCopy.data[dataCopy.quizIndex].quiz_id}/question`
-
-      return dataCopy;
+      //     // `https://localhost:8080/api/quiz-page/quizzes/${dataCopy.data[dataCopy.quizIndex].quiz_id}/question`
+      //   },
+      //   [dataCopy.quizIndex]);
+      // return dataCopy;
     }
-    case "GET_ANSWERS": {
+    case "DOWNLOADES_QUESTIONS": {
       let dataCopy = { ...state };
-      let { questionId, quizId } = action.payload;
-      getData(`quizzes/${quizId}/question/${questionId}/answer`).then(
-        (result) => dataCopy.answers.push(result)
-      );
+      dataCopy.questions = action.payload.questions;
+      console.log("DOWNLOADED QUESTIONS DATA COPY", dataCopy);
       return dataCopy;
     }
     case "QUESTION_CHANGER": {
@@ -250,7 +259,6 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  // testing app without authorization required (middleware removed in routes)
   useEffect(() => {
     const getData = async () => {
       if (isLoggedIn) {
@@ -277,6 +285,28 @@ function App() {
     };
     getData();
   }, [isLoggedIn]);
+
+  // useEffect(() => {
+  //   console.log("RUNNING USE EFFECT");
+  //   console.log("QUIZ SELECTED", appData.quizSelected);
+  //   console.log("QUIZ INDEX", appData.quizIndex);
+  //   if (appData.quizSelected) {
+  //     console.log("RUNNING USE EFFECT INSIDE IF");
+  //     getData(
+  //       `quizzes/${appData.data[appData.quizIndex].quiz_id}/question`
+  //     ).then(
+  //       (result) => console.log("GET QUESTIONS RESULT", result)
+  //       // props.dispatch({
+  //       //   type: "QUIZ_CHANGER",
+  //       //   payload: {
+  //       //     quizName: props.quizName,
+  //       //     quizIndex: props.index,
+  //       //     quizSelected: true,
+  //       //   },
+  //       // })
+  //     );
+  //   }
+  // }, [appData.quizIndex]);
 
   useEffect(() => {
     const saveData = async () => {

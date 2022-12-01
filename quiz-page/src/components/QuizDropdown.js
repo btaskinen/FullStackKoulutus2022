@@ -6,10 +6,17 @@ const QuizDropdown = (props) => {
       className="dropdown-buttons"
       onClick={(event) => {
         // console.log("quizIndex:", index);
+        // props.dispatch({
+        //   type: "QUIZ_CHANGER",
+        //   payload: {
+        //     quizName: props.quizName,
+        //     quizIndex: props.index,
+        //     quizSelected: true,
+        //   },
+        // });
         props.dispatch({
-          type: "QUIZ_CHANGER",
+          type: "QUIZ_SELECTED",
           payload: {
-            quizName: props.quizName,
             quizIndex: props.index,
             quizSelected: true,
           },

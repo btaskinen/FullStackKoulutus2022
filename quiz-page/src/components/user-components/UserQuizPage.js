@@ -18,16 +18,7 @@ function UserQuizPage(props) {
       <div className="flex-container">
         <div>
           <div className="question-contianer">
-            {props.appData.questionsAnswers.map((question, index) => {
-              // put dispatch "GET_ANSWERS" here
-              // props.dispatch({
-              //   type: "GET_ANSWERS",
-              //   payload: {
-              //     questionId: question.question_id,
-              //     quizId: question.quiz_id,
-              //   },
-              // });
-
+            {props.appData.questions.map((question, index) => {
               return (
                 <UserQuestions
                   key={question.question_id}
