@@ -5,25 +5,6 @@ const LoginPage = (props) => {
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
 
-  // const loginUser = async (email, password) => {
-  //   try {
-  //     const result = await axios.post(
-  //       `https://localhost:8080/api/quiz-page//users/login`,
-  //       {
-  //         user_email: email,
-  //         password: password,
-  //       }
-  //     );
-  //     const token = result.data.data.token;
-  //     if (token) {
-  //       props.loginHandler();
-  //       localStorage.setItem("loginToken", token);
-  //     }
-  //   } catch (result) {
-  //     alert(result.response.data);
-  //   }
-  // };
-
   const submitHandler = () => {
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;

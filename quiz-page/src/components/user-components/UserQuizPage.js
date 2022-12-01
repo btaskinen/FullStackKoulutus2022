@@ -1,9 +1,6 @@
 import "../../App.css";
 import "./UserQuizPage.css";
 import UserQuestions from "./UserQuestions";
-import axios from "axios";
-
-// let questionArray = [];
 
 function UserQuizPage(props) {
   return (

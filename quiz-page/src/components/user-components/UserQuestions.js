@@ -18,9 +18,6 @@ const UserQuestions = (props) => {
 
   return (
     <div>
-      {/* {!questionArray.includes(question.question_id) && (
-        <div className="style-question">{props.question.question_text}</div>
-      )} */}
       <div className="style-question">{props.question.question_text}</div>
       <div className="answer-container">
         {answers.map((answer, index) => (

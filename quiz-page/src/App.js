@@ -1,83 +1,11 @@
 import "./App.css";
 import "./components/QuizPage";
-import QuizPage from "./components/QuizPage";
 import "./components/Checkboxes";
 import { useState, useReducer, useEffect } from "react";
 import axios from "axios";
 import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
-import getData from "./utilities/requestFunctions";
-
-// let question1 = {
-//   questionText: "Question 1",
-//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-// };
-
-// let question2 = {
-//   questionText: "Question 2",
-//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-// };
-
-// let question3 = {
-//   questionText: "Question 3",
-//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-// };
-
-// let question4 = {
-//   questionText: "Question 4",
-//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-// };
-
-// let question5 = {
-//   questionText: "Question 5",
-//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-// };
-
-// let question6 = {
-//   questionText: "Question 6",
-//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-// };
-
-// let question7 = {
-//   questionText: "Question 7",
-//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-// };
-
-// let question8 = {
-//   questionText: "Question 8",
-//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-// };
-
-// let question9 = {
-//   questionText: "Question 9",
-//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-// };
-
-// let quiz1 = {
-//   quizIndex: 0,
-//   quizName: "Quiz 1",
-//   questions: [question1, question2, question3],
-// };
-
-// let quiz2 = {
-//   quizIndex: 1,
-//   quizName: "Quiz 2",
-//   questions: [question4, question5, question6],
-// };
-
-// let quiz3 = {
-//   quizIndex: 2,
-//   quizName: "Quiz 3",
-//   questions: [question7, question8, question9],
-// };
-
-// let quizData = {
-//   quizzes: [quiz1, quiz2, quiz3],
-//   quizIndex: 0,
-//   saveData: false,
-//   // dataInitialized: false,
-// };
 
 let quizData = {
   data: [
@@ -101,9 +29,7 @@ let quizData = {
   saveData: false,
 };
 
-// state = appData
 function reducer(state, action) {
-  // console.log(state);
   switch (action.type) {
     case "QUIZ_NUMBER_CHANGER": {
       console.log(action.payload);
@@ -119,44 +45,10 @@ function reducer(state, action) {
     }
     case "QUIZ_CHANGER": {
       let dataCopy = { ...state };
-      // console.log(dataCopy.quizData);
-      // console.log(action.payload.quizIndex);
-      // console.log(action.payload.quizName);
       dataCopy.quizIndex = action.payload.quizIndex;
       console.log("QUIZ CHANGER DATA", dataCopy);
-      // const getData = async (url) => {
-      //   //quizId
-      //   console.log("GETTING THE QUESTIONS");
-      //   try {
-      //     const result = await axios.get(
-      //       `https://localhost:8080/api/quiz-page/${url}`,
-      //       {
-      //         headers: { Authorization: localStorage.getItem("loginToken") },
-      //       }
-      //     );
-      //     dataCopy.questions = result.data;
-      //     console.log("DATA with Questions", dataCopy.questions);
-      //     // dispatch({ type: "LOAD_QUESTION_ANSWER", payload: result.data });
-      //   } catch (result) {
-      //     console.log(result);
-      //     alert(result.message);
-      //   }
-      //   // dataCopy.quizSelected = action.payload.quizSelected;
-      // };
-      // useEffect =
-      //   (() => {
-      //     getData(
-      //       `quizzes/${dataCopy.data[dataCopy.quizIndex].quiz_id}/question`
-      //     )
-      //       .then((result) => (dataCopy.questionsAnswers = result))
-      //       .then(() => (dataCopy.quizSelected = action.payload.quizSelected));
-
-      //     // `https://localhost:8080/api/quiz-page/quizzes/${dataCopy.data[dataCopy.quizIndex].quiz_id}/question`
-      //   },
-      //   [dataCopy.quizIndex]);
-      // return dataCopy;
     }
-    case "DOWNLOADES_QUESTIONS": {
+    case "DOWNLOADED_QUESTIONS": {
       let dataCopy = { ...state };
       dataCopy.questions = action.payload.questions;
       console.log("DOWNLOADED QUESTIONS DATA COPY", dataCopy);
@@ -286,28 +178,6 @@ function App() {
     getData();
   }, [isLoggedIn]);
 
-  // useEffect(() => {
-  //   console.log("RUNNING USE EFFECT");
-  //   console.log("QUIZ SELECTED", appData.quizSelected);
-  //   console.log("QUIZ INDEX", appData.quizIndex);
-  //   if (appData.quizSelected) {
-  //     console.log("RUNNING USE EFFECT INSIDE IF");
-  //     getData(
-  //       `quizzes/${appData.data[appData.quizIndex].quiz_id}/question`
-  //     ).then(
-  //       (result) => console.log("GET QUESTIONS RESULT", result)
-  //       // props.dispatch({
-  //       //   type: "QUIZ_CHANGER",
-  //       //   payload: {
-  //       //     quizName: props.quizName,
-  //       //     quizIndex: props.index,
-  //       //     quizSelected: true,
-  //       //   },
-  //       // })
-  //     );
-  //   }
-  // }, [appData.quizIndex]);
-
   useEffect(() => {
     const saveData = async () => {
       try {
@@ -323,29 +193,6 @@ function App() {
       saveData();
     }
   }, [appData.saveData]);
-
-  // Getting and Saving app data to localStorage
-  // useEffect(() => {
-  //   let appData = localStorage.getItem("appData");
-  //   if (appData == null) {
-  //     console.log("Data was read from constant");
-  //     localStorage.setItem("appData", JSON.stringify(quizData));
-  //     dispatch({ type: "INITIATE_DATA", payload: quizData });
-  //   } else {
-  //     console.log("Data was read from local storage");
-  //     dispatch({ type: "INITIATE_DATA", payload: JSON.parse(appData) });
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (appData.saveData === true) {
-  //     console.log("data was saved");
-  //     console.log("Quiz name needs to be saved");
-  //     console.log("Data:", appData);
-  //     localStorage.setItem("appData", JSON.stringify(appData));
-  //     dispatch({ type: "UPDATE_STORAGE", payload: false });
-  //   }
-  // }, [appData.saveData]);
 
   return (
     <div>
@@ -367,17 +214,104 @@ function App() {
           dispatch={dispatch}
         />
       )}
-      {/* {isLoggedIn && (
-        <QuizPage
-          isLoggedIn={isLoggedIn}
-          quizzes={appData.quizzes}
-          quizIndex={appData.quizIndex}
-          dispatch={dispatch}
-        />
-      )} */}
       <Footer />
     </div>
   );
 }
 
 export default App;
+
+// ---------------- OLD CODE VERSION FOR LOCAL DATA STORAGE
+// Getting and Saving app data to localStorage
+// useEffect(() => {
+//   let appData = localStorage.getItem("appData");
+//   if (appData == null) {
+//     console.log("Data was read from constant");
+//     localStorage.setItem("appData", JSON.stringify(quizData));
+//     dispatch({ type: "INITIATE_DATA", payload: quizData });
+//   } else {
+//     console.log("Data was read from local storage");
+//     dispatch({ type: "INITIATE_DATA", payload: JSON.parse(appData) });
+//   }
+// }, []);
+
+// useEffect(() => {
+//   if (appData.saveData === true) {
+//     console.log("data was saved");
+//     console.log("Quiz name needs to be saved");
+//     console.log("Data:", appData);
+//     localStorage.setItem("appData", JSON.stringify(appData));
+//     dispatch({ type: "UPDATE_STORAGE", payload: false });
+//   }
+// }, [appData.saveData]);
+
+// --------------------- OLD DATA STRUCTURE ---------------------
+// let question1 = {
+//   questionText: "Question 1",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
+
+// let question2 = {
+//   questionText: "Question 2",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
+
+// let question3 = {
+//   questionText: "Question 3",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
+
+// let question4 = {
+//   questionText: "Question 4",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
+
+// let question5 = {
+//   questionText: "Question 5",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
+
+// let question6 = {
+//   questionText: "Question 6",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
+
+// let question7 = {
+//   questionText: "Question 7",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
+
+// let question8 = {
+//   questionText: "Question 8",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
+
+// let question9 = {
+//   questionText: "Question 9",
+//   answers: ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
+// };
+
+// let quiz1 = {
+//   quizIndex: 0,
+//   quizName: "Quiz 1",
+//   questions: [question1, question2, question3],
+// };
+
+// let quiz2 = {
+//   quizIndex: 1,
+//   quizName: "Quiz 2",
+//   questions: [question4, question5, question6],
+// };
+
+// let quiz3 = {
+//   quizIndex: 2,
+//   quizName: "Quiz 3",
+//   questions: [question7, question8, question9],
+// };
+
+// let quizData = {
+//   quizzes: [quiz1, quiz2, quiz3],
+//   quizIndex: 0,
+//   saveData: false,
+//   // dataInitialized: false,
+// };

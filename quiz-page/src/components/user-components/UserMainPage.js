@@ -2,7 +2,6 @@ import "./UserMainPage.css";
 import { useState, useEffect } from "react";
 import QuizButton from "../QuizButton";
 import UserQuizPage from "./UserQuizPage";
-import axios from "axios";
 import getData from "../../utilities/requestFunctions";
 
 const UserMainPage = (props) => {
@@ -19,19 +18,16 @@ const UserMainPage = (props) => {
         `quizzes/${
           props.appData.data[props.appData.quizIndex].quiz_id
         }/question`
-      ).then(
-        (result) => {
-          console.log("GET QUESTIONS RESULT", result);
-          props.dispatch({
-            type: "DOWNLOADES_QUESTIONS",
-            payload: {
-              questions: result,
-            },
-          });
-          setQuestionsDownloaded(true);
-        }
-        // .then(setQuestionsDownloaded(true))
-      );
+      ).then((result) => {
+        console.log("GET QUESTIONS RESULT", result);
+        props.dispatch({
+          type: "DOWNLOADED_QUESTIONS",
+          payload: {
+            questions: result,
+          },
+        });
+        setQuestionsDownloaded(true);
+      });
     }
   }, [props.appData.quizIndex]);
 

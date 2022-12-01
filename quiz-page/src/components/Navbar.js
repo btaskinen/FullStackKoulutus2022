@@ -41,7 +41,6 @@ const Navbar = (props) => {
             </a>
           )}
         </div>
-        {/* {props.isLoggedIn && <p>Logged in as</p>} */}
       </div>
     </div>
   );
