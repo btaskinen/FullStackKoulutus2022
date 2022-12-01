@@ -16,3 +16,23 @@
   border: 1px solid rgb(78, 76, 76);
   font-size: 14px;
 }
+
+label {
+  font-family: sans-serif;
+  font-size: 20px;
+  color: rgb(42, 42, 42);
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  margin-right: 10px;
+}
+
+input[type="checkbox"]:checked {
+  /* opacity: 0; */
+  accent-color: rgb(44, 117, 84);
+}
+
+input[type="checkbox"]:checked + label {
+  font-weight: bold;
+}
