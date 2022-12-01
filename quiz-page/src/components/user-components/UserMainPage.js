@@ -19,14 +19,18 @@ const UserMainPage = (props) => {
           props.appData.data[props.appData.quizIndex].quiz_id
         }/question`
       ).then((result) => {
-        console.log("GET QUESTIONS RESULT", result);
-        props.dispatch({
-          type: "DOWNLOADED_QUESTIONS",
-          payload: {
-            questions: result,
-          },
-        });
-        setQuestionsDownloaded(true);
+        if (typeof result === "object") {
+          props.dispatch({
+            type: "DOWNLOADED_QUESTIONS",
+            payload: {
+              questions: result,
+            },
+          });
+          setQuestionsDownloaded(true);
+        }
+        if (typeof result === "string") {
+          alert(result);
+        }
       });
     }
   }, [props.appData.quizIndex]);

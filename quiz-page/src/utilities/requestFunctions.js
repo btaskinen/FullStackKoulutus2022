@@ -9,9 +9,10 @@ const getData = async (url) => {
       }
     );
     return result.data;
-  } catch (result) {
-    console.log(result);
-    alert(result.message);
+  } catch (error) {
+    console.log(error);
+    // alert(result.message);
+    return error.message;
   }
 };
 
