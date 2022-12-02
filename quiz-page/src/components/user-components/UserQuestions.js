@@ -3,7 +3,7 @@ import "./UserQuestions.css";
 import UserAnswers from "./UserAnswers";
 import "../Quizzes";
 import { useState, useEffect } from "react";
-import getData from "../../utilities/requestFunctions";
+import { getData } from "../../utilities/requestFunctions";
 
 const UserQuestions = (props) => {
   const [answers, setAnswers] = useState([]);
@@ -14,7 +14,7 @@ const UserQuestions = (props) => {
     );
   }, [props.questionId, props.quizId]);
 
-  console.log(answers);
+  // console.log(answers);
 
   return (
     <div>
@@ -28,6 +28,7 @@ const UserQuestions = (props) => {
             questionIndex={props.questionIndex}
             answerIndex={index}
             dispatch={props.dispatch}
+            updateSelectedAnswers={props.updateSelectedAnswers}
           />
         ))}
       </div>

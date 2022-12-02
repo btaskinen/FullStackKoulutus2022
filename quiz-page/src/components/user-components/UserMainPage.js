@@ -2,7 +2,7 @@ import "./UserMainPage.css";
 import { useState, useEffect } from "react";
 import QuizButton from "../QuizButton";
 import UserQuizPage from "./UserQuizPage";
-import getData from "../../utilities/requestFunctions";
+import { getData } from "../../utilities/requestFunctions";
 
 const UserMainPage = (props) => {
   const [questionsDownloaded, setQuestionsDownloaded] = useState(false);
@@ -24,6 +24,7 @@ const UserMainPage = (props) => {
             type: "DOWNLOADED_QUESTIONS",
             payload: {
               questions: result,
+              quizId: props.appData.data[props.appData.quizIndex].quiz_id,
             },
           });
           setQuestionsDownloaded(true);

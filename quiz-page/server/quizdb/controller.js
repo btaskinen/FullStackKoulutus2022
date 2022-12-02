@@ -342,6 +342,24 @@ const deleteAnswer = async (req, res) => {
   }
 };
 
+// -------------------- EXAME EXECUTION --------------------------
+const submitQuiz = async (req, res, next) => {
+  const { quiz_id, user_id, executed, answers } = req.body;
+  try {
+    await pool.query(queries.submitAnswers, [
+      quiz_id,
+      user_id,
+      executed,
+      answers,
+    ]);
+    res.status(201).send("Your answers have been successfully submitted!");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+    return next();
+  }
+};
+
 // ---------------------- AUTHENTICATION -------------------------
 
 // user login
@@ -461,6 +479,7 @@ module.exports = {
   addNewAnswer,
   updateAnswer,
   deleteAnswer,
+  submitQuiz,
   userLogin,
   userRegister,
   accessResources,

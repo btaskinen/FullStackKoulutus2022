@@ -22,7 +22,13 @@ const StartPage = (props) => {
         props.loginHandler();
         localStorage.setItem("loginToken", token);
       }
-      props.dispatch({ type: "LOGGEDIN_USER", payload: email });
+      props.dispatch({
+        type: "LOGGEDIN_USER",
+        payload: {
+          userEmail: result.data.data.userEmail,
+          userId: result.data.data.userId,
+        },
+      });
     } catch (result) {
       alert(result.response.data);
     }

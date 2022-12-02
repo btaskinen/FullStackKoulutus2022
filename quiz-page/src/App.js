@@ -27,6 +27,7 @@ let quizData = {
   quizIndex: 0,
   quizSelected: false,
   saveData: false,
+  submit: false,
 };
 
 function reducer(state, action) {
@@ -51,6 +52,7 @@ function reducer(state, action) {
     case "DOWNLOADED_QUESTIONS": {
       let dataCopy = { ...state };
       dataCopy.questions = action.payload.questions;
+      dataCopy.quizId = action.payload.quizId;
       console.log("DOWNLOADED QUESTIONS DATA COPY", dataCopy);
       return dataCopy;
     }
@@ -101,8 +103,10 @@ function reducer(state, action) {
     }
     case "LOGGEDIN_USER": {
       console.log("LOGGEDIN_USER", action.payload);
+      let { userEmail, userId } = action.payload;
       let dataCopy = { ...state };
-      dataCopy.loggedinUser = action.payload;
+      dataCopy.loggedinUser = userEmail;
+      dataCopy.loggedinUserId = userId;
       return dataCopy;
     }
     case "DOWNLOAD_STARTED":
@@ -129,6 +133,13 @@ function reducer(state, action) {
     }
     case "UPDATE_STORAGE": {
       return { ...state, saveData: action.payload };
+    }
+    case "STORE_USER_ANSWERS": {
+      let { answers, submit } = action.payload;
+      let dataCopy = { ...state };
+      dataCopy.answers = answers;
+      dataCopy.submit = submit;
+      return dataCopy;
     }
     default:
       throw new Error("Something went wrong!");

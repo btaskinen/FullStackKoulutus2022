@@ -90,6 +90,15 @@ router.delete(
   controller.deleteAnswer
 );
 
+// ---------------------- QUIZ EXECTUTION ------------------------
+router.post(
+  "/quizzes/quiz_execution",
+  tokenVerification,
+  controller.submitQuiz
+);
+
+// router.post("/quizzes/quiz_execution", controller.submitQuiz);
+
 // ---------------------- AUTHENTICATION -------------------------
 
 router.post("/users/login", controller.userLogin);

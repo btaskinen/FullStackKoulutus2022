@@ -35,6 +35,10 @@ const updateAnswer =
 
 const deleteAnswer = "DELETE FROM answer WHERE answer_id = $1";
 
+// ----------------------QUIZ EXECUTION --------------------------
+const submitAnswers =
+  "INSERT INTO quiz_execution (quiz_id, user_id, executed, answers) VALUES ($1, $2, $3, $4)";
+
 // ---------------------- Authentication -------------------------
 
 const userLogin = "SELECT * FROM users WHERE user_email = $1";
@@ -60,6 +64,7 @@ module.exports = {
   addNewAnswer,
   updateAnswer,
   deleteAnswer,
+  submitAnswers,
   userLogin,
   userRegister,
   isAdminQuerry,
