@@ -94,7 +94,7 @@ const deleteQuiz = async (req, res) => {
 
 // -------------------- QUESTION RELATED FUNCTIONS ----------------------------
 // getting all the questions belonging to a specific quiz that
-const getQuestionsByQuizId = async (req, res) => {
+const getQuestionsByQuizId = async (req, res, next) => {
   try {
     const quizId = parseInt(req.params.quiz_id);
     let results = await pool.query(queries.getQuestionsByQuizId, [quizId]);
@@ -103,9 +103,11 @@ const getQuestionsByQuizId = async (req, res) => {
       res.send("No questions found for this Quiz. Make sure quiz exists!");
     }
     res.status(200).json(results.rows);
+    next();
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occured");
+    next();
   }
 };
 

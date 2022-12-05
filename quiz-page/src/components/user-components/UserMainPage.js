@@ -56,7 +56,7 @@ const UserMainPage = (props) => {
           </div>
         </div>
       )}
-      {questionsDownloaded && (
+      {questionsDownloaded && props.appData.quizSelected && (
         <UserQuizPage appData={props.appData} dispatch={props.dispatch} />
       )}
     </div>

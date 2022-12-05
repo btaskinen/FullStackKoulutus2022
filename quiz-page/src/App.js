@@ -44,6 +44,12 @@ function reducer(state, action) {
       dataCopy.quizIndex = action.payload.quizIndex;
       return dataCopy;
     }
+    case "QUIZ_UNSELECTED": {
+      console.log("QUIZ_UNSELECTED");
+      let dataCopy = { ...state };
+      dataCopy.quizSelected = action.payload.quizSelected;
+      return dataCopy;
+    }
     case "QUIZ_CHANGER": {
       let dataCopy = { ...state };
       dataCopy.quizIndex = action.payload.quizIndex;

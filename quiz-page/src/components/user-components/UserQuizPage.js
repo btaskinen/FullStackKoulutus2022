@@ -59,7 +59,25 @@ function UserQuizPage(props) {
           >
             Submit Answers
           </button>
-          <button>Cancle</button>
+          <button
+            onClick={() => {
+              // props.dispatch({
+              //   type: "QUIZ_UNSELECTED",
+              //   payload: { quizSelected: false },
+              // });
+              const response = window.confirm(
+                "Are you sure you want to Cancle? Your answers will be lost"
+              );
+              if (response) {
+                props.dispatch({
+                  type: "QUIZ_UNSELECTED",
+                  payload: { quizSelected: false },
+                });
+              }
+            }}
+          >
+            Cancle
+          </button>
         </div>
       </div>
     </div>
