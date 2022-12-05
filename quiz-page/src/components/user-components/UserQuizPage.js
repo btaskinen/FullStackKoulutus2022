@@ -6,6 +6,16 @@ import { useState } from "react";
 function UserQuizPage(props) {
   const [answerChecked, setanswerChecked] = useState([]);
 
+  const onQuizSubmit = () => {
+    console.log("Quiz Submit");
+    props.dispatch({
+      type: "STORE_USER_ANSWERS",
+      payload: { userAnswers: answerChecked },
+    });
+    // props.quizSubmittedHandler(true);
+    props.setQuizSubmitted(true);
+  };
+
   const updateSelectedAnswers = (value) => {
     if (
       answerChecked.filter((id) => id.answerId === value.answerId).length > 0
@@ -48,23 +58,11 @@ function UserQuizPage(props) {
           </div>
         </div>
         <div>
-          <button
-            className="submit-button"
-            onClick={(event) => {
-              props.dispatch({
-                type: "STORE_USER_ANSWERS",
-                payload: { answers: answerChecked },
-              });
-            }}
-          >
+          <button className="submit-button" onClick={onQuizSubmit}>
             Submit Answers
           </button>
           <button
             onClick={() => {
-              // props.dispatch({
-              //   type: "QUIZ_UNSELECTED",
-              //   payload: { quizSelected: false },
-              // });
               const response = window.confirm(
                 "Are you sure you want to Cancle? Your answers will be lost"
               );

@@ -142,15 +142,15 @@ function reducer(state, action) {
     }
     case "STORE_USER_ANSWERS": {
       console.log("STORE USER ANSWERS PAYLOAD", action.payload);
-      let { answers } = action.payload;
+      let { userAnswers } = action.payload;
       let dataCopy = { ...state };
-      dataCopy.answers = answers;
+      dataCopy.userAnswers = userAnswers;
       const data = {
         quiz_id: dataCopy.quizId,
         user_id: dataCopy.loggedinUserId,
         executed: true,
         execution_date: new Date(Date.now()).toISOString(),
-        answers: JSON.stringify(dataCopy.answers),
+        answers: JSON.stringify(dataCopy.userAnswers),
       };
       postData(`quizzes/quiz_execution`, data);
       console.log("STORE USER ANSWERS", dataCopy);

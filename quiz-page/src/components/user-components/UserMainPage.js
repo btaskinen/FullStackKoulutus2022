@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import QuizButton from "../QuizButton";
 import UserQuizPage from "./UserQuizPage";
 import { getData } from "../../utilities/requestFunctions";
+import UserResultPage from "./UserResultPage";
 
 const UserMainPage = (props) => {
   const [questionsDownloaded, setQuestionsDownloaded] = useState(false);
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
 
   useEffect(() => {
-    // setQuestionsDownloaded(false); // for when changing quizzes does not change questions
+    setQuestionsDownloaded(false); // for when changing quizzes does not change questions
     console.log("RUNNING USE EFFECT");
     console.log("QUIZ SELECTED", props.appData.quizSelected);
     console.log("QUIZ INDEX", props.appData.quizIndex);
@@ -38,7 +40,7 @@ const UserMainPage = (props) => {
 
   return (
     <div>
-      {!props.appData.quizSelected && (
+      {!props.appData.quizSelected && !quizSubmitted && (
         <div>
           <h1>Quizzes</h1>
           <p>Please select a Quiz</p>
@@ -56,8 +58,20 @@ const UserMainPage = (props) => {
           </div>
         </div>
       )}
-      {questionsDownloaded && props.appData.quizSelected && (
-        <UserQuizPage appData={props.appData} dispatch={props.dispatch} />
+      {questionsDownloaded && props.appData.quizSelected && !quizSubmitted && (
+        <UserQuizPage
+          appData={props.appData}
+          dispatch={props.dispatch}
+          setQuizSubmitted={setQuizSubmitted}
+        />
+      )}
+      {quizSubmitted && (
+        <UserResultPage
+          appData={props.appData}
+          setQuizSubmitted={setQuizSubmitted}
+          setQuestionsDownloaded={setQuestionsDownloaded}
+          dispatch={props.dispatch}
+        />
       )}
     </div>
   );
