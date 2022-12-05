@@ -1,11 +1,9 @@
 import "../../App.css";
 import "./UserQuizPage.css";
 import UserQuestions from "./UserQuestions";
-import { useState, useEffect } from "react";
-import { postData } from "../../utilities/requestFunctions";
+import { useState } from "react";
 
 function UserQuizPage(props) {
-  // create useState based function that creates array with the answers that are checked
   const [answerChecked, setanswerChecked] = useState([]);
 
   const updateSelectedAnswers = (value) => {
@@ -21,23 +19,6 @@ function UserQuizPage(props) {
   };
 
   console.log(answerChecked);
-
-  useEffect(() => {
-    const data = {
-      quiz_id: props.appData.quizId,
-      // user_id: props.appData.loggedinUserId,
-      user_id: 29,
-      executed: true,
-      answers: props.appData.answers,
-    };
-    if ((props.appData.submit = true)) {
-      postData(`quizzes/quiz_execution`, data);
-      props.dispatch({
-        type: "STORE_USER_ANSWERS",
-        payload: { submit: false },
-      });
-    }
-  }, [props.appData.submit]);
 
   return (
     <div>
@@ -72,7 +53,7 @@ function UserQuizPage(props) {
             onClick={(event) => {
               props.dispatch({
                 type: "STORE_USER_ANSWERS",
-                payload: { answers: answerChecked, submit: true },
+                payload: { answers: answerChecked },
               });
             }}
           >

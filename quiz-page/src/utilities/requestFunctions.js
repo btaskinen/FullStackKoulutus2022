@@ -18,14 +18,8 @@ export const getData = async (url) => {
 
 export const postData = async (url, data) => {
   try {
-    const data = {
-      quiz_id: 2,
-      user_id: 29,
-      executed: true,
-      answers: { a: 1, b: 2 },
-    };
     await axios
-      .post(`https://localhost:8080/api/quiz-page/${url}`, {
+      .post(`https://localhost:8080/api/quiz-page/${url}`, data, {
         headers: { Authorization: localStorage.getItem("loginToken") },
       })
       .then((result) => console.log(result));

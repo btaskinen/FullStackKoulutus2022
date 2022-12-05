@@ -37,7 +37,7 @@ const deleteAnswer = "DELETE FROM answer WHERE answer_id = $1";
 
 // ----------------------QUIZ EXECUTION --------------------------
 const submitAnswers =
-  "INSERT INTO quiz_execution (quiz_id, user_id, executed, answers) VALUES ($1, $2, $3, $4)";
+  "INSERT INTO quiz_execution (quiz_id, user_id, executed, execution_date, answers) VALUES ($1, $2, $3, $4, $5)";
 
 // ---------------------- Authentication -------------------------
 

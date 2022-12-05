@@ -344,12 +344,13 @@ const deleteAnswer = async (req, res) => {
 
 // -------------------- EXAME EXECUTION --------------------------
 const submitQuiz = async (req, res, next) => {
-  const { quiz_id, user_id, executed, answers } = req.body;
+  const { quiz_id, user_id, executed, execution_date, answers } = req.body;
   try {
     await pool.query(queries.submitAnswers, [
       quiz_id,
       user_id,
       executed,
+      execution_date,
       answers,
     ]);
     res.status(201).send("Your answers have been successfully submitted!");
@@ -401,7 +402,7 @@ const userLogin = async (req, res, next) => {
         userEmail: existingUser.rows[0].user_email,
       },
       process.env.TOKEN_SECRET,
-      { expiresIn: "5m" }
+      { expiresIn: "30m" }
     );
     res.header("Authorization", token).send({
       success: true,

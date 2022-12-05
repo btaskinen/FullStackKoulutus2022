@@ -6,6 +6,7 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
+import { postData } from "./utilities/requestFunctions";
 
 let quizData = {
   data: [
@@ -27,7 +28,6 @@ let quizData = {
   quizIndex: 0,
   quizSelected: false,
   saveData: false,
-  submit: false,
 };
 
 function reducer(state, action) {
@@ -135,10 +135,19 @@ function reducer(state, action) {
       return { ...state, saveData: action.payload };
     }
     case "STORE_USER_ANSWERS": {
-      let { answers, submit } = action.payload;
+      console.log("STORE USER ANSWERS PAYLOAD", action.payload);
+      let { answers } = action.payload;
       let dataCopy = { ...state };
       dataCopy.answers = answers;
-      dataCopy.submit = submit;
+      const data = {
+        quiz_id: dataCopy.quizId,
+        user_id: dataCopy.loggedinUserId,
+        executed: true,
+        execution_date: new Date(Date.now()).toISOString(),
+        answers: JSON.stringify(dataCopy.answers),
+      };
+      postData(`quizzes/quiz_execution`, data);
+      console.log("STORE USER ANSWERS", dataCopy);
       return dataCopy;
     }
     default:
