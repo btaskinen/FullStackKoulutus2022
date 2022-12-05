@@ -3,6 +3,7 @@ import "./QuizButton.css";
 const QuizButton = (props) => {
   return (
     <button
+      className="quiz-button"
       onClick={(event) => {
         props.dispatch({
           type: "QUIZ_SELECTED",

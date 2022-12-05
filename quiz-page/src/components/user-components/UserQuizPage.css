@@ -1,0 +1,39 @@
+.app-header {
+  font-size: 20px;
+}
+
+.quizPage-main {
+  font-style: italic;
+}
+
+.quiz-page-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button,
+.cancel-button {
+  /* background-color: rgb(44, 117, 84); */
+  background-color: rgb(184, 185, 185);
+  /* width: 100px; */
+  border-radius: 5px;
+  border: none;
+  margin: 10px;
+  padding: 10px;
+  color: black;
+  border: none;
+  font-size: 16px;
+}
+
+.submit-button:hover,
+.cancel-button:hover {
+  background-color: rgb(78, 76, 76);
+  color: white;
+}
+
+.submit-button:active,
+.cancel-button:active {
+  background-color: rgb(78, 76, 76);
+  color: white;
+  border: 2px solid black;
+}

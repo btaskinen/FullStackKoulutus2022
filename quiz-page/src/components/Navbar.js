@@ -26,8 +26,8 @@ const Navbar = (props) => {
         )}
         {!props.isLoggedIn && (
           <div>
-            <a href="/Login">Login</a>
-            <a href="/Register" onClick={props.registerHandler}>
+            <a href="/">Login</a>
+            <a href="/" onClick={props.registerHandler}>
               Register
             </a>
           </div>

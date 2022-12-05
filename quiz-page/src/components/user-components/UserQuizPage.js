@@ -32,10 +32,10 @@ function UserQuizPage(props) {
 
   return (
     <div>
-      <header className="App-header">
+      <header className="app-header">
         <h1>Quiz: {props.appData.data[props.appData.quizIndex].quiz_name}</h1>
       </header>
-      <p className="QuizPage-main">
+      <p className="quizPage-main">
         Select the correct answer for each question. Submit your answers by
         clicking the "Submit Answers" button.
       </p>
@@ -46,6 +46,7 @@ function UserQuizPage(props) {
               return (
                 <UserQuestions
                   key={question.question_id}
+                  index={index}
                   quizId={question.quiz_id}
                   question={question}
                   questionId={question.question_id}
@@ -57,11 +58,12 @@ function UserQuizPage(props) {
             })}
           </div>
         </div>
-        <div>
+        <div className="quiz-page-button-container">
           <button className="submit-button" onClick={onQuizSubmit}>
             Submit Answers
           </button>
           <button
+            className="cancel-button"
             onClick={() => {
               const response = window.confirm(
                 "Are you sure you want to Cancle? Your answers will be lost"
@@ -74,7 +76,7 @@ function UserQuizPage(props) {
               }
             }}
           >
-            Cancle
+            Cancel
           </button>
         </div>
       </div>

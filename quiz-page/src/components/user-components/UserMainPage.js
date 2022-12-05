@@ -39,7 +39,7 @@ const UserMainPage = (props) => {
   }, [props.appData.quizIndex]);
 
   return (
-    <div>
+    <div className="user-main-page-container">
       {!props.appData.quizSelected && !quizSubmitted && (
         <div>
           <h1>Quizzes</h1>

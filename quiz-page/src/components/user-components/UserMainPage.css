@@ -2,6 +2,13 @@ body {
   background-color: rgb(184, 185, 185);
 }
 
+/* .user-main-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+} */
+
 h1 {
   color: black;
   margin: 20px;
@@ -15,5 +22,8 @@ p {
 
 .quiz-container {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-content: center;
+  margin-bottom: 100px;
 }

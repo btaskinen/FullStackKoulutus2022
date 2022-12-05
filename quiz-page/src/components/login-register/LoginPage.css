@@ -58,6 +58,18 @@ p {
   color: white;
   border: none;
   font-size: 18px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: rgb(68, 162, 119);
+  color: black;
+}
+
+.login-button:active {
+  background-color: rgb(68, 162, 119);
+  color: black;
+  border: 2px solid black;
 }
 
 .checkbox {

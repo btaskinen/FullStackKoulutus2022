@@ -18,7 +18,9 @@ const UserQuestions = (props) => {
 
   return (
     <div>
-      <div className="style-question">{props.question.question_text}</div>
+      <div className="style-question">
+        {props.index + 1}. {props.question.question_text}
+      </div>
       <div className="answer-container">
         {answers.map((answer, index) => (
           <UserAnswers

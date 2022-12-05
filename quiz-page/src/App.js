@@ -1,6 +1,5 @@
 import "./App.css";
 import "./components/QuizPage";
-import "./components/Checkboxes";
 import { useState, useReducer, useEffect } from "react";
 import axios from "axios";
 import Footer from "./components/Footer";
@@ -54,6 +53,7 @@ function reducer(state, action) {
       let dataCopy = { ...state };
       dataCopy.quizIndex = action.payload.quizIndex;
       console.log("QUIZ CHANGER DATA", dataCopy);
+      return dataCopy;
     }
     case "DOWNLOADED_QUESTIONS": {
       let dataCopy = { ...state };
