@@ -1,9 +1,9 @@
 import "./AdminAnswers.css";
 
-const Answers = (props) => {
+const AdminAnswers = (props) => {
   return (
     <div className="style-answers">
-      {props.answer}
+      {props.answer.answer_text}
       <input
         className="answer-text-field"
         type="text"
@@ -18,10 +18,10 @@ const Answers = (props) => {
             },
           });
         }}
-        value={props.answer}
+        value={props.answer.answer_text}
       />
     </div>
   );
 };
 
-export default Answers;
+export default AdminAnswers;

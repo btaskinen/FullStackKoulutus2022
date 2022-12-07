@@ -31,10 +31,10 @@ let quizData = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "QUIZ_NUMBER_CHANGER": {
+    case "QUIZ_NAME_CHANGER": {
       console.log(action.payload);
       let dataCopy = { ...state }; // the three dots make a copy of the state
-      dataCopy.quizzes[dataCopy.quizIndex].quizName = action.payload;
+      dataCopy.data[dataCopy.quizIndex].quiz_name = action.payload;
       return dataCopy;
     }
     case "QUIZ_SELECTED": {
@@ -109,10 +109,11 @@ function reducer(state, action) {
     }
     case "LOGGEDIN_USER": {
       console.log("LOGGEDIN_USER", action.payload);
-      let { userEmail, userId } = action.payload;
+      let { userEmail, userId, isAdmin } = action.payload;
       let dataCopy = { ...state };
       dataCopy.loggedinUser = userEmail;
       dataCopy.loggedinUserId = userId;
+      dataCopy.isAdmin = isAdmin;
       return dataCopy;
     }
     case "DOWNLOAD_STARTED":
@@ -163,7 +164,7 @@ function reducer(state, action) {
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminMode, setAdminMode] = useState(true);
 
   const [appData, dispatch] = useReducer(reducer, quizData);
   console.log("App Data", appData);
@@ -175,6 +176,10 @@ function App() {
   const logoutHandler = () => {
     localStorage.removeItem("loginToken");
     setIsLoggedIn(false);
+  };
+
+  const adminModeHandler = () => {
+    setAdminMode((current) => !current);
   };
 
   useEffect(() => {
@@ -232,7 +237,8 @@ function App() {
       )}
       {isLoggedIn && (
         <MainPage
-          isAdmin={isAdmin}
+          adminMode={adminMode}
+          adminModeHandler={adminModeHandler}
           appData={appData}
           isLoggedIn={isLoggedIn}
           loginHandler={loginHandler}

@@ -3,19 +3,21 @@ import "./Quizzes.css";
 const Quizzes = (props) => {
   return (
     <div className="header">
-      <div className="quiz-title">
-        {props.quizzes[props.quizIndex].quizName}
-      </div>
+      <div className="quiz-title">{props.editedQuizName}</div>
       <input
-        className="quiz-head-tex-field"
+        className="quiz-head-text-field"
         type="text"
-        onChange={(event) => {
-          props.dispatch({
-            type: "QUIZ_NUMBER_CHANGER",
-            payload: event.target.value,
-          });
-        }}
-        value={props.quizzes[props.quizIndex].quizName}
+        onChange={
+          (event) => props.setEditedQuizName(event.target.value)
+          //   (event) => {
+          //   props.dispatch({
+          //     type: "QUIZ_NAME_CHANGER",
+          //     payload: event.target.value,
+          //   });
+          // }
+        }
+        placeholder={props.appData.data[props.appData.quizIndex].quiz_name}
+        // value={props.appData.data[props.appData.quizIndex].quiz_name}
       />
     </div>
   );

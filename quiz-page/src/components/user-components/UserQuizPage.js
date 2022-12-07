@@ -4,7 +4,7 @@ import UserQuestions from "./UserQuestions";
 import { useState } from "react";
 
 function UserQuizPage(props) {
-  const [answerChecked, setanswerChecked] = useState([]);
+  const [answerChecked, setAnswerChecked] = useState([]);
 
   const onQuizSubmit = () => {
     console.log("Quiz Submit");
@@ -20,11 +20,11 @@ function UserQuizPage(props) {
     if (
       answerChecked.filter((id) => id.answerId === value.answerId).length > 0
     ) {
-      setanswerChecked(
+      setAnswerChecked(
         answerChecked.filter((answer) => answer.answerId !== value.answerId)
       );
     } else {
-      setanswerChecked([...answerChecked, value]);
+      setAnswerChecked([...answerChecked, value]);
     }
   };
 

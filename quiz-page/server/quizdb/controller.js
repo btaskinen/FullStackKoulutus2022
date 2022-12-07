@@ -411,6 +411,7 @@ const userLogin = async (req, res, next) => {
       data: {
         userId: existingUser.rows[0].user_id,
         userEmail: existingUser.rows[0].user_email,
+        admin: existingUser.rows[0].admin,
         token: token,
       },
     });

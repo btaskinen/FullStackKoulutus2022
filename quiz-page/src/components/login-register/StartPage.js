@@ -27,6 +27,7 @@ const StartPage = (props) => {
         payload: {
           userEmail: result.data.data.userEmail,
           userId: result.data.data.userId,
+          isAdmin: result.data.data.admin,
         },
       });
     } catch (result) {

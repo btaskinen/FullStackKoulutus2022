@@ -8,6 +8,9 @@ function MainPage(props) {
     <div>
       <Navbar
         isLoggedIn={props.isLoggedIn}
+        isAdmin={props.appData.isAdmin}
+        adminMode={props.adminMode}
+        adminModeHandler={props.adminModeHandler}
         appData={props.appData}
         dispatch={props.dispatch}
         logoutHandler={props.logoutHandler}
@@ -15,10 +18,10 @@ function MainPage(props) {
       <div className="display-loggedin-user">
         You are logged in as {props.appData.loggedinUser}
       </div>
-      {!props.isAdmin && (
+      {(!props.appData.isAdmin || !props.adminMode) && (
         <UserMainPage appData={props.appData} dispatch={props.dispatch} />
       )}
-      {props.isAdmin && (
+      {props.appData.isAdmin && props.adminMode && (
         <AdminMainPage appData={props.appData} dispatch={props.dispatch} />
       )}
     </div>
