@@ -1,5 +1,5 @@
 .style-question {
-  background-color: rgb(44, 117, 84);
+  background-color: #087f5b;
   padding: 5px;
   margin: 0px;
   display: flex;
@@ -19,7 +19,7 @@
   padding: 5px;
   margin-left: 20px;
   align-items: center;
-  color: rgb(78, 76, 76);
+  color: #495057;
 }
 
 .answer-container {
@@ -36,14 +36,25 @@
 }
 
 .add-answer-button {
-  align-items: flex-end;
-  background-color: rgb(184, 185, 185);
-  height: 30px;
+  background-color: #087f5b;
+  width: 100px;
   border-radius: 5px;
   border: none;
+  margin: 15px;
   padding: 5px;
-  margin-left: 5px;
-  margin-bottom: 10px;
-  color: black;
+  color: #fff;
   border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.add-answer-button:hover {
+  background-color: #20c997;
+  color: #343a40;
+}
+
+.add-answer-button:active {
+  background-color: #20c997;
+  color: #343a40;
+  border: 2px solid #343a40;
 }

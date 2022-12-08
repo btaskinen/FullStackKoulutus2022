@@ -1,14 +1,14 @@
 body {
-  background-color: rgb(184, 185, 185);
+  background-color: #ced4da;
 }
 
 h1 {
-  color: black;
+  color: #343a40;
   margin: 20px;
 }
 
 p {
-  color: black;
+  color: #343a40;
   margin: 25px;
   font-size: 20px;
 }
@@ -26,7 +26,7 @@ p {
 }
 
 .label {
-  color: black;
+  color: #343a40;
   font-weight: bold;
   font-size: 20px;
 }
@@ -37,8 +37,8 @@ p {
   padding: 10px;
   margin: 2px;
   margin-bottom: 10px;
-  color: rgb(78, 76, 76);
-  border: 1px solid rgb(78, 76, 76);
+  color: #495057;
+  border: 1px solid #343a40;
   font-size: 20px;
 }
 
@@ -49,30 +49,30 @@ p {
 }
 
 .login-button {
-  background-color: rgb(44, 117, 84);
+  background-color: #087f5b;
   width: 100px;
   border-radius: 5px;
   border: none;
   margin: 15px;
   padding: 5px;
-  color: white;
+  color: #fff;
   border: none;
   font-size: 18px;
 }
 
 .login-button:hover {
-  background-color: rgb(68, 162, 119);
+  background-color: #20c997;
   color: black;
 }
 
 .login-button:active {
-  background-color: rgb(68, 162, 119);
+  background-color: #20c997;
   color: black;
-  border: 2px solid black;
+  border: 2px solid #343a40;
 }
 
 .checkbox {
-  color: black;
+  color: #343a40;
   font-size: 14px;
   padding: 5px;
 }

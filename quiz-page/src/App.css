@@ -1,6 +1,17 @@
+/* MAIN COLOR
+#087f5b
+#0ca678
+#20c997
+
+#343a40
+#495057
+#adb5bd
+#ced4da
+ */
+
 body {
-  color: white;
-  font-family: sans-serif;
+  color: #fff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .App {
@@ -39,7 +50,7 @@ body {
 }
 
 .active {
-  background-color: #04aa6d;
+  background-color: #0ca678;
   color: white;
 }
 

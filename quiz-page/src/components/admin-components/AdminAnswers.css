@@ -1,5 +1,5 @@
 .style-answers {
-  background-color: rgb(184, 185, 185);
+  background-color: #ced4da;
   display: flex;
   padding: 10px;
   justify-content: left;
@@ -12,7 +12,7 @@
   border-radius: 5px;
   padding: 5px;
   margin-left: 10px;
-  color: rgb(78, 76, 76);
-  border: 1px solid rgb(78, 76, 76);
+  color: #495057;
+  border: 1px solid #495057;
   font-size: 14px;
 }

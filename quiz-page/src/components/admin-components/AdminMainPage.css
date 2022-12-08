@@ -4,13 +4,13 @@
   padding: 25px;
   border: none;
   background-color: rgb(184, 185, 185);
-  color: rgb(44, 117, 84);
+  color: #087f5b;
 }
 
 .new-quiz-button:hover {
   border: none;
   background-color: rgb(184, 185, 185);
   text-decoration: underline;
-  color: rgb(44, 117, 84);
+  color: #087f5b;
   cursor: pointer;
 }

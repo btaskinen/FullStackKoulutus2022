@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(184, 185, 185);
+  background-color: #ced4da;
 }
 
 /* .user-main-page-container {
@@ -10,12 +10,12 @@ body {
 } */
 
 h1 {
-  color: black;
+  color: #343a40;
   margin: 20px;
 }
 
 p {
-  color: black;
+  color: #343a40;
   margin: 25px;
   font-size: 20px;
 }
@@ -27,5 +27,5 @@ p {
   gap: 20px;
   justify-content: center;
   align-content: center;
-  /* margin-bottom: 100px; */
+  margin-bottom: 200px;
 }

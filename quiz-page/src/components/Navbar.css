@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: rgb(44, 117, 84);
+  background-color: #087f5b;
   /* position: fixed; */
   top: 0;
   width: 100%;
@@ -29,7 +29,7 @@
   font-size: 16px;
   border: none;
   outline: none;
-  color: white;
+  color: #fff;
   font-weight: bold;
   padding: 14px 16px;
   background-color: inherit;
@@ -40,7 +40,7 @@
 
 .Navigation-bar a:hover,
 .dropdown:hover .dropbtn {
-  background-color: rgb(156, 156, 152);
+  background-color: #adb5bd;
 }
 
 .dropdown-content {
@@ -48,7 +48,7 @@
   position: absolute;
   background-color: #f9f9f9;
   min-width: 93.3px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 16px 0px #343a40;
   z-index: 1;
   border-bottom-right-radius: 5px;
 }
@@ -56,7 +56,7 @@
 .dropdown-content button {
   width: 100%; /*this makes the butten the same width as container*/
   float: none;
-  color: black;
+  color: #343a40;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -65,7 +65,7 @@
 
   border: none;
   outline: none;
-  color: black;
+  color: #343a40;
   font-weight: bold;
   background-color: inherit;
   font-family: inherit;
@@ -94,5 +94,5 @@
 }
 
 .nav-btn:hover {
-  background-color: rgb(156, 156, 152);
+  background-color: #adb5bd;
 }

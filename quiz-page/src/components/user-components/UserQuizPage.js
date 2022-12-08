@@ -1,4 +1,4 @@
-import "../../App.css";
+// import "../../App.css";
 import "./UserQuizPage.css";
 import UserQuestions from "./UserQuestions";
 import { useState } from "react";
@@ -63,7 +63,7 @@ function UserQuizPage(props) {
             Submit Answers
           </button>
           <button
-            className="cancel-button"
+            className="quiz-page-cancel-button"
             onClick={() => {
               const response = window.confirm(
                 "Are you sure you want to Cancle? Your answers will be lost"

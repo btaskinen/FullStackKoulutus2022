@@ -1,5 +1,5 @@
 .quiz-button {
-  background-color: rgb(44, 117, 84);
+  background-color: #087f5b;
   border-radius: 5px;
   border: none;
   padding: 10px;
@@ -12,12 +12,12 @@
 }
 
 .quiz-button:hover {
-  background-color: rgb(68, 162, 119);
-  color: black;
+  background-color: #20c997;
+  color: #343a40;
 }
 
 .quiz-button:active {
-  background-color: rgb(68, 162, 119);
-  color: black;
-  border: 2px solid black;
+  background-color: #20c997;
+  color: #343a40;
+  border: 2px solid #343a40;
 }

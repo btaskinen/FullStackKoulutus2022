@@ -5,11 +5,11 @@ import { useState } from "react";
 
 function AdminQuizPage(props) {
   const [editedQuizName, setEditedQuizName] = useState(
-    props.appData.data[props.appData.quizIndex].quiz_name
+    props.adminData.data[props.adminData.quizIndex].quiz_name
   );
 
   const [editedQuestions, setEditedQuestions] = useState(
-    props.appData.questions
+    props.adminData.questions
   );
   const [answers, setAnswers] = useState([]);
   const [copyEditedAnswers, setCopyEditedAnswers] = useState([]);
@@ -18,7 +18,7 @@ function AdminQuizPage(props) {
     let copyEditedQuestions = [...editedQuestions];
     copyEditedQuestions.push({
       question_text: "New Question",
-      quiz_id: props.appData.quizId,
+      quiz_id: props.adminData.quizId,
     });
     setEditedQuestions(copyEditedQuestions);
   };
@@ -57,7 +57,9 @@ function AdminQuizPage(props) {
         {/* <h1>Quiz: {props.appData.data[props.appData.quizIndex].quiz_name}</h1> */}
         <Quizzes
           appData={props.appData}
+          adminData={props.adminData}
           dispatch={props.dispatch}
+          dispatchAdmin={props.dispatchAdmin}
           editedQuizName={editedQuizName}
           setEditedQuizName={setEditedQuizName}
         />
@@ -68,7 +70,7 @@ function AdminQuizPage(props) {
       <div className="flex-container">
         <div>
           <div className="question-contianer">
-            {props.appData.questions.map((question, index) => {
+            {props.adminData.questions.map((question, index) => {
               return (
                 <AdminQuestions
                   key={question.question_id}
@@ -77,7 +79,9 @@ function AdminQuizPage(props) {
                   question={question}
                   questionId={question.question_id}
                   dispatch={props.dispatch}
+                  dispatchAdmin={props.dispatchAdmin}
                   appData={props.appData}
+                  adminData={props.adminData}
                   editedQuestions={editedQuestions}
                   setEditedQuestions={setEditedQuestions}
                   setAnswers={setAnswers}
@@ -93,10 +97,9 @@ function AdminQuizPage(props) {
           </div>
           <button
             className="add-question-button"
-            onClick={addQuestionHandler}
-            //   () => {
-            //   props.dispatch({ type: "ADD_QUESTION" });
-            // }}
+            onClick={() => {
+              props.dispatchAdmin({ type: "ADD_QUESTION" });
+            }}
           >
             Add Question
           </button>
