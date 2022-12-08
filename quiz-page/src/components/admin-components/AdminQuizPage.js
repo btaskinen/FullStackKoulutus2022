@@ -11,8 +11,12 @@ function AdminQuizPage(props) {
   const [editedQuestions, setEditedQuestions] = useState(
     props.appData.questions
   );
+  const [answers, setAnswers] = useState([]);
+  const [copyEditedAnswers, setCopyEditedAnswers] = useState([]);
 
-  console.log("Edidted Questions", props.appData.questions);
+  console.log("edited Quiz Name", editedQuizName);
+  console.log("edited Questions", editedQuestions);
+  console.log("copy of Edited Answers", copyEditedAnswers);
 
   // const onQuizSubmit = () => {
   //   console.log("Quiz Submit");
@@ -55,7 +59,7 @@ function AdminQuizPage(props) {
       <div className="flex-container">
         <div>
           <div className="question-contianer">
-            {editedQuestions.map((question, index) => {
+            {props.appData.questions.map((question, index) => {
               return (
                 <AdminQuestions
                   key={question.question_id}
@@ -67,6 +71,11 @@ function AdminQuizPage(props) {
                   appData={props.appData}
                   editedQuestions={editedQuestions}
                   setEditedQuestions={setEditedQuestions}
+                  setAnswers={setAnswers}
+                  setCopyEditedAnswers={setCopyEditedAnswers}
+                  answers={answers}
+                  // editedAnswers={editedAnswers}
+                  // setEditedAnswers={setEditedAnswers}
                   // updateSelectedAnswers={updateSelectedAnswers}
                 />
               );

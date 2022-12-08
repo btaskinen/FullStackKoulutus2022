@@ -6,16 +6,13 @@ import { useState, useEffect } from "react";
 import { getData } from "../../utilities/requestFunctions";
 
 const AdminQuestions = (props) => {
-  const [answers, setAnswers] = useState([]);
-
-  console.log("editedQuestions Array", props.editedQuestions);
-  console.log("Answers", answers);
+  // const [answers, setAnswers] = useState([]);
 
   const editQuestionsHandler = (event) => {
     const value = event.target.value;
     console.log("Value", value);
     let copyEditedQuestions = [...props.editedQuestions];
-    copyEditedQuestions[props.index] = value;
+    copyEditedQuestions[props.index].question_text = value;
 
     props.setEditedQuestions(copyEditedQuestions);
     // props.editedQuestions.map((editedQuestion) => {
@@ -33,14 +30,15 @@ const AdminQuestions = (props) => {
 
   useEffect(() => {
     getData(`quizzes/${props.quizId}/question/${props.questionId}/answer`).then(
-      (result) => setAnswers(result)
+      (result) => props.setAnswers(result)
     );
   }, [props.questionId, props.quizId]);
 
   return (
     <div>
       <div className="style-question">
-        {props.index + 1}. {props.editedQuestions[props.index].question_text}
+        {props.index + 1}.
+        {/* {props.editedQuestions[props.index].question_text} */}
         <input
           className="question-text-field"
           type="text"
@@ -54,11 +52,11 @@ const AdminQuestions = (props) => {
             //   },
             // });
           }
-          placeholder={props.editedQuestions[props.index].question_text}
+          value={props.editedQuestions[props.index].question_text}
         />
       </div>
       <div className="answer-container">
-        {answers.map((answer, index) => (
+        {props.answers.map((answer, index) => (
           <AdminAnswers
             key={index}
             question={props.question}
@@ -66,6 +64,8 @@ const AdminQuestions = (props) => {
             questionIndex={props.questionIndex}
             answerIndex={index}
             dispatch={props.dispatch}
+            answers={props.answers}
+            setCopyEditedAnswers={props.setCopyEditedAnswers}
           />
         ))}
       </div>

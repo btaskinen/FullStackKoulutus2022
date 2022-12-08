@@ -16,7 +16,7 @@ const Quizzes = (props) => {
           //   });
           // }
         }
-        placeholder={props.appData.data[props.appData.quizIndex].quiz_name}
+        value={props.editedQuizName}
         // value={props.appData.data[props.appData.quizIndex].quiz_name}
       />
     </div>

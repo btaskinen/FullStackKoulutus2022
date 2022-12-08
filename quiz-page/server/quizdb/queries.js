@@ -23,7 +23,8 @@ const deleteQuestion = "DELETE FROM question WHERE question_id = $1";
 
 // ---------------------------- ANSWER QUERIES -------------------------------
 const getAnswersByQuizId =
-  "SELECT * FROM answer JOIN question ON question.question_id = answer.question_id WHERE quiz_id = $1 AND answer.question_id =$2";
+  // "SELECT * FROM answer JOIN question ON question.question_id = answer.question_id WHERE quiz_id = $1 AND answer.question_id =$2";
+  "SELECT answer_id, answer_text, answer.question_id, correct_answer FROM answer JOIN question ON question.question_id = answer.question_id WHERE quiz_id = $1 AND answer.question_id =$2";
 
 const getAnswerByAnswerId = "SELECT * FROM answer WHERE answer_id = $1";
 
