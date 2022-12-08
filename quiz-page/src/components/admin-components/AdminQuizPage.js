@@ -14,6 +14,15 @@ function AdminQuizPage(props) {
   const [answers, setAnswers] = useState([]);
   const [copyEditedAnswers, setCopyEditedAnswers] = useState([]);
 
+  const addQuestionHandler = () => {
+    let copyEditedQuestions = [...editedQuestions];
+    copyEditedQuestions.push({
+      question_text: "New Question",
+      quiz_id: props.appData.quizId,
+    });
+    setEditedQuestions(copyEditedQuestions);
+  };
+
   console.log("edited Quiz Name", editedQuizName);
   console.log("edited Questions", editedQuestions);
   console.log("copy of Edited Answers", copyEditedAnswers);
@@ -72,6 +81,7 @@ function AdminQuizPage(props) {
                   editedQuestions={editedQuestions}
                   setEditedQuestions={setEditedQuestions}
                   setAnswers={setAnswers}
+                  copyEditedAnswers={copyEditedAnswers}
                   setCopyEditedAnswers={setCopyEditedAnswers}
                   answers={answers}
                   // editedAnswers={editedAnswers}
@@ -83,9 +93,10 @@ function AdminQuizPage(props) {
           </div>
           <button
             className="add-question-button"
-            onClick={() => {
-              props.dispatch({ type: "ADD_QUESTION" });
-            }}
+            onClick={addQuestionHandler}
+            //   () => {
+            //   props.dispatch({ type: "ADD_QUESTION" });
+            // }}
           >
             Add Question
           </button>

@@ -34,6 +34,15 @@ const AdminQuestions = (props) => {
     );
   }, [props.questionId, props.quizId]);
 
+  const addAnswerHandler = () => {
+    let copyEditedAnswers = [...props.copyEditedAnswers];
+    copyEditedAnswers.push({
+      question_text: "New Question",
+      quiz_id: props.appData.quizId,
+    });
+    props.setCopyEditedAnswers(copyEditedAnswers);
+  };
+
   return (
     <div>
       <div className="style-question">
@@ -72,12 +81,13 @@ const AdminQuestions = (props) => {
 
       <button
         className="add-answer-button"
-        onClick={(event) => {
-          props.dispatch({
-            type: "ADD_ANSWER",
-            payload: { questionIndex: props.questionIndex },
-          });
-        }}
+        onClick={addAnswerHandler}
+        //   (event) => {
+        //   props.dispatch({
+        //     type: "ADD_ANSWER",
+        //     payload: { questionIndex: props.questionIndex },
+        //   });
+        // }}
       >
         Add Answer
       </button>
