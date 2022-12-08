@@ -1,22 +1,23 @@
 import "./AdminAnswers.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const AdminAnswers = (props) => {
   const [editedAnswers, setEditedAnswers] = useState(props.answers);
-  console.log("edited Answers", editedAnswers);
+  const [checkboxChecked, setCheckbox] = useState(props.answer.correct_answer);
 
   const answerCheckedHandler = (event) => {
-    const value = {
-      answerId: event.target.id,
-      correctAnswer: event.target.value,
-    }; // Checkbox value
-
-    props.updateSelectedAnswers(value);
+    setCheckbox((current) => !current);
   };
+
+  useEffect(() => {
+    let copyEditedAnswers = [...editedAnswers];
+    copyEditedAnswers[props.answerIndex].correct_answer = checkboxChecked;
+    setEditedAnswers(copyEditedAnswers);
+    props.setCopyEditedAnswers(copyEditedAnswers);
+  }, [checkboxChecked]);
 
   const editAnswersHandler = (event) => {
     const value = event.target.value;
-    console.log("Value", value);
     let copyEditedAnswers = [...editedAnswers];
     copyEditedAnswers[props.answerIndex].answer_text = value;
 
@@ -31,7 +32,8 @@ const AdminAnswers = (props) => {
         type="checkbox"
         id={props.answer.answer_id}
         name={`response to question ${props.question.question_id}`}
-        value={props.answer.correct_answer}
+        value={checkboxChecked}
+        checked={checkboxChecked}
         onClick={answerCheckedHandler}
       />
       <label htmlFor={props.answer.answer_id}></label>
