@@ -17,7 +17,7 @@ const UserMainPage = (props) => {
     if (props.appData.quizSelected) {
       console.log("RUNNING USE EFFECT INSIDE IF");
       getData(
-        `quizzes/${
+        `user/quizzes/${
           props.appData.data[props.appData.quizIndex].quiz_id
         }/question`
       ).then((result) => {

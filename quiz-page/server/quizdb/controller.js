@@ -111,6 +111,23 @@ const getQuestionsByQuizId = async (req, res, next) => {
   }
 };
 
+const getQuestionsByQuizIdUser = async (req, res, next) => {
+  try {
+    const quizId = parseInt(req.params.quiz_id);
+    let results = await pool.query(queries.getQuestionsByQuizIdUser, [quizId]);
+    const quizIdNotInDb = !results.rows.length;
+    if (quizIdNotInDb) {
+      res.send("No questions found for this Quiz. Make sure quiz exists!");
+    }
+    res.status(200).json(results.rows);
+    next();
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+    next();
+  }
+};
+
 const getQuestionByQuestionId = async (req, res) => {
   try {
     const questionId = parseInt(req.params.question_id);
@@ -474,6 +491,7 @@ module.exports = {
   updateQuiz,
   deleteQuiz,
   getQuestionsByQuizId,
+  getQuestionsByQuizIdUser,
   getQuestionByQuestionId,
   addNewQuestion,
   updateQuestion,

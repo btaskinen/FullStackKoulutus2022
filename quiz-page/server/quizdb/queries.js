@@ -12,7 +12,8 @@ const updateQuiz =
 const deleteQuiz = "DELETE FROM quizzes WHERE quiz_id = $1";
 
 // ---------------------------- QUESTION QUERIES -------------------------------
-// const getQuestionsByQuizId = "SELECT * FROM question WHERE quiz_id = $1";
+const getQuestionsByQuizIdUser = "SELECT * FROM question WHERE quiz_id = $1";
+
 const getQuestionsByQuizId =
   "SELECT quiz_id, question.question_id, question_text, answer_id, answer_text, correct_answer, answer.question_id FROM answer INNER JOIN question ON question.question_id = answer.question_id WHERE quiz_id = $1";
 const getQuestionByQuestionId = "SELECT * FROM question WHERE question_id = $1";
@@ -58,6 +59,7 @@ module.exports = {
   updateQuiz,
   deleteQuiz,
   getQuestionsByQuizId,
+  getQuestionsByQuizIdUser,
   getQuestionByQuestionId,
   addNewQuestion,
   updateQuestion,

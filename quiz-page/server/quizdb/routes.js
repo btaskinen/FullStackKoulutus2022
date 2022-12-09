@@ -35,6 +35,12 @@ router.get(
   tokenVerification,
   controller.getQuestionsByQuizId
 );
+// special route to load only questions for user
+router.get(
+  "/user/quizzes/:quiz_id/question",
+  tokenVerification,
+  controller.getQuestionsByQuizIdUser
+);
 router.get(
   "/quizzes/:quiz_id/question/:question_id",
   tokenVerification, // alternatively * instead of :quiz_id?
