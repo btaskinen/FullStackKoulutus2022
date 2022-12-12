@@ -32,6 +32,7 @@ const LoginPage = (props) => {
           <input
             className="login-text-field"
             type="text"
+            id="user-email"
             placeholder="User Name"
             ref={emailInputRef}
           />
@@ -52,10 +53,18 @@ const LoginPage = (props) => {
             <label className="checkbox">Show Password</label>
           </div>
           <div className="button-container">
-            <button className="login-button" onClick={submitHandler}>
+            <button
+              className="login-button"
+              data-cy="login-page-login-button"
+              onClick={submitHandler}
+            >
               Login
             </button>
-            <button className="login-button" onClick={props.registerHandler}>
+            <button
+              className="login-button"
+              data-cy="login-page-register-button"
+              onClick={props.registerHandler}
+            >
               Register
             </button>
           </div>
