@@ -105,6 +105,9 @@ router.post(
 
 // router.post("/quizzes/quiz_execution", controller.submitQuiz);
 
+// --------------------------- USERS -----------------------------
+router.delete("/users/:user_email", controller.deleteUserByEmail);
+
 // ---------------------- AUTHENTICATION -------------------------
 
 router.post("/users/login", controller.userLogin);

@@ -380,6 +380,19 @@ const submitQuiz = async (req, res, next) => {
   }
 };
 
+// ------------------------- USERS ------------------------------
+const deleteUserByEmail = async (req, res) => {
+  try {
+    const userEmail = parseInt(req.params.user_email);
+    await pool.query(queries.deleteUserByEmail, [userEmail]);
+    res.status(204).send("User has been successfully deleted.");
+    console.log("not catch");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+};
+
 // ---------------------- AUTHENTICATION -------------------------
 
 // user login
@@ -502,6 +515,7 @@ module.exports = {
   updateAnswer,
   deleteAnswer,
   submitQuiz,
+  deleteUserByEmail,
   userLogin,
   userRegister,
   accessResources,

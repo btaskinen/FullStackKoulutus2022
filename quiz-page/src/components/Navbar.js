@@ -43,10 +43,18 @@ const Navbar = (props) => {
         )}
         {!props.isLoggedIn && (
           <div>
-            <button className="nav-btn" onClick={props.registerHandler}>
+            <button
+              className="nav-btn"
+              data-cy="nav-login-button"
+              onClick={props.registerHandler}
+            >
               Login
             </button>
-            <button className="nav-btn" onClick={props.registerHandler}>
+            <button
+              className="nav-btn"
+              data-cy="nav-register-button"
+              onClick={props.registerHandler}
+            >
               Register
             </button>
           </div>
@@ -62,7 +70,9 @@ const Navbar = (props) => {
               Admin Mode
             </button>
           )}
-          <button className="nav-btn">Help</button>
+          <button className="nav-btn" data-cy="nav-help-button">
+            Help
+          </button>
           {props.isLoggedIn && (
             <button className="nav-btn" onClick={props.logoutHandler}>
               Logout
