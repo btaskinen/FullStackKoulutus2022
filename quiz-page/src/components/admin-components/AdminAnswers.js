@@ -2,7 +2,7 @@ import "./AdminAnswers.css";
 import { useState, useEffect } from "react";
 
 const AdminAnswers = (props) => {
-  const [checkboxChecked, setCheckbox] = useState(props.answer.correct_answer);
+  const [checkboxChecked, setCheckbox] = useState(props.answer.correctAnswer);
 
   const answerCheckedHandler = (event) => {
     setCheckbox((current) => !current);
@@ -24,14 +24,14 @@ const AdminAnswers = (props) => {
       <input
         className="checkbox"
         type="checkbox"
-        id={props.answer.answer_id}
-        name={`response to question ${props.answer.question_id}`}
+        id={props.answer.answerId}
+        name={`response to question ${props.question.questionId}`}
         value={checkboxChecked}
         checked={checkboxChecked}
         onClick={answerCheckedHandler}
       />
-      <label htmlFor={props.answer.answer_id}></label>
-      {props.answer.answer_text}
+      <label htmlFor={props.answer.answerId}></label>
+      {props.answer.answerText}
       <input
         className="answer-text-field"
         type="text"
@@ -49,7 +49,7 @@ const AdminAnswers = (props) => {
             });
           }
         }
-        value={props.answer.answer_text}
+        value={props.answer.answerText}
       />
     </div>
   );

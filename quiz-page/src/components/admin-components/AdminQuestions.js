@@ -40,8 +40,8 @@ const AdminQuestions = (props) => {
   return (
     <div>
       <div className="style-question">
-        {props.index + 1}.
-        {props.adminData.questions[props.index][0].question_text}
+        {props.questionIndex + 1}.
+        {props.adminData.questionAnswers[props.questionIndex].questionText}
         <input
           className="question-text-field"
           type="text"
@@ -50,20 +50,22 @@ const AdminQuestions = (props) => {
               type: "QUESTION_CHANGER",
               payload: {
                 questionText: event.target.value,
-                questionIndex: props.index,
+                questionIndex: props.questionIndex,
               },
             });
           }}
-          value={props.adminData.questions[props.index].question_text}
+          value={
+            props.adminData.questionAnswers[props.questionIndex].questionText
+          }
         />
       </div>
       <div className="answer-container">
-        {props.question.map((answer, index) => (
+        {props.question.answers.map((answer, index) => (
           <AdminAnswers
             key={index}
             question={props.question}
             answer={answer}
-            questionIndex={props.index}
+            questionIndex={props.questionIndex}
             answerIndex={index}
             dispatch={props.dispatch}
             dispatchAdmin={props.dispatchAdmin}
@@ -72,7 +74,6 @@ const AdminQuestions = (props) => {
           />
         ))}
       </div>
-
       <button
         className="add-answer-button"
         onClick={(event) => {

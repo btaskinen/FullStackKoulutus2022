@@ -3,6 +3,7 @@ import { useState, useReducer, useEffect } from "react";
 import QuizButton from "../QuizButton";
 import AdminQuizPage from "./AdminQuizPage";
 import { getData } from "../../utilities/requestFunctions";
+import { questionAnswerReformatting } from "../../utilities/functions";
 
 function reducerAdmin(state, action) {
   switch (action.type) {
@@ -31,22 +32,13 @@ function reducerAdmin(state, action) {
       return dataCopy;
     }
     case "DOWNLOADED_QUESTIONS": {
-      const { questions, quizId } = action.payload;
-      console.log("DOWNLOADED_QUESTIONS", questions);
-      const groupBy = (data, key) => {
-        return data.reduce((storage, item) => {
-          let group = item[key];
-          storage[group] = storage[group] || [];
-          storage[group].push(item);
-          return storage;
-        }, {});
-      };
-      const groupedQuestions = groupBy(questions, "question_id");
-      const arrayGroupedQuestions = Object.values(groupedQuestions);
-      console.log("GROUPED QUESTIONS", arrayGroupedQuestions);
+      const arrayData = questionAnswerReformatting(
+        action.payload.questionsData
+      );
+      console.log("ARRAY DATA", arrayData);
       let dataCopy = { ...state };
-      dataCopy.questions = arrayGroupedQuestions;
-      dataCopy.quizId = quizId;
+      dataCopy.questionAnswers = arrayData;
+      dataCopy.quizId = action.payload.quizId;
       console.log("DOWNLOADED QUESTIONS DATA COPY", dataCopy);
       return dataCopy;
     }
@@ -55,7 +47,7 @@ function reducerAdmin(state, action) {
       let { questionText, questionIndex } = action.payload;
       let dataCopy = { ...state };
       // console.log(state.quizData);
-      dataCopy.questions[questionIndex].question_text = questionText;
+      dataCopy.questionAnswers[questionIndex].questionText = questionText;
       return dataCopy;
     }
     case "DOWNLOADED_ANSWERS": {
@@ -68,15 +60,17 @@ function reducerAdmin(state, action) {
       console.log("Answer payload", action.payload);
       let { questionIndex, answerText, answerIndex } = action.payload;
       let dataCopy = { ...state };
-      dataCopy.questions[questionIndex][answerIndex].answer_text = answerText;
+      dataCopy.questionAnswers[questionIndex].answers[answerIndex].answerText =
+        answerText;
       return dataCopy;
     }
     case "CHECKBOX_CHANGER": {
       console.log("CHECKBOX_CHANGER", action.payload);
       let { checkboxState, questionIndex, answerIndex } = action.payload;
       let dataCopy = { ...state };
-      dataCopy.questions[questionIndex][answerIndex].correct_answer =
-        checkboxState;
+      dataCopy.questionAnswers[questionIndex].answers[
+        answerIndex
+      ].correctAnswer = checkboxState;
       return dataCopy;
     }
     case "ADD_QUIZ": {
@@ -91,23 +85,29 @@ function reducerAdmin(state, action) {
     }
     case "ADD_QUESTION": {
       let dataCopy = { ...state };
-      dataCopy.questions.push({
-        question_text: "New Question",
-        quiz_id: dataCopy.quizId,
-      });
+      const newIndex = dataCopy.questionAnswers.length + 1;
+      console.log("New Index", newIndex);
+      const obj = {
+        quizId: undefined,
+        questionText: "New Question",
+        answers: [
+          {
+            answerText: "New Answer",
+            correctAnswer: false,
+          },
+        ],
+      };
+      dataCopy.questionAnswers.push(obj);
       return dataCopy;
     }
     case "ADD_ANSWER": {
       let { questionIndex } = action.payload;
       let dataCopy = { ...state };
-      dataCopy.questions[questionIndex].push({
-        answer_text: "New Answer",
-        correct_answer: false,
-        question_id: dataCopy.questions[questionIndex][0].question_id,
-        question_text: dataCopy.questions[questionIndex][0].question_text,
-        quiz_id: dataCopy.quizId,
-      });
-      console.log();
+      const obj = {
+        answerText: "New Answer",
+        correctAnswer: false,
+      };
+      dataCopy.questionAnswers[questionIndex].answers.push(obj);
       return dataCopy;
     }
     case "DOWNLOAD_STARTED":
@@ -135,10 +135,10 @@ function reducerAdmin(state, action) {
 const AdminMainPage = (props) => {
   const [adminData, dispatchAdmin] = useReducer(reducerAdmin, props.appData);
 
-  console.log("admin data", adminData);
-
   useEffect(() => {
+    console.log("adminData is updated");
     dispatchAdmin({ type: "UPDATE_DATA", payload: props.appData });
+    console.log("admin data", adminData);
   }, [props.appData]);
 
   const [questionsDownloaded, setQuestionsDownloaded] = useState(false);
@@ -160,7 +160,7 @@ const AdminMainPage = (props) => {
           dispatchAdmin({
             type: "DOWNLOADED_QUESTIONS",
             payload: {
-              questions: result,
+              questionsData: result,
               quizId: props.appData.data[props.appData.quizIndex].quiz_id,
             },
           });

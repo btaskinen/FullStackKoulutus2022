@@ -144,7 +144,9 @@ function reducer(state, action) {
       return { ...action.payload, dataInitiated: true, quizIndex: 0 };
     }
     case "UPDATE_STORAGE": {
-      return { ...state, saveData: action.payload };
+      let dataCopy = { ...state };
+      dataCopy = action.payload;
+      return dataCopy;
     }
     case "STORE_USER_ANSWERS": {
       console.log("STORE USER ANSWERS PAYLOAD", action.payload);

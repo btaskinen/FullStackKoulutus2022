@@ -49,7 +49,7 @@ function UserQuizPage(props) {
                   questionIndex={index}
                   quizId={question.quizId}
                   question={question}
-                  questionId={question.question_Id}
+                  questionId={question.questionId}
                   dispatch={props.dispatch}
                   appData={props.appData}
                   updateSelectedAnswers={updateSelectedAnswers}

@@ -14,15 +14,6 @@ function AdminQuizPage(props) {
   const [answers, setAnswers] = useState([]);
   const [copyEditedAnswers, setCopyEditedAnswers] = useState([]);
 
-  const addQuestionHandler = () => {
-    let copyEditedQuestions = [...editedQuestions];
-    copyEditedQuestions.push({
-      question_text: "New Question",
-      quiz_id: props.adminData.quizId,
-    });
-    setEditedQuestions(copyEditedQuestions);
-  };
-
   console.log("edited Quiz Name", editedQuizName);
   console.log("edited Questions", editedQuestions);
   console.log("copy of Edited Answers", copyEditedAnswers);
@@ -70,14 +61,14 @@ function AdminQuizPage(props) {
       <div className="flex-container">
         <div>
           <div className="question-contianer">
-            {props.adminData.questions.map((question, index) => {
+            {props.adminData.questionAnswers.map((question, index) => {
               return (
                 <AdminQuestions
-                  key={question.question_id}
-                  index={index}
-                  quizId={question.quiz_id}
+                  key={question.questionId}
+                  questionIndex={index}
+                  quizId={question.quizId}
                   question={question}
-                  questionId={question.question_id}
+                  questionId={question.questionId}
                   dispatch={props.dispatch}
                   dispatchAdmin={props.dispatchAdmin}
                   appData={props.appData}
@@ -111,7 +102,7 @@ function AdminQuizPage(props) {
             onClick={() => {
               props.dispatch({
                 type: "UPDATE_STORAGE",
-                payload: true,
+                payload: props.adminData,
               });
             }}
           >
