@@ -6,29 +6,29 @@ import { useState, useEffect } from "react";
 import { getData } from "../../utilities/requestFunctions";
 
 const UserQuestions = (props) => {
-  const [answers, setAnswers] = useState([]);
+  // const [answers, setAnswers] = useState([]);
 
-  useEffect(() => {
-    getData(`quizzes/${props.quizId}/question/${props.questionId}/answer`).then(
-      (result) => setAnswers(result)
-    );
-  }, [props.questionId, props.quizId]);
+  // useEffect(() => {
+  //   getData(`quizzes/${props.quizId}/question/${props.questionId}/answer`).then(
+  //     (result) => setAnswers(result)
+  //   );
+  // }, [props.questionId, props.quizId]);
 
   // console.log(answers);
 
   return (
     <div>
       <div className="style-question">
-        {props.index + 1}. {props.question.question_text}
+        {props.questionIndex + 1}. {props.question.questionText}
       </div>
       <div className="answer-container">
-        {answers.map((answer, index) => (
+        {props.question.answers.map((answer, answerIndex) => (
           <UserAnswers
-            key={answer.answer_id}
+            key={answer.answerId}
             question={props.question}
             answer={answer}
             questionIndex={props.questionIndex}
-            answerIndex={index}
+            answerIndex={answer[answerIndex]}
             dispatch={props.dispatch}
             updateSelectedAnswers={props.updateSelectedAnswers}
           />

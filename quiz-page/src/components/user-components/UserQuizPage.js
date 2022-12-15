@@ -42,14 +42,14 @@ function UserQuizPage(props) {
       <div className="flex-container">
         <div>
           <div className="question-contianer">
-            {props.appData.questions.map((question, index) => {
+            {props.appData.questionAnswers.map((question, index) => {
               return (
                 <UserQuestions
-                  key={question.question_id}
-                  index={index}
-                  quizId={question.quiz_id}
+                  key={question.questionId}
+                  questionIndex={index}
+                  quizId={question.quizId}
                   question={question}
-                  questionId={question.question_id}
+                  questionId={question.question_Id}
                   dispatch={props.dispatch}
                   appData={props.appData}
                   updateSelectedAnswers={updateSelectedAnswers}

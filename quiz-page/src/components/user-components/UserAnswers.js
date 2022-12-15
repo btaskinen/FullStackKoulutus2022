@@ -15,12 +15,12 @@ const UserAnswers = (props) => {
       <input
         className="checkbox"
         type="checkbox"
-        id={props.answer.answer_id}
-        name={`response to question ${props.question.question_id}`}
-        value={props.answer.correct_answer}
+        id={props.answer.answerId}
+        name={`response to question ${props.question.questionId}`}
+        value={props.answer.correctAnswer}
         onClick={answerCheckedHandler}
       />
-      <label htmlFor={props.answer.answer_id}>{props.answer.answer_text}</label>
+      <label htmlFor={props.answer.answerId}>{props.answer.answerText}</label>
     </div>
   );
 };

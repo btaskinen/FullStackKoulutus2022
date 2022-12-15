@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
 import { postData } from "./utilities/requestFunctions";
+import { questionAnswerReformatting } from "./utilities/functions";
 
 let quizData = {
   data: [
@@ -56,8 +57,12 @@ function reducer(state, action) {
       return dataCopy;
     }
     case "DOWNLOADED_QUESTIONS": {
+      const arrayData = questionAnswerReformatting(
+        action.payload.questionsData
+      );
+      console.log("ARRAY DATA", arrayData);
       let dataCopy = { ...state };
-      dataCopy.questions = action.payload.questions;
+      dataCopy.questionAnswers = arrayData;
       dataCopy.quizId = action.payload.quizId;
       console.log("DOWNLOADED QUESTIONS DATA COPY", dataCopy);
       return dataCopy;

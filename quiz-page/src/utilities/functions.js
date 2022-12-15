@@ -8,9 +8,9 @@ export const questionAnswerReformatting = (array) => {
   const newArray = array.map((object) => {
     if (!questionIdArray.includes(object.question_id)) {
       const questionObject = {
-        quiz_id: object.quiz_id,
-        question_id: object.question_id,
-        question_text: object.question_text,
+        quizId: object.quiz_id,
+        questionId: object.question_id,
+        questionText: object.question_text,
         answers: [],
       };
       questionIdArray.push(object.question_id);
@@ -27,15 +27,16 @@ export const questionAnswerReformatting = (array) => {
   // answer array in  of the corresponding question
   array.map((object) => {
     filteredArray.map((questionObject) => {
-      if (object.question_id === questionObject.question_id) {
+      if (object.question_id === questionObject.questionId) {
         const obj = {
-          answer_id: object.answer_id,
-          answer_text: object.answer_text,
-          correct_answer: object.correct_answer,
+          answerId: object.answer_id,
+          answerText: object.answer_text,
+          correctAnswer: object.correct_answer,
         };
         questionObject.answers.push(obj);
       }
     });
   });
+  console.log("Filtered Array Answers: ", filteredArray.answers);
   return filteredArray;
 };

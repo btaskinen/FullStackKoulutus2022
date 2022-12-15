@@ -17,7 +17,7 @@ const UserMainPage = (props) => {
     if (props.appData.quizSelected) {
       console.log("RUNNING USE EFFECT INSIDE IF");
       getData(
-        `user/quizzes/${
+        `quizzes/${
           props.appData.data[props.appData.quizIndex].quiz_id
         }/question`
       ).then((result) => {
@@ -25,7 +25,7 @@ const UserMainPage = (props) => {
           props.dispatch({
             type: "DOWNLOADED_QUESTIONS",
             payload: {
-              questions: result,
+              questionsData: result,
               quizId: props.appData.data[props.appData.quizIndex].quiz_id,
             },
           });
