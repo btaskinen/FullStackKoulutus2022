@@ -75,12 +75,28 @@ function reducerAdmin(state, action) {
     }
     case "ADD_QUIZ": {
       let dataCopy = { ...state };
-      dataCopy.quizzes.push({
-        quizIndex: dataCopy.quizzes.length,
-        quizName: "New Quiz",
-        questions: [],
-      });
-      console.log(dataCopy);
+      const newIndex = dataCopy.data.length + 1;
+      console.log("New Index", newIndex);
+      const obj = {
+        quiz_date: new Date(Date.now()).toISOString(),
+        quiz_description: "New Quiz",
+        quiz_id: 1,
+        quiz_name: "New Quiz",
+        quiz_validity: true,
+      };
+      dataCopy.quizSelected = true;
+      dataCopy.quizIndex = newIndex;
+      dataCopy.data.push(obj);
+      return dataCopy;
+    }
+    case "DELETE_QUIZ": {
+      console.log("delete quiz button clicked");
+      let { quizIndex } = action.payload;
+      let dataCopy = { ...state };
+      console.log("quiz index", dataCopy.data[quizIndex]);
+      dataCopy.data.splice(quizIndex, 1);
+      dataCopy.quizSelected = false;
+      console.log("DELETE QUIZ dataCOPY", dataCopy);
       return dataCopy;
     }
     case "ADD_QUESTION": {
@@ -100,6 +116,12 @@ function reducerAdmin(state, action) {
       dataCopy.questionAnswers.push(obj);
       return dataCopy;
     }
+    case "DELETE_QUESTION": {
+      let { questionIndex } = action.payload;
+      let dataCopy = { ...state };
+      dataCopy.questionAnswers.splice(questionIndex, 1);
+      return dataCopy;
+    }
     case "ADD_ANSWER": {
       let { questionIndex } = action.payload;
       let dataCopy = { ...state };
@@ -108,6 +130,12 @@ function reducerAdmin(state, action) {
         correctAnswer: false,
       };
       dataCopy.questionAnswers[questionIndex].answers.push(obj);
+      return dataCopy;
+    }
+    case "DELETE_ANSWER": {
+      let { answerIndex, questionIndex } = action.payload;
+      let dataCopy = { ...state };
+      dataCopy.questionAnswers[questionIndex].answers.splice(answerIndex, 1);
       return dataCopy;
     }
     case "DOWNLOAD_STARTED":
@@ -193,7 +221,14 @@ const AdminMainPage = (props) => {
               />
             ))}
           </div>
-          <button className="new-quiz-button">Create new quiz</button>
+          <button
+            className="new-quiz-button"
+            onClick={() => {
+              dispatchAdmin({ type: "ADD_QUIZ" });
+            }}
+          >
+            Create new quiz
+          </button>
         </div>
       )}
       {questionsDownloaded && props.appData.quizSelected && !quizSubmitted && (

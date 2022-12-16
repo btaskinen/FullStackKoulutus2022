@@ -11,13 +11,13 @@
 
 .back-to-quiz {
   border: none;
-  background-color: #ced4da;
+  background-color: #e9ecef;
   color: #087f5b;
 }
 
 .back-to-quiz:hover {
   border: none;
-  background-color: #ced4da;
+  background-color: #e9ecef;
   text-decoration: underline;
   color: #087f5b;
   cursor: pointer;

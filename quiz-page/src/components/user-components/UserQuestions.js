@@ -19,7 +19,9 @@ const UserQuestions = (props) => {
   return (
     <div>
       <div className="style-question">
-        {props.questionIndex + 1}. {props.question.questionText}
+        <p className="user-quiz-page-question-text">
+          {props.questionIndex + 1}. {props.question.questionText}
+        </p>
       </div>
       <div className="answer-container">
         {props.question.answers.map((answer, answerIndex) => (

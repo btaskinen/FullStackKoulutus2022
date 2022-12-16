@@ -60,7 +60,7 @@ function UserQuizPage(props) {
         </div>
         <div className="quiz-page-button-container">
           <button className="submit-button" onClick={onQuizSubmit}>
-            Submit Answers
+            Submit
           </button>
           <button
             className="quiz-page-cancel-button"

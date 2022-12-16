@@ -1,6 +1,7 @@
 export const questionAnswerReformatting = (array) => {
   // array to store available question ids
   const questionIdArray = [];
+  console.log("raw data", array);
 
   // remove duplicate questions by performing a series of two map function:
   // 1. map: only return a formatted object, if the question id hasn't been
@@ -17,6 +18,8 @@ export const questionAnswerReformatting = (array) => {
       return questionObject;
     }
   });
+
+  console.log("new array", newArray);
 
   // 2. map: the newArray is filtered to remove the undefined elements of the array
   const filteredArray = newArray.filter((index) => {

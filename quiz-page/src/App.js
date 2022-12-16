@@ -88,12 +88,18 @@ function reducer(state, action) {
     }
     case "ADD_QUIZ": {
       let dataCopy = { ...state };
-      dataCopy.quizzes.push({
-        quizIndex: dataCopy.quizzes.length,
-        quizName: "New Quiz",
-        questions: [],
-      });
-      console.log(dataCopy);
+      const newIndex = dataCopy.data.length + 1;
+      console.log("New Index", newIndex);
+      const obj = {
+        quiz_date: new Date(Date.now()).toISOString(),
+        quiz_description: "New Quiz",
+        quiz_id: 1,
+        quiz_name: "New Quiz",
+        quiz_validity: true,
+      };
+      dataCopy.quizSelected = true;
+      dataCopy.quizIndex = newIndex;
+      dataCopy.data.push(obj);
       return dataCopy;
     }
     case "ADD_QUESTION": {

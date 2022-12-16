@@ -2,6 +2,7 @@ import "./AdminQuizPage.css";
 import AdminQuestions from "./AdminQuestions";
 import Quizzes from "../Quizzes";
 import { useState } from "react";
+import { MdDelete } from "react-icons/md";
 
 function AdminQuizPage(props) {
   const [editedQuizName, setEditedQuizName] = useState(
@@ -13,10 +14,6 @@ function AdminQuizPage(props) {
   );
   const [answers, setAnswers] = useState([]);
   const [copyEditedAnswers, setCopyEditedAnswers] = useState([]);
-
-  console.log("edited Quiz Name", editedQuizName);
-  console.log("edited Questions", editedQuestions);
-  console.log("copy of Edited Answers", copyEditedAnswers);
 
   // const onQuizSubmit = () => {
   //   console.log("Quiz Submit");
@@ -98,7 +95,7 @@ function AdminQuizPage(props) {
         <div className="quiz-page-button-container">
           {/* <button className="submit-button" onClick={onQuizSubmit}> */}
           <button
-            className="save-button"
+            className="admin-quiz-page-button save-button"
             onClick={() => {
               props.dispatch({
                 type: "UPDATE_STORAGE",
@@ -109,7 +106,7 @@ function AdminQuizPage(props) {
             Save
           </button>
           <button
-            className="cancel-button"
+            className="admin-quiz-page-button cancel-button"
             onClick={() => {
               const response = window.confirm(
                 "Are you sure you want to Cancel? Your changes will be lost."
@@ -123,6 +120,29 @@ function AdminQuizPage(props) {
             }}
           >
             Cancel
+          </button>
+          <button
+            className="admin-quiz-page-button delete-quiz-button"
+            onClick={() => {
+              const response = window.confirm(
+                "This action will delete the quiz and can not be undone. Are you sure you want to continue?"
+              );
+              if (response) {
+                props.dispatchAdmin({
+                  type: "DELETE_QUIZ",
+                  payload: {
+                    quizIndex: props.adminData.quizIndex,
+                  },
+                });
+                props.dispatch({
+                  type: "QUIZ_UNSELECTED",
+                  payload: { quizSelected: false },
+                });
+              }
+            }}
+          >
+            {/* <MdDelete className="delete-icon" /> */}
+            Delete Quiz
           </button>
         </div>
       </div>

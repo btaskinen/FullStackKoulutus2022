@@ -16,3 +16,26 @@
   border: 1px solid #495057;
   font-size: 14px;
 }
+
+.delete-button-answers {
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e9ecef;
+  border: none;
+  border-radius: 5px;
+}
+
+.delete-icon-answers {
+  color: #087f5b;
+  width: 24px;
+  height: 24px;
+}
+
+.delete-button-answers:hover,
+.delete-icon-answers:hover {
+  background-color: #087f5b;
+  color: #fff;
+}

@@ -2,6 +2,7 @@ import "../../App.css";
 import "./AdminQuestions.css";
 import AdminAnswers from "./AdminAnswers";
 import "../Quizzes";
+import { MdDelete } from "react-icons/md";
 import { useState, useEffect } from "react";
 import { getData } from "../../utilities/requestFunctions";
 
@@ -40,8 +41,23 @@ const AdminQuestions = (props) => {
   return (
     <div>
       <div className="style-question">
-        {props.questionIndex + 1}.
-        {props.adminData.questionAnswers[props.questionIndex].questionText}
+        <button
+          className="delete-button-questions"
+          onClick={() => {
+            props.dispatchAdmin({
+              type: "DELETE_QUESTION",
+              payload: {
+                questionIndex: props.questionIndex,
+              },
+            });
+          }}
+        >
+          <MdDelete className="delete-icon" />
+        </button>
+        <p className="question-text-style">
+          {props.questionIndex + 1}.{" "}
+          {props.adminData.questionAnswers[props.questionIndex].questionText}
+        </p>
         <input
           className="question-text-field"
           type="text"
