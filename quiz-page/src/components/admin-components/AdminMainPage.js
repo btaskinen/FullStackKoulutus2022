@@ -4,6 +4,7 @@ import QuizButton from "../QuizButton";
 import AdminQuizPage from "./AdminQuizPage";
 import { getData } from "../../utilities/requestFunctions";
 import { questionAnswerReformatting } from "../../utilities/functions";
+import { deleteData } from "../../utilities/requestFunctions";
 
 function reducerAdmin(state, action) {
   switch (action.type) {
@@ -91,11 +92,14 @@ function reducerAdmin(state, action) {
     case "DELETE_QUIZ": {
       console.log("delete quiz button clicked");
       let { quizIndex } = action.payload;
+      console.log("QUIZ INDEX", quizIndex);
       let dataCopy = { ...state };
-      console.log("quiz index", dataCopy.data[quizIndex]);
+      console.log("Data Copy", dataCopy);
+      console.log("quiz id", dataCopy.data[quizIndex].quiz_id);
       dataCopy.data.splice(quizIndex, 1);
       dataCopy.quizSelected = false;
       console.log("DELETE QUIZ dataCOPY", dataCopy);
+      deleteData(`quizzes/${dataCopy.data[quizIndex].quiz_id}`);
       return dataCopy;
     }
     case "ADD_QUESTION": {
@@ -103,7 +107,7 @@ function reducerAdmin(state, action) {
       const newIndex = dataCopy.questionAnswers.length + 1;
       console.log("New Index", newIndex);
       const obj = {
-        quizId: undefined,
+        quizId: action.payload,
         questionText: "New Question",
         answers: [
           {
@@ -188,10 +192,10 @@ const AdminMainPage = (props) => {
           questionsData: [
             {
               answer_id: null,
-              answer_text: "Reindeer",
+              answer_text: "New Answer",
               correct_answer: false,
               question_id: null,
-              question_text: "Which of these animals is not native to Finland?",
+              question_text: "New Question",
               quiz_id: null,
             },
           ],

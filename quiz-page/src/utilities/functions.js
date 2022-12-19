@@ -1,3 +1,6 @@
+import { getData, postData } from "./requestFunctions";
+import { putData } from "./requestFunctions";
+
 export const questionAnswerReformatting = (array) => {
   // array to store available question ids
   const questionIdArray = [];
@@ -42,4 +45,73 @@ export const questionAnswerReformatting = (array) => {
   });
   console.log("Filtered Array Answers: ", filteredArray.answers);
   return filteredArray;
+};
+
+export const savingData = (data, index) => {
+  console.log("INSIDE savingData Function", data);
+  if (data.data[index].quiz_id === null) {
+    postData("quizzes/", data.data[index]);
+    // then(() => {
+    //   const result = getData(`quizzes/${data.data[index].quiz_name}`).then(
+    //     () => {
+    //       console.log("Resut from GetQuizByQuizName", result);
+    //     }
+    //   );
+  } else {
+    const quizData = {
+      quiz_id: data.data[index].quiz_id,
+      quiz_name: data.data[index].quiz_name,
+      quiz_description: "",
+      quiz_date: new Date(Date.now()).toISOString(),
+      quiz_validity: true,
+    };
+    putData(`quizzes/${data.data[index].quiz_id}`, quizData);
+    data.questionAnswers.map((question) => {
+      // when question is new => post request
+      if (!question.questionId) {
+        const questionData = {
+          question_text: question.questionText,
+          quizId: question.quizId,
+        };
+        postData(`/quizzes/${question.quizId}/question`, questionData);
+
+        // postData(`quizzes/${question.quizId}/question/:question_id/answer`);
+        return;
+      } else {
+        // when question is old => put request
+        const questionData = {
+          question_id: question.questionId,
+          question_text: question.questionText,
+          quizId: question.quizId,
+        };
+        putData(
+          `/quizzes/${question.quizId}/question/${question.questionId}`,
+          questionData
+        );
+        question.answers.map((answer) => {
+          if (!answer.answerId) {
+            const answerData = {
+              answer_text: answer.answerText,
+              correct_answer: answer.correctAnswer,
+            };
+            postData(
+              `quizzes/${question.quizId}/question/${question.questionId}/answer`,
+              answerData
+            );
+          } else {
+            const answerData = {
+              answer_text: answer.answerText,
+              correct_answer: answer.correctAnswer,
+            };
+            putData(
+              `quizzes/${question.quizId}/question/${question.questionId}/answer/${answer.answerId}`,
+              answerData
+            );
+          }
+        });
+
+        return;
+      }
+    });
+  }
 };

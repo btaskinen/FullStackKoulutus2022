@@ -5,6 +5,8 @@ const getQuizzes = "SELECT * FROM quizzes";
 // const getQuizById = "SELECT * FROM quizzes WHERE quiz_id = $1";
 const getQuizById =
   "SELECT quiz_id, question.question_id, question_text, answer_id, answer_text, correct_answer FROM question INNER JOIN answer ON question.question_id = answer.question_id WHERE question.quiz_id = $1";
+const getQuizByQuizName = "SELECT * FROM quizzes WHERE quiz_name = $1";
+
 const addNewQuiz =
   "INSERT INTO quizzes (quiz_name, quiz_description, quiz_date, quiz_validity) VALUES ($1,$2,$3,$4)";
 const updateQuiz =
@@ -58,6 +60,7 @@ const isAdminQuerry = "SELECT * FROM users WHERE user_email = $1";
 module.exports = {
   getQuizzes,
   getQuizById,
+  getQuizByQuizName,
   addNewQuiz,
   updateQuiz,
   deleteQuiz,

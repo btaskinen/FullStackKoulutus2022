@@ -5,10 +5,13 @@ import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 
 function AdminQuizPage(props) {
-  console.log("QUIZ PAGE", props.adminData);
   const [editedQuizName, setEditedQuizName] = useState(
     props.adminData.data[props.adminData.quizIndex].quiz_name
   );
+
+  const quizNameHandler = (event) => {
+    setEditedQuizName(event.target.value);
+  };
 
   const [editedQuestions, setEditedQuestions] = useState(
     props.adminData.questions
@@ -16,29 +19,10 @@ function AdminQuizPage(props) {
   const [answers, setAnswers] = useState([]);
   const [copyEditedAnswers, setCopyEditedAnswers] = useState([]);
 
-  // const onQuizSubmit = () => {
-  //   console.log("Quiz Submit");
-  //   props.dispatch({
-  //     type: "STORE_USER_ANSWERS",
-  //     payload: { userAnswers: answerChecked },
-  //   });
-  //   // props.quizSubmittedHandler(true);
-  //   props.setQuizSubmitted(true);
-  // };
-
-  // const updateSelectedAnswers = (value) => {
-  //   if (
-  //     answerChecked.filter((id) => id.answerId === value.answerId).length > 0
-  //   ) {
-  //     setanswerChecked(
-  //       answerChecked.filter((answer) => answer.answerId !== value.answerId)
-  //     );
-  //   } else {
-  //     setanswerChecked([...answerChecked, value]);
-  //   }
-  // };
-
-  // console.log(answerChecked);
+  console.log(
+    "QUIZ PAGE QUIZ ID",
+    props.adminData.data[props.adminData.quizIndex].quiz_id
+  );
 
   return (
     <div>
@@ -50,7 +34,7 @@ function AdminQuizPage(props) {
           dispatch={props.dispatch}
           dispatchAdmin={props.dispatchAdmin}
           editedQuizName={editedQuizName}
-          setEditedQuizName={setEditedQuizName}
+          quizNameHandler={quizNameHandler}
         />
       </header>
       <p className="quizPage-main">
@@ -87,7 +71,11 @@ function AdminQuizPage(props) {
           <button
             className="add-question-button"
             onClick={() => {
-              props.dispatchAdmin({ type: "ADD_QUESTION" });
+              props.dispatchAdmin({
+                type: "ADD_QUESTION",
+                payload:
+                  props.adminData.data[props.adminData.quizIndex].quiz_id,
+              });
             }}
           >
             Add Question
@@ -100,7 +88,11 @@ function AdminQuizPage(props) {
             onClick={() => {
               props.dispatch({
                 type: "SAVE_EDITED_QUIZ",
-                payload: props.adminData,
+                payload: {
+                  data: props.adminData,
+                  quizName: editedQuizName,
+                  quizIndex: props.adminData.quizIndex,
+                },
               });
             }}
           >

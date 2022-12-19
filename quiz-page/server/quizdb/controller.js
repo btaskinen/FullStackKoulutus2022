@@ -32,6 +32,17 @@ const getQuizById = async (req, res) => {
   }
 };
 
+const getQuizByQuizName = async (req, res) => {
+  try {
+    const { quiz_name } = req.params;
+    let results = await pool.query(queries.getQuizByQuizName, [quiz_name]);
+    res.status(200).json(results.rows);
+  } catch (error) {
+    res.status(500).send("An error occured");
+    console.log(error);
+  }
+};
+
 // adding a new quiz to quizdb
 // status code 201 = new resource created
 const addNewQuiz = async (req, res) => {
@@ -500,6 +511,7 @@ const accessResources = (req, res) => {
 module.exports = {
   getQuizzes,
   getQuizById,
+  getQuizByQuizName,
   addNewQuiz,
   updateQuiz,
   deleteQuiz,

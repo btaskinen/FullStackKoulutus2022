@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
 import { postData } from "./utilities/requestFunctions";
-import { questionAnswerReformatting } from "./utilities/functions";
+import { questionAnswerReformatting, savingData } from "./utilities/functions";
 
 let quizData = {
   data: [
@@ -173,8 +173,15 @@ function reducer(state, action) {
       return dataCopy;
     }
     case "SAVE_EDITED_QUIZ": {
+      let { data, quizName, quizIndex } = action.payload;
+      console.log("DATA TO BE SAVED", data);
       let dataCopy = { ...state };
-      dataCopy = action.payload;
+      dataCopy.data[quizIndex].quiz_name = quizName;
+      savingData(data, quizIndex);
+      dataCopy.quizSelected = false;
+      dataCopy.quizIndex = -1;
+      // let dataCopy = { ...state };
+      return dataCopy;
     }
     default:
       throw new Error("Something went wrong!");
