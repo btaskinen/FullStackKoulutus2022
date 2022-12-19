@@ -25,7 +25,7 @@ let quizData = {
       quiz_validity: false,
     },
   ],
-  quizIndex: 0,
+  quizIndex: -1,
   quizSelected: false,
   saveData: false,
 };
@@ -39,6 +39,7 @@ function reducer(state, action) {
       return dataCopy;
     }
     case "QUIZ_SELECTED": {
+      console.log("SELECTED QUIZ INDEX", action.payload.quizIndex);
       let dataCopy = { ...state };
       dataCopy.quizSelected = action.payload.quizSelected;
       dataCopy.quizIndex = action.payload.quizIndex;
@@ -48,6 +49,7 @@ function reducer(state, action) {
       console.log("QUIZ_UNSELECTED");
       let dataCopy = { ...state };
       dataCopy.quizSelected = action.payload.quizSelected;
+      dataCopy.quizIndex = -1;
       return dataCopy;
     }
     case "QUIZ_CHANGER": {
@@ -169,6 +171,10 @@ function reducer(state, action) {
       postData(`quizzes/quiz_execution`, data);
       console.log("STORE USER ANSWERS", dataCopy);
       return dataCopy;
+    }
+    case "SAVE_EDITED_QUIZ": {
+      let dataCopy = { ...state };
+      dataCopy = action.payload;
     }
     default:
       throw new Error("Something went wrong!");

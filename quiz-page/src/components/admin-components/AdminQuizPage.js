@@ -5,6 +5,7 @@ import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 
 function AdminQuizPage(props) {
+  console.log("QUIZ PAGE", props.adminData);
   const [editedQuizName, setEditedQuizName] = useState(
     props.adminData.data[props.adminData.quizIndex].quiz_name
   );
@@ -98,7 +99,7 @@ function AdminQuizPage(props) {
             className="admin-quiz-page-button save-button"
             onClick={() => {
               props.dispatch({
-                type: "UPDATE_STORAGE",
+                type: "SAVE_EDITED_QUIZ",
                 payload: props.adminData,
               });
             }}
@@ -114,7 +115,10 @@ function AdminQuizPage(props) {
               if (response) {
                 props.dispatch({
                   type: "QUIZ_UNSELECTED",
-                  payload: { quizSelected: false },
+                  payload: {
+                    state: props.appData,
+                    quizSelected: false,
+                  },
                 });
               }
             }}

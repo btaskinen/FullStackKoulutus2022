@@ -75,16 +75,15 @@ function reducerAdmin(state, action) {
     }
     case "ADD_QUIZ": {
       let dataCopy = { ...state };
-      const newIndex = dataCopy.data.length + 1;
+      const newIndex = dataCopy.data.length;
       console.log("New Index", newIndex);
       const obj = {
         quiz_date: new Date(Date.now()).toISOString(),
         quiz_description: "New Quiz",
-        quiz_id: 1,
+        quiz_id: null,
         quiz_name: "New Quiz",
         quiz_validity: true,
       };
-      dataCopy.quizSelected = true;
       dataCopy.quizIndex = newIndex;
       dataCopy.data.push(obj);
       return dataCopy;
@@ -177,7 +176,30 @@ const AdminMainPage = (props) => {
     console.log("RUNNING USE EFFECT");
     console.log("QUIZ SELECTED", props.appData.quizSelected);
     console.log("QUIZ INDEX", props.appData.quizIndex);
-    if (props.appData.quizSelected) {
+
+    console.log("quiz id", props.appData.data[props.appData.quizIndex]);
+    if (
+      props.appData.quizSelected &&
+      props.appData.data[props.appData.quizIndex].quiz_id === null
+    ) {
+      dispatchAdmin({
+        type: "DOWNLOADED_QUESTIONS",
+        payload: {
+          questionsData: [
+            {
+              answer_id: null,
+              answer_text: "Reindeer",
+              correct_answer: false,
+              question_id: null,
+              question_text: "Which of these animals is not native to Finland?",
+              quiz_id: null,
+            },
+          ],
+          quizId: props.appData.data[props.appData.quizIndex].quiz_id,
+        },
+      });
+      setQuestionsDownloaded(true);
+    } else if (props.appData.quizSelected) {
       console.log("RUNNING USE EFFECT INSIDE IF");
       getData(
         `quizzes/${

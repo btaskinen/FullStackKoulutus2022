@@ -1,22 +1,25 @@
 import "./Quizzes.css";
-import { MdDelete } from "react-icons/md";
+import { useState } from "react";
 
 const Quizzes = (props) => {
+  const [quizName, setQuizName] = useState(
+    props.adminData.data[props.adminData.quizIndex].quiz_name
+  );
+
+  console.log("Quizzes props", props);
+
+  const quizNameHandler = (event) => {
+    setQuizName(event.target.value);
+  };
+
   return (
     <div className="header">
-      <div className="quiz-title">
-        {props.adminData.data[props.adminData.quizIndex].quiz_name}
-      </div>
+      <div className="quiz-title">{quizName}</div>
       <input
         className="quiz-head-text-field"
         type="text"
-        onChange={(event) => {
-          props.dispatchAdmin({
-            type: "QUIZ_NAME_CHANGER",
-            payload: event.target.value,
-          });
-        }}
-        value={props.adminData.data[props.adminData.quizIndex].quiz_name}
+        onChange={quizNameHandler}
+        value={quizName}
       />
     </div>
   );
