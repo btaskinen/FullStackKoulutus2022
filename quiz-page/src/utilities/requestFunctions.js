@@ -23,7 +23,7 @@ export const postData = async (url, data) => {
       .post(`https://localhost:8080/api/quiz-page/${url}`, data, {
         headers: { Authorization: localStorage.getItem("loginToken") },
       })
-      .then((result) => alert(result.data));
+      .then((result) => console.log(result.data));
   } catch (error) {
     console.log(error.response);
     return error;
@@ -36,7 +36,7 @@ export const putData = async (url, data) => {
       .put(`https://localhost:8080/api/quiz-page/${url}`, data, {
         headers: { Authorization: localStorage.getItem("loginToken") },
       })
-      .then((result) => alert(result.data));
+      .then((result) => console.log(result.data));
   } catch (error) {
     console.log(error.response.data);
     return error;
@@ -61,7 +61,7 @@ export const postNewData = async (url, data) => {
       .post(`https://localhost:8080/api/quiz-page/${url}`, data, {
         headers: { Authorization: localStorage.getItem("loginToken") },
       })
-      .then((result) => alert(result.data));
+      .then((result) => console.log(result.data));
     await axios.get;
   } catch (error) {
     console.log(error.response.data);

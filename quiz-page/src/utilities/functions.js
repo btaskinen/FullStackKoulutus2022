@@ -1,4 +1,4 @@
-import { getData, postData, getDataBody } from "./requestFunctions";
+import { getData, postData } from "./requestFunctions";
 import { putData } from "./requestFunctions";
 
 export const questionAnswerReformatting = (array) => {
@@ -100,9 +100,29 @@ export const savingData = (data, index) => {
           question_text: question.questionText,
           quizId: question.quizId,
         };
-        postData(`/quizzes/${question.quizId}/question`, questionData);
+        postData(`/quizzes/${question.quizId}/question`, questionData)
+          .then(() => {
+            console.log("Question Text", question.questionText);
+            const questionResult = getData(
+              `quizzes/${data.data[index].quiz_id}/question/question_text/${question.questionText}`
+            );
+            return questionResult;
+          })
+          .then((questionResult) => {
+            console.log("Result from Question getData", questionResult);
+            question.answers.map((answer) => {
+              const answerData = {
+                answer_id: answer.answerId,
+                answer_text: answer.answerText,
+                correct_answer: answer.correctAnswer,
+              };
+              postData(
+                `quizzes/${data.data[index].quiz_id}/question/${questionResult[0].question_id}/answer`,
+                answerData
+              );
+            });
+          });
 
-        // postData(`quizzes/${question.quizId}/question/:question_id/answer`);
         return;
       } else {
         // when question is old => put request

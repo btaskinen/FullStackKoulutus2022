@@ -1,16 +1,63 @@
 import "./AdminQuizPage.css";
 import AdminQuestions from "./AdminQuestions";
 import Quizzes from "../Quizzes";
+import Modal from "../Modal";
+import Backdrop from "../Backdrop";
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 
 function AdminQuizPage(props) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalText, setModalText] = useState("");
+  const [modalButton, setModalButton] = useState("");
+  const [modalMode, setModalMode] = useState("");
   const [editedQuizName, setEditedQuizName] = useState(
     props.adminData.data[props.adminData.quizIndex].quiz_name
   );
 
   const quizNameHandler = (event) => {
     setEditedQuizName(event.target.value);
+  };
+
+  const openSaveModalHandler = () => {
+    setModalIsOpen(true);
+    setModalText("Your data has been successfully saved");
+    setModalButton("OK");
+    setModalMode("Save");
+  };
+
+  const openCancelModalHandler = () => {
+    setModalIsOpen(true);
+    setModalText("Are you sure you want to Cancel? Your changes will be lost.");
+    setModalButton("Confirm");
+    setModalMode("Cancel");
+  };
+
+  const closeModalHandler = () => {
+    setModalIsOpen(false);
+  };
+
+  const confirmSaveHandler = () => {
+    setModalIsOpen(false);
+    props.dispatch({
+      type: "SAVE_EDITED_QUIZ",
+      payload: {
+        data: props.adminData,
+        quizName: editedQuizName,
+        quizIndex: props.adminData.quizIndex,
+      },
+    });
+  };
+
+  const confirmCancelHandler = () => {
+    setModalIsOpen(false);
+    props.dispatch({
+      type: "QUIZ_UNSELECTED",
+      payload: {
+        state: props.appData,
+        quizSelected: false,
+      },
+    });
   };
 
   const [editedQuestions, setEditedQuestions] = useState(
@@ -85,35 +132,13 @@ function AdminQuizPage(props) {
           {/* <button className="submit-button" onClick={onQuizSubmit}> */}
           <button
             className="admin-quiz-page-button save-button"
-            onClick={() => {
-              props.dispatch({
-                type: "SAVE_EDITED_QUIZ",
-                payload: {
-                  data: props.adminData,
-                  quizName: editedQuizName,
-                  quizIndex: props.adminData.quizIndex,
-                },
-              });
-            }}
+            onClick={openSaveModalHandler}
           >
             Save
           </button>
           <button
             className="admin-quiz-page-button cancel-button"
-            onClick={() => {
-              const response = window.confirm(
-                "Are you sure you want to Cancel? Your changes will be lost."
-              );
-              if (response) {
-                props.dispatch({
-                  type: "QUIZ_UNSELECTED",
-                  payload: {
-                    state: props.appData,
-                    quizSelected: false,
-                  },
-                });
-              }
-            }}
+            onClick={openCancelModalHandler}
           >
             Cancel
           </button>
@@ -142,6 +167,23 @@ function AdminQuizPage(props) {
           </button>
         </div>
       </div>
+      {modalIsOpen && <Backdrop onClick={closeModalHandler} />}
+      {modalIsOpen && modalMode === "Cancel" && (
+        <Modal
+          closeModalHandler={closeModalHandler}
+          modalText={modalText}
+          modalButton={modalButton}
+          confirmHandler={confirmCancelHandler}
+        />
+      )}
+      {modalIsOpen && modalMode === "Save" && (
+        <Modal
+          closeModalHandler={closeModalHandler}
+          modalText={modalText}
+          modalButton={modalButton}
+          confirmHandler={confirmSaveHandler}
+        />
+      )}
     </div>
   );
 }
