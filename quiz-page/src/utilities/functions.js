@@ -1,4 +1,4 @@
-import { getData, postData } from "./requestFunctions";
+import { getData, postData, getDataBody } from "./requestFunctions";
 import { putData } from "./requestFunctions";
 
 export const questionAnswerReformatting = (array) => {
@@ -50,13 +50,40 @@ export const questionAnswerReformatting = (array) => {
 export const savingData = (data, index) => {
   console.log("INSIDE savingData Function", data);
   if (data.data[index].quiz_id === null) {
-    postData("quizzes/", data.data[index]);
-    // then(() => {
-    //   const result = getData(`quizzes/${data.data[index].quiz_name}`).then(
-    //     () => {
-    //       console.log("Resut from GetQuizByQuizName", result);
-    //     }
-    //   );
+    postData("quizzes/", data.data[index])
+      .then(() => getData(`quizzes/quizname/${data.data[index].quiz_name}`))
+      .then((result) => {
+        console.log("Result from Quiz getData", result[0].quiz_id);
+        data.questionAnswers.map((question) => {
+          const questionData = {
+            question_text: question.questionText,
+            quizId: result[0].quiz_id,
+          };
+          postData(`quizzes/${result[0].quiz_id}/question`, questionData)
+            .then(() => {
+              console.log("Question Text", question.questionText);
+              const questionResult = getData(
+                `quizzes/${result[0].quiz_id}/question/question_text/${question.questionText}`
+              );
+              return questionResult;
+            })
+            .then((questionResult) => {
+              console.log("Result from Question getData", questionResult);
+              question.answers.map((answer) => {
+                const answerData = {
+                  answer_id: answer.answerId,
+                  answer_text: answer.answerText,
+                  correct_answer: answer.correctAnswer,
+                };
+                postData(
+                  `quizzes/${result[0].quiz_id}/question/${questionResult[0].question_id}/answer`,
+                  answerData
+                );
+              });
+            });
+        });
+      });
+    return;
   } else {
     const quizData = {
       quiz_id: data.data[index].quiz_id,

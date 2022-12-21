@@ -14,9 +14,14 @@ router.get("/", (req, res) => {
 router.get("/quizzes", tokenVerification, controller.getQuizzes);
 // router.get("/quizzes", controller.getQuizzes);
 router.get("/quizzes/:quiz_id", tokenVerification, controller.getQuizById);
+// router.get(
+//   "/quizzes/verify/:quiz_id",
+//   tokenVerification,
+//   controller.getQuizById
+// );
 // router.get("/quizzes/:quiz_id", controller.getQuizById);
 router.get(
-  "/quizzes/:quiz_name",
+  "/quizzes/quizname/:quiz_name",
   tokenVerification,
   controller.getQuizByQuizName
 );
@@ -51,6 +56,13 @@ router.get(
   tokenVerification, // alternatively * instead of :quiz_id?
   controller.getQuestionByQuestionId
 );
+
+router.get(
+  "/quizzes/:quiz_id/question/question_text/:question_text",
+  tokenVerification, // alternatively * instead of :quiz_id?
+  controller.getQuestionByQuestionText
+);
+
 router.post(
   "/quizzes/:quiz_id/question",
   tokenVerification,

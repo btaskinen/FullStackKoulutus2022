@@ -25,7 +25,7 @@ export const postData = async (url, data) => {
       })
       .then((result) => alert(result.data));
   } catch (error) {
-    console.log(error.response.data);
+    console.log(error.response);
     return error;
   }
 };
@@ -48,6 +48,21 @@ export const deleteData = async (url) => {
     await axios.delete(`https://localhost:8080/api/quiz-page/${url}`, {
       headers: { Authorization: localStorage.getItem("loginToken") },
     });
+  } catch (error) {
+    console.log(error.response.data);
+    return error;
+  }
+};
+
+export const postNewData = async (url, data) => {
+  console.log("request function", data);
+  try {
+    await axios
+      .post(`https://localhost:8080/api/quiz-page/${url}`, data, {
+        headers: { Authorization: localStorage.getItem("loginToken") },
+      })
+      .then((result) => alert(result.data));
+    await axios.get;
   } catch (error) {
     console.log(error.response.data);
     return error;

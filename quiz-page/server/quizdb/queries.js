@@ -2,9 +2,9 @@
 
 // ---------------------------- QUIZ QUERIES ------------------------------------
 const getQuizzes = "SELECT * FROM quizzes";
-// const getQuizById = "SELECT * FROM quizzes WHERE quiz_id = $1";
-const getQuizById =
-  "SELECT quiz_id, question.question_id, question_text, answer_id, answer_text, correct_answer FROM question INNER JOIN answer ON question.question_id = answer.question_id WHERE question.quiz_id = $1";
+const getQuizById = "SELECT * FROM quizzes WHERE quiz_id = $1";
+// const getCompleteQuizById =
+//   "SELECT quiz_id, question.question_id, question_text, answer_id, answer_text, correct_answer FROM question INNER JOIN answer ON question.question_id = answer.question_id WHERE question.quiz_id = $1";
 const getQuizByQuizName = "SELECT * FROM quizzes WHERE quiz_name = $1";
 
 const addNewQuiz =
@@ -19,6 +19,9 @@ const getQuestionsByQuizIdUser = "SELECT * FROM question WHERE quiz_id = $1";
 const getQuestionsByQuizId =
   "SELECT quiz_id, question.question_id, question_text, answer_id, answer_text, correct_answer, answer.question_id FROM answer INNER JOIN question ON question.question_id = answer.question_id WHERE quiz_id = $1";
 const getQuestionByQuestionId = "SELECT * FROM question WHERE question_id = $1";
+
+const getQuestionByQuestionText =
+  "SELECT * FROM question WHERE question_text = $1";
 const addNewQuestion =
   "INSERT INTO question (question_text, quiz_id) VALUES ($1, $2)";
 const updateQuestion =
@@ -67,6 +70,7 @@ module.exports = {
   getQuestionsByQuizId,
   getQuestionsByQuizIdUser,
   getQuestionByQuestionId,
+  getQuestionByQuestionText,
   addNewQuestion,
   updateQuestion,
   deleteQuestion,

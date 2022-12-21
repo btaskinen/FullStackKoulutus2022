@@ -22,6 +22,7 @@ const getQuizzes = async (req, res) => {
 };
 
 const getQuizById = async (req, res) => {
+  console.log("REQ PARAMS QUIZ ID", req.params.quiz_id);
   try {
     const quizId = parseInt(req.params.quiz_id);
     let results = await pool.query(queries.getQuizById, [quizId]);
@@ -32,7 +33,20 @@ const getQuizById = async (req, res) => {
   }
 };
 
+// const getCompleteQuizById = async (req, res) => {
+//   console.log("REQ PARAMS QUIZ ID", req.params.quiz_id);
+//   try {
+//     const quizId = parseInt(req.params.quiz_id);
+//     let results = await pool.query(queries.getCompleteQuizById, [quizId]);
+//     res.status(200).json(results.rows);
+//   } catch (error) {
+//     res.status(500).send("An error occured");
+//     console.log(error);
+//   }
+// };
+
 const getQuizByQuizName = async (req, res) => {
+  console.log("QUIZ NAME REQ BODY", req.body);
   try {
     const { quiz_name } = req.params;
     let results = await pool.query(queries.getQuizByQuizName, [quiz_name]);
@@ -156,11 +170,33 @@ const getQuestionByQuestionId = async (req, res) => {
   }
 };
 
+const getQuestionByQuestionText = async (req, res) => {
+  try {
+    console.log("QUESTION BY QUESTION TEXT REQ PARAMS:", req.params);
+    const questionText = req.params.question_text;
+    console.log("QUESTION BY QUESTION TEXT QUESTION TEXT:", questionText);
+    let results = await pool.query(queries.getQuestionByQuestionText, [
+      questionText,
+    ]);
+    console.log("RESULTS FROM QUESTION BY QUESTION TEXT:", results);
+    const questionTextNotInDb = !results.rows.length;
+    if (questionTextNotInDb) {
+      res.send("No question found. Make sure question exists");
+    }
+    res.status(200).json(results.rows);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("An error occured");
+  }
+};
+
 const addNewQuestion = async (req, res) => {
   try {
     const quizId = parseInt(req.params.quiz_id);
     let results = await pool.query(queries.getQuizById, [quizId]);
+    console.log("addNEWQUESTION", results);
     const quizIdNotInDb = !results.rows.length;
+    console.log("addNewQuestion Boolean", quizIdNotInDb);
     if (quizIdNotInDb) {
       res.send("Quiz not found. Make sure it exists");
     }
@@ -408,6 +444,7 @@ const deleteUserByEmail = async (req, res) => {
 
 // user login
 const userLogin = async (req, res, next) => {
+  console.log("Request Body", req.body);
   const { user_email, password } = req.body;
   const { error } = loginValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -518,6 +555,7 @@ module.exports = {
   getQuestionsByQuizId,
   getQuestionsByQuizIdUser,
   getQuestionByQuestionId,
+  getQuestionByQuestionText,
   addNewQuestion,
   updateQuestion,
   deleteQuestion,
