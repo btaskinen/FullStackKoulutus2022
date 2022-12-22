@@ -4,7 +4,6 @@ import Quizzes from "../Quizzes";
 import Modal from "../Modal";
 import Backdrop from "../Backdrop";
 import { useState } from "react";
-import { MdDelete } from "react-icons/md";
 
 function AdminQuizPage(props) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -60,11 +59,11 @@ function AdminQuizPage(props) {
     });
   };
 
-  const [editedQuestions, setEditedQuestions] = useState(
-    props.adminData.questions
-  );
-  const [answers, setAnswers] = useState([]);
-  const [copyEditedAnswers, setCopyEditedAnswers] = useState([]);
+  // const [editedQuestions, setEditedQuestions] = useState(
+  //   props.adminData.questions
+  // );
+  // const [answers, setAnswers] = useState([]);
+  // const [copyEditedAnswers, setCopyEditedAnswers] = useState([]);
 
   console.log(
     "QUIZ PAGE QUIZ ID",
@@ -102,12 +101,12 @@ function AdminQuizPage(props) {
                   dispatchAdmin={props.dispatchAdmin}
                   appData={props.appData}
                   adminData={props.adminData}
-                  editedQuestions={editedQuestions}
-                  setEditedQuestions={setEditedQuestions}
-                  setAnswers={setAnswers}
-                  copyEditedAnswers={copyEditedAnswers}
-                  setCopyEditedAnswers={setCopyEditedAnswers}
-                  answers={answers}
+                  // editedQuestions={editedQuestions}
+                  // setEditedQuestions={setEditedQuestions}
+                  // setAnswers={setAnswers}
+                  // copyEditedAnswers={copyEditedAnswers}
+                  // setCopyEditedAnswers={setCopyEditedAnswers}
+                  // answers={answers}
                   // editedAnswers={editedAnswers}
                   // setEditedAnswers={setEditedAnswers}
                   // updateSelectedAnswers={updateSelectedAnswers}
@@ -149,20 +148,19 @@ function AdminQuizPage(props) {
                 "This action will delete the quiz and can not be undone. Are you sure you want to continue?"
               );
               if (response) {
-                props.dispatchAdmin({
+                props.dispatch({
                   type: "DELETE_QUIZ",
                   payload: {
                     quizIndex: props.adminData.quizIndex,
                   },
                 });
-                props.dispatch({
-                  type: "QUIZ_UNSELECTED",
-                  payload: { quizSelected: false },
-                });
+                // props.dispatch({
+                //   type: "QUIZ_UNSELECTED",
+                //   payload: { quizSelected: false },
+                // });
               }
             }}
           >
-            {/* <MdDelete className="delete-icon" /> */}
             Delete Quiz
           </button>
         </div>

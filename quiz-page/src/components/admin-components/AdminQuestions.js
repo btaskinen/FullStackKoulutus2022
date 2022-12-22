@@ -3,54 +3,30 @@ import "./AdminQuestions.css";
 import AdminAnswers from "./AdminAnswers";
 import "../Quizzes";
 import { MdDelete } from "react-icons/md";
-import { useState, useEffect } from "react";
-import { getData } from "../../utilities/requestFunctions";
 
 const AdminQuestions = (props) => {
-  // const editQuestionsHandler = (event) => {
-  //   const value = event.target.value;
-  //   console.log("Value", value);
-  //   let copyEditedQuestions = [...props.editedQuestions];
-  //   copyEditedQuestions[props.index].question_text = value;
-
-  //   props.setEditedQuestions(copyEditedQuestions);
-  // };
-
-  // useEffect(() => {
-  //   getData(`quizzes/${props.quizId}/question/${props.questionId}/answer`).then(
-  //     // (result) =>
-  //     //   props.dispatchAdmin({
-  //     //     type: "DOWNLOADED_ANSWERS",
-  //     //     payload: {
-  //     //       result,
-  //     //     },
-  //     //   })
-  //     (result) => props.setAnswers(result)
-  //   );
-  // }, [props.questionId, props.quizId]);
-
-  // const addAnswerHandler = () => {
-  //   let copyEditedAnswers = [...props.copyEditedAnswers];
-  //   copyEditedAnswers.push({
-  //     question_text: "New Question",
-  //     quiz_id: props.adminData.quizId,
-  //   });
-  //   props.setCopyEditedAnswers(copyEditedAnswers);
-  // };
+  const deleteQuestionHandler = () => {
+    props.adminData.deletedAnswers =
+      props.adminData.questionAnswers[props.questionIndex].answers;
+    props.adminData.deletedAnswers.forEach((answer) => {
+      answer.questionId =
+        props.adminData.questionAnswers[props.questionIndex].questionId;
+    });
+    console.log("deleted Answers", props.adminData.deletedAnswers);
+    props.dispatchAdmin({
+      type: "DELETE_QUESTION",
+      payload: {
+        questionIndex: props.questionIndex,
+      },
+    });
+  };
 
   return (
     <div>
       <div className="style-question">
         <button
           className="delete-button-questions"
-          onClick={() => {
-            props.dispatchAdmin({
-              type: "DELETE_QUESTION",
-              payload: {
-                questionIndex: props.questionIndex,
-              },
-            });
-          }}
+          onClick={deleteQuestionHandler}
         >
           <MdDelete className="delete-icon" />
         </button>
@@ -86,7 +62,7 @@ const AdminQuestions = (props) => {
             dispatch={props.dispatch}
             dispatchAdmin={props.dispatchAdmin}
             answers={props.answers}
-            setCopyEditedAnswers={props.setCopyEditedAnswers}
+            // setCopyEditedAnswers={props.setCopyEditedAnswers}
           />
         ))}
       </div>

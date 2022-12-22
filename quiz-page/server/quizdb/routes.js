@@ -33,10 +33,10 @@ router.put(
   controller.updateQuiz
 );
 router.delete(
-  "/quizzes/:quiz_id",
+  "/quizzes/:quiz_id/:question_id",
   tokenVerification,
   isAdmin,
-  controller.deleteQuiz
+  controller.deleteWholeQuiz
 );
 
 // ------------------- MANIPULATING QUESTIONS -------------------

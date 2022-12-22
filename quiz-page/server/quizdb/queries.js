@@ -11,7 +11,8 @@ const addNewQuiz =
   "INSERT INTO quizzes (quiz_name, quiz_description, quiz_date, quiz_validity) VALUES ($1,$2,$3,$4)";
 const updateQuiz =
   "UPDATE quizzes SET quiz_name = $1, quiz_description = $2, quiz_date = $3, quiz_validity = $4 WHERE quiz_id = $5";
-const deleteQuiz = "DELETE FROM quizzes WHERE quiz_id = $1";
+const deleteWholeQuiz =
+  "DELETE FROM quizzes, question, answer WHERE quizzes.quiz_id = $1 AND question.question_id = $2 AND answer.question_id = $2";
 
 // ---------------------------- QUESTION QUERIES -------------------------------
 const getQuestionsByQuizIdUser = "SELECT * FROM question WHERE quiz_id = $1";
@@ -66,7 +67,7 @@ module.exports = {
   getQuizByQuizName,
   addNewQuiz,
   updateQuiz,
-  deleteQuiz,
+  deleteWholeQuiz,
   getQuestionsByQuizId,
   getQuestionsByQuizIdUser,
   getQuestionByQuestionId,

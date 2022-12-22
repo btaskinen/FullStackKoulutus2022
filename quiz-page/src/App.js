@@ -5,7 +5,7 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
-import { postData } from "./utilities/requestFunctions";
+import { postData, deleteData } from "./utilities/requestFunctions";
 import { questionAnswerReformatting, savingData } from "./utilities/functions";
 
 let quizData = {
@@ -28,6 +28,8 @@ let quizData = {
   quizIndex: -1,
   quizSelected: false,
   saveData: false,
+  deletedAnswers: [],
+  deletedQuestions: [],
 };
 
 function reducer(state, action) {
@@ -50,6 +52,8 @@ function reducer(state, action) {
       let dataCopy = { ...state };
       dataCopy.quizSelected = action.payload.quizSelected;
       dataCopy.quizIndex = -1;
+      dataCopy.deletedAnswers = [];
+      dataCopy.deletedQuestions = [];
       return dataCopy;
     }
     case "QUIZ_CHANGER": {
@@ -120,6 +124,20 @@ function reducer(state, action) {
       ].answers.push("New Answer");
       return dataCopy;
     }
+    case "DELETE_QUIZ": {
+      console.log("delete quiz button clicked");
+      let { quizIndex } = action.payload;
+      console.log("QUIZ INDEX", quizIndex);
+      let dataCopy = { ...state };
+      console.log("Data Copy", dataCopy);
+      console.log("quiz id", dataCopy.data[quizIndex].quiz_id);
+      dataCopy.data.splice(quizIndex, 1);
+      console.log("DELETE QUIZ dataCOPY", dataCopy);
+      // deleteData(`quizzes/${dataCopy.data[quizIndex].quiz_id}`);
+      dataCopy.quizSelected = false;
+      dataCopy.quizIndex = -1;
+      return dataCopy;
+    }
     case "LOGGEDIN_USER": {
       console.log("LOGGEDIN_USER", action.payload);
       let { userEmail, userId, isAdmin } = action.payload;
@@ -178,9 +196,10 @@ function reducer(state, action) {
       let dataCopy = { ...state };
       dataCopy.data[quizIndex].quiz_name = quizName;
       savingData(data, quizIndex);
+      dataCopy.deletedAnswers = [];
+      dataCopy.deletedQuestions = [];
       dataCopy.quizSelected = false;
       dataCopy.quizIndex = -1;
-      // let dataCopy = { ...state };
       return dataCopy;
     }
     default:

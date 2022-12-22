@@ -102,15 +102,16 @@ const updateQuiz = async (req, res) => {
 
 // deleting quiz
 // status 204 = no content
-const deleteQuiz = async (req, res) => {
+const deleteWholeQuiz = async (req, res) => {
   try {
     const quizId = parseInt(req.params.quiz_id);
-    let results = await pool.query(queries.getQuizById, [quizId]);
-    const noQuizFound = !results.rows.length;
-    if (noQuizFound) {
-      res.send("Quiz does not exist in database");
-    }
-    await pool.query(queries.deleteQuiz, [quizId]);
+    const questionId = parseInt(req.params.question_id);
+    // let results = await pool.query(queries.getQuizById, [quizId]);
+    // const noQuizFound = !results.rows.length;
+    // if (noQuizFound) {
+    //   res.send("Quiz does not exist in database");
+    // }
+    await pool.query(queries.deleteQuiz, [quizId, questionId]);
     res.status(204).send("Quiz has been successfully deleted.");
   } catch (error) {
     res.status(500).send(error);
@@ -194,9 +195,9 @@ const addNewQuestion = async (req, res) => {
   try {
     const quizId = parseInt(req.params.quiz_id);
     let results = await pool.query(queries.getQuizById, [quizId]);
-    console.log("addNEWQUESTION", results);
+    // console.log("addNEWQUESTION", results);
     const quizIdNotInDb = !results.rows.length;
-    console.log("addNewQuestion Boolean", quizIdNotInDb);
+    // console.log("addNewQuestion Boolean", quizIdNotInDb);
     if (quizIdNotInDb) {
       res.send("Quiz not found. Make sure it exists");
     }
@@ -551,7 +552,7 @@ module.exports = {
   getQuizByQuizName,
   addNewQuiz,
   updateQuiz,
-  deleteQuiz,
+  deleteWholeQuiz,
   getQuestionsByQuizId,
   getQuestionsByQuizIdUser,
   getQuestionByQuestionId,

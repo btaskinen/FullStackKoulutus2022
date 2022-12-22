@@ -89,19 +89,7 @@ function reducerAdmin(state, action) {
       dataCopy.data.push(obj);
       return dataCopy;
     }
-    case "DELETE_QUIZ": {
-      console.log("delete quiz button clicked");
-      let { quizIndex } = action.payload;
-      console.log("QUIZ INDEX", quizIndex);
-      let dataCopy = { ...state };
-      console.log("Data Copy", dataCopy);
-      console.log("quiz id", dataCopy.data[quizIndex].quiz_id);
-      dataCopy.data.splice(quizIndex, 1);
-      dataCopy.quizSelected = false;
-      console.log("DELETE QUIZ dataCOPY", dataCopy);
-      deleteData(`quizzes/${dataCopy.data[quizIndex].quiz_id}`);
-      return dataCopy;
-    }
+
     case "ADD_QUESTION": {
       let dataCopy = { ...state };
       const newIndex = dataCopy.questionAnswers.length + 1;
@@ -122,7 +110,21 @@ function reducerAdmin(state, action) {
     case "DELETE_QUESTION": {
       let { questionIndex } = action.payload;
       let dataCopy = { ...state };
+      // let copyAnswerArray = dataCopy.questionAnswers[questionIndex].answers;
+      // console.log("DATA COPY", dataCopy);
+      // console.log("copyAnswerArray", copyAnswerArray);
+      // copyAnswerArray.forEach((answer, index) => {
+      //   console.log(`Answer ${answer} at index ${index}`);
+      //   answer.questionId = dataCopy.questionAnswers[questionIndex].questionId;
+      //   dataCopy.deletedAnswers.push(answer);
+      //   dataCopy.questionAnswers[questionIndex].answers.splice(index, 1);
+      // });
+
+      dataCopy.deletedQuestions.push(dataCopy.questionAnswers[questionIndex]);
       dataCopy.questionAnswers.splice(questionIndex, 1);
+      console.log("QUESTION ANSWERS ARRAY", dataCopy.questionAnswers);
+      console.log("DELETED QUESTIONS ARRAY", dataCopy.deletedQuestions);
+      console.log("DELETED ANSWERS ARRAY", dataCopy.deletedAnswers);
       return dataCopy;
     }
     case "ADD_ANSWER": {
@@ -138,7 +140,14 @@ function reducerAdmin(state, action) {
     case "DELETE_ANSWER": {
       let { answerIndex, questionIndex } = action.payload;
       let dataCopy = { ...state };
+      dataCopy.questionAnswers[questionIndex].answers[answerIndex].questionId =
+        dataCopy.questionAnswers[questionIndex].questionId;
+      dataCopy.deletedAnswers.push(
+        dataCopy.questionAnswers[questionIndex].answers[answerIndex]
+      );
       dataCopy.questionAnswers[questionIndex].answers.splice(answerIndex, 1);
+      console.log("QUESTION ANSWERS ARRAY", dataCopy.questionAnswers);
+      console.log("DELETED ANSWERS ARRAY", dataCopy.deletedAnswers);
       return dataCopy;
     }
     case "DOWNLOAD_STARTED":

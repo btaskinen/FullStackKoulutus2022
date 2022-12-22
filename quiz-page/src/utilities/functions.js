@@ -1,5 +1,4 @@
-import { getData, postData } from "./requestFunctions";
-import { putData } from "./requestFunctions";
+import { getData, postData, putData, deleteData } from "./requestFunctions";
 
 export const questionAnswerReformatting = (array) => {
   // array to store available question ids
@@ -47,6 +46,19 @@ export const questionAnswerReformatting = (array) => {
   return filteredArray;
 };
 
+const deletingQuestions = (data, index) => {
+  const promise = new Promise((resolve, reject) => {
+    data.deletedAnswers.forEach((answer) => {
+      console.log("ANSWER TO BE DELETED", answer);
+      deleteData(
+        `quizzes/${data.data[index].quiz_id}/question/${answer.questionId}/answer/${answer.answerId}`
+      );
+    });
+    resolve("Answers deleted");
+    return promise;
+  });
+};
+
 export const savingData = (data, index) => {
   console.log("INSIDE savingData Function", data);
   if (data.data[index].quiz_id === null) {
@@ -85,14 +97,7 @@ export const savingData = (data, index) => {
       });
     return;
   } else {
-    const quizData = {
-      quiz_id: data.data[index].quiz_id,
-      quiz_name: data.data[index].quiz_name,
-      quiz_description: "",
-      quiz_date: new Date(Date.now()).toISOString(),
-      quiz_validity: true,
-    };
-    putData(`quizzes/${data.data[index].quiz_id}`, quizData);
+    putData(`quizzes/${data.data[index].quiz_id}`, data.data[index]);
     data.questionAnswers.map((question) => {
       // when question is new => post request
       if (!question.questionId) {
@@ -160,5 +165,17 @@ export const savingData = (data, index) => {
         return;
       }
     });
+    if (data.deletedAnswers.length > 0) {
+      deletingQuestions(data, index).then(() => {
+        if (data.deletedQuestions.length > 0) {
+          data.deletedQuestions.forEach((question) => {
+            console.log("QUESTION TO BE DELETED", question);
+            deleteData(
+              `quizzes/${data.data[index].quiz_id}/question/${question.questionId}`
+            ).then(console.log("QUESTION DELETED"));
+          });
+        }
+      });
+    }
   }
 };

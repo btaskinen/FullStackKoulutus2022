@@ -50,20 +50,17 @@ const AdminAnswers = (props) => {
       <input
         className="answer-text-field"
         type="text"
-        onChange={
-          // {editAnswersHandler}
-          (event) => {
-            props.dispatchAdmin({
-              type: "ANSWER_CHANGER",
-              payload: {
-                question: props.question,
-                questionIndex: props.questionIndex,
-                answerText: event.target.value,
-                answerIndex: props.answerIndex,
-              },
-            });
-          }
-        }
+        onChange={(event) => {
+          props.dispatchAdmin({
+            type: "ANSWER_CHANGER",
+            payload: {
+              question: props.question,
+              questionIndex: props.questionIndex,
+              answerText: event.target.value,
+              answerIndex: props.answerIndex,
+            },
+          });
+        }}
         value={props.answer.answerText}
       />
     </div>
