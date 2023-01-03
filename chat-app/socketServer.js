@@ -23,7 +23,7 @@ const broadcast = (message, socketSent) => {
 };
 
 const server = net.createServer((socket) => {
-  socket.write("Echo server\r\n");
+  socket.write("You have been connected to the chat server!\r\n");
   users.push(socket); // add socket when client establishes connection
   console.log("User connected.");
 
@@ -36,14 +36,12 @@ const server = net.createServer((socket) => {
   });
 
   socket.on("error", () => {
-    console.log("User closed connection.");
+    console.log("User has disconnected.");
   });
 
   socket.on("close", () => {
-    console.log("User closed connection.");
+    console.log("User has quit the chat.");
   });
-
-  //socket.pipe(socket);
 });
 
 server.listen(1337, "127.0.0.1");
