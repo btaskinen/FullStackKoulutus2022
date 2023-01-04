@@ -8,8 +8,6 @@ const client = new net.Socket();
 
 const rl = readline.createInterface(process.stdin, process.stdout);
 
-const swearwords = ["fuck", "shit", "damn", "motherfucker", "shithead"];
-
 const waitForUsername = new Promise((resolve) => {
   rl.question("Provide a username to join the chat: ", (answer) => {
     resolve(answer);
@@ -17,34 +15,63 @@ const waitForUsername = new Promise((resolve) => {
 });
 
 waitForUsername.then((username) => {
-  client.connect(1337, "127.0.0.1");
+  client.connect({ port: 1337, host: "127.0.0.1" });
 
   rl.on("line", (data) => {
-    client.setTimeout(10000);
-    const input = data.toLowerCase();
-    const result = swearwords.map((word) => {
-      return input.includes(word);
-    });
-    // console.log(result);
-    if (result.includes(true)) {
-      client.write(`${username} was removed from chat due to swearing`);
-      client.end();
-    } else if (data === "quit") {
-      client.write(`${username} has left the chat.`);
+    // client.setTimeout(30000);
+
+    if (data === "quit") {
+      client.write(
+        JSON.stringify({
+          type: "MESSAGE",
+          message: `${username} has left the chat.`,
+          username: username,
+        })
+      );
       // client.setTimeout(1000);
       client.end();
+    } else if (/\$\w*\:/.test(data)) {
+      const dataArray = data.split(":", 1);
+      selectedName = dataArray[0].slice(1);
+      trimmedMessage = data.replace(dataArray[0] + ":", "");
+      // console.log("MESSAGE", trimmedMessage);
+      client.write(
+        JSON.stringify({
+          type: "PRIVATEMESSAGE",
+          message: `PRIVATE ${username} : ${trimmedMessage}`,
+          username: username,
+          selectedName: selectedName,
+        })
+      );
     } else {
-      client.write(`${username} : ${data}`);
+      client.write(
+        JSON.stringify({
+          type: "MESSAGE",
+          message: `${username} : ${data}`,
+          username: username,
+        })
+      );
     }
   });
 
   client.on("connect", () => {
-    client.write(username + " has joined the chat.");
+    client.write(
+      JSON.stringify({
+        type: "CONNECT",
+        username: username,
+        message: `${username} has joined the chat.`,
+      })
+    );
   });
 
   client.on("timeout", () => {
-    // client.write("quit");
-    client.write(`${username} was removed from chat due to inactivity`);
+    client.write(
+      JSON.stringify({
+        type: "CONNECT",
+        message: `${username} was removed from chat due to inactivity`,
+        username: username,
+      })
+    );
     client.end();
   });
 });
@@ -52,11 +79,6 @@ waitForUsername.then((username) => {
 client.on("data", (data) => {
   console.log("\x1b[33m%s\x1b[0m", data);
 });
-
-// client.on("timeout", () => {
-//   // client.write("quit");
-//   client.end();
-// });
 
 client.on("end", () => {
   process.exit();
