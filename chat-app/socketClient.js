@@ -20,16 +20,44 @@ waitForUsername.then((username) => {
   rl.on("line", (data) => {
     // client.setTimeout(30000);
 
-    if (data === "quit") {
+    if (data === "!quit") {
       client.write(
         JSON.stringify({
-          type: "MESSAGE",
+          type: "QUIT",
           message: `${username} has left the chat.`,
           username: username,
         })
       );
       // client.setTimeout(1000);
       client.end();
+    } else if (data === "!help") {
+      client.write(
+        JSON.stringify({
+          type: "HELP",
+        })
+      );
+    } else if (data === "!users") {
+      client.write(
+        JSON.stringify({
+          type: "USERS",
+        })
+      );
+    } else if (data.includes("!remove")) {
+      try {
+        const dataArray = data.split(":");
+        selectedName = dataArray[1].slice(1);
+        client.write(
+          JSON.stringify({
+            type: "REMOVE",
+            username: username,
+            selectedName: selectedName,
+          })
+        );
+      } catch (error) {
+        console.log(
+          `Wrong input. Make sure you give command correctly (!remove: username)`
+        );
+      }
     } else if (/\$\w*\:/.test(data)) {
       const dataArray = data.split(":", 1);
       selectedName = dataArray[0].slice(1);
@@ -77,7 +105,10 @@ waitForUsername.then((username) => {
 });
 
 client.on("data", (data) => {
-  console.log("\x1b[33m%s\x1b[0m", data);
+  const dataObject = JSON.parse(data);
+  console.log(dataObject);
+  console.log(dataObject.color, dataObject.message);
+  // console.log("\x1b[33m%s\x1b[0m", data);
 });
 
 client.on("end", () => {
