@@ -12,7 +12,14 @@ const net = require("net");
 
 let users = [];
 
-const colors = [];
+const colors = [
+  "\x1b[0;31m%s\x1b[0m",
+  "\x1b[0;32m%s\x1b[0m",
+  "\x1b[0;34m%s\x1b[0m",
+  "\x1b[0;35m%s\x1b[0m",
+  "\x1b[0;36m%s\x1b[0m",
+  "\x1b[0;37m%s\x1b[0m",
+];
 
 const colorServer = "\x1b[33m%s\x1b[0m";
 
@@ -26,14 +33,24 @@ const broadcast = (data, socketSent) => {
       console.log(`${dataObject.username} has connceted the Chat`);
       users.forEach((user) => {
         if (user.socket === socketSent) user.username = dataObject.username;
-        if (user.socket !== socketSent) user.socket.write(dataObject.message);
+        if (user.socket !== socketSent)
+          user.socket.write(
+            JSON.stringify({
+              color: colorServer,
+              message: dataObject.message,
+            })
+          );
       });
       break;
     case "HELP":
       users.forEach((user) => {
         if (user.socket === socketSent)
           user.socket.write(
-            'INSTRUCTIONS\n\n- For private message start message with "$nickname:"\n\n- For list of users, type "!users"\n\n- (only when Admin) to remove user, type "!remove: username"\n\n- To exit chat, type "!quit"\n'
+            JSON.stringify({
+              color: colorServer,
+              message:
+                'INSTRUCTIONS\n\n- For private message start message with "$nickname:"\n\n- For list of users, type "!users"\n\n- (only when Admin) to remove user, type "!remove: username"\n\n- To exit chat, type "!quit"\n',
+            })
           );
       });
 
@@ -43,21 +60,42 @@ const broadcast = (data, socketSent) => {
       const result = swearwords.map((word) => {
         return input.includes(word);
       });
+      let textColor;
+
+      users.forEach((user) => {
+        if (user.socket === socketSent) {
+          textColor = user.color;
+        }
+      });
       // console.log(result);
       if (result.includes(true)) {
         users.forEach((user) => {
           if (user.socket === socketSent) {
-            user.socket.write(`You were removed from chat due to swearing`);
+            user.socket.write(
+              JSON.stringify({
+                color: colorServer,
+                message: `You were removed from chat due to swearing`,
+              })
+            );
             user.socket.end();
           }
           if (user.socket !== socketSent)
             user.socket.write(
-              `${dataObject.username} was removed from chat due to swearing`
+              JSON.stringify({
+                color: colorServer,
+                message: `${dataObject.username} was removed from chat due to swearing`,
+              })
             );
         });
       } else {
         users.forEach((user) => {
-          if (user.socket !== socketSent) user.socket.write(dataObject.message);
+          if (user.socket !== socketSent)
+            user.socket.write(
+              JSON.stringify({
+                color: textColor,
+                message: dataObject.message,
+              })
+            );
         });
       }
       break;
@@ -68,16 +106,31 @@ const broadcast = (data, socketSent) => {
       const result = swearwords.map((word) => {
         return input.includes(word);
       });
+      let textColor;
+
+      users.forEach((user) => {
+        if (user.socket === socketSent) {
+          textColor = user.color;
+        }
+      });
       // console.log(result);
       if (result.includes(true)) {
         users.forEach((user) => {
           if (user.socket === socketSent) {
-            user.socket.write(`You were removed from chat due to swearing`);
+            user.socket.write(
+              JSON.stringify({
+                color: colorServer,
+                message: `You were removed from chat due to swearing`,
+              })
+            );
             user.socket.end();
           }
           if (user.socket !== socketSent)
             user.socket.write(
-              `${dataObject.username} was removed from chat due to swearing`
+              JSON.stringify({
+                color: colorServer,
+                message: `${dataObject.username} was removed from chat due to swearing`,
+              })
             );
         });
       } else {
@@ -86,7 +139,12 @@ const broadcast = (data, socketSent) => {
             user.socket !== socketSent &&
             user.username === dataObject.selectedName
           )
-            user.socket.write(dataObject.message);
+            user.socket.write(
+              JSON.stringify({
+                color: textColor,
+                message: dataObject.message,
+              })
+            );
         });
       }
       break;
@@ -108,14 +166,20 @@ const broadcast = (data, socketSent) => {
             if (user.username === dataObject.selectedName) {
               users.splice(currentIndex, 1);
               user.socket.write(
-                `${dataObject.username} removed you from the chat.`
+                JSON.stringify({
+                  color: colorServer,
+                  message: `${dataObject.username} removed you from the chat.`,
+                })
               );
               user.socket.end();
             }
           });
           users.forEach((user) => {
             user.socket.write(
-              `${dataObject.username} removed ${dataObject.selectedName} from Chat.`
+              JSON.stringify({
+                color: colorServer,
+                message: `${dataObject.username} removed ${dataObject.selectedName} from Chat.`,
+              })
             );
           });
         } else if (
@@ -124,12 +188,20 @@ const broadcast = (data, socketSent) => {
           usernameExists === false
         ) {
           user.socket.write(
-            `Username does not exist. Make sure to type command  and name correctly (!remove: username)`
+            JSON.stringify({
+              color: colorServer,
+              message: `Username does not exist. Make sure to type command  and name correctly (!remove: username)`,
+            })
           );
         }
 
         if (user.socket === socketSent && user.isAdmin === false) {
-          user.socket.write("You can't remove users. You are not admin");
+          user.socket.write(
+            JSON.stringify({
+              color: colorServer,
+              message: "You can't remove users. You are not admin",
+            })
+          );
         }
       });
       break;
@@ -145,7 +217,12 @@ const broadcast = (data, socketSent) => {
 
       users.forEach((user) => {
         if (user.socket === socketSent) {
-          user.socket.write(`${string}`);
+          user.socket.write(
+            JSON.stringify({
+              color: colorServer,
+              message: `${string}`,
+            })
+          );
         }
       });
       break;
@@ -159,7 +236,13 @@ const broadcast = (data, socketSent) => {
       users.splice(index, 1);
       users[0].isAdmin = true;
       users.forEach((user) => {
-        if (user.socket !== socketSent) user.socket.write(dataObject.message);
+        if (user.socket !== socketSent)
+          user.socket.write(
+            JSON.stringify({
+              color: colorServer,
+              message: dataObject.message,
+            })
+          );
       });
       users[0].socket.write(
         JSON.stringify({
@@ -181,8 +264,14 @@ const server = net.createServer((socket) => {
         'You have been connected to the chat server!\n\nNote that swearing will lead to immediate removal from chat.\n\nFor Instructions type "!help"\n',
     })
   );
+  const index = users.length;
   if (users.length === 0) {
-    users.push({ socket: socket, username: null, isAdmin: true });
+    users.push({
+      socket: socket,
+      username: null,
+      isAdmin: true,
+      color: colors[index],
+    });
     socket.write(
       JSON.stringify({
         color: colorServer,
@@ -190,7 +279,12 @@ const server = net.createServer((socket) => {
       })
     );
   } else {
-    users.push({ socket: socket, username: null, isAdmin: false });
+    users.push({
+      socket: socket,
+      username: null,
+      isAdmin: false,
+      color: colors[index],
+    });
   }
 
   socket.on("data", (data) => {
@@ -207,23 +301,29 @@ const server = net.createServer((socket) => {
 
   socket.on("close", () => {
     console.log("User has quit the chat.");
-    let index;
-    let username;
-    users.forEach((user, currentIndex) => {
-      if (user.socket === socket) {
-        index = currentIndex;
-        username = user.username;
-      }
-    });
-    let adminCheck = false;
-    if (users[index].isAdmin === true) adminCheck = true;
-    users.splice(index, 1);
-    users[0].isAdmin = true;
-    users.forEach((user) => {
-      if (user.socket !== socket)
-        user.socket.write(`${username} has quit the chat.`);
-    });
-    if (adminCheck) users[0].socket.write("\nYou are the admin now!");
+    // let index;
+    // let username;
+    // users.forEach((user, currentIndex) => {
+    //   if (user.socket === socket) {
+    //     index = currentIndex;
+    //     username = user.username;
+    //   }
+    // });
+    // let adminCheck = false;
+    // if (users[index].isAdmin === true) adminCheck = true;
+    // users.splice(index, 1);
+    // users[0].isAdmin = true;
+    // users.forEach((user) => {
+    //   if (user.socket !== socket)
+    //     user.socket.write(`${username} has quit the chat.`);
+    // });
+    // if (adminCheck)
+    //   users[0].socket.write(
+    //     JSON.stringify({
+    //       color: colorServer,
+    //       message: "\nYou are the admin now!",
+    //     })
+    //   );
   });
 });
 

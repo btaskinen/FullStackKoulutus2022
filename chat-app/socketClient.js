@@ -55,6 +55,7 @@ waitForUsername.then((username) => {
         );
       } catch (error) {
         console.log(
+          "\x1b[33m%s\x1b[0m",
           `Wrong input. Make sure you give command correctly (!remove: username)`
         );
       }
@@ -106,7 +107,6 @@ waitForUsername.then((username) => {
 
 client.on("data", (data) => {
   const dataObject = JSON.parse(data);
-  console.log(dataObject);
   console.log(dataObject.color, dataObject.message);
   // console.log("\x1b[33m%s\x1b[0m", data);
 });
