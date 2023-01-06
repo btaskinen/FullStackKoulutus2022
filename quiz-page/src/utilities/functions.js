@@ -46,18 +46,18 @@ export const questionAnswerReformatting = (array) => {
   return filteredArray;
 };
 
-const deletingQuestions = (data, index) => {
-  const promise = new Promise((resolve, reject) => {
-    data.deletedAnswers.forEach((answer) => {
-      console.log("ANSWER TO BE DELETED", answer);
-      deleteData(
-        `quizzes/${data.data[index].quiz_id}/question/${answer.questionId}/answer/${answer.answerId}`
-      );
-    });
-    resolve("Answers deleted");
-    return promise;
-  });
-};
+// const deletingQuestions = (data, index) => {
+//   const promise = new Promise((resolve, reject) => {
+//     data.deletedAnswers.forEach((answer) => {
+//       console.log("ANSWER TO BE DELETED", answer);
+//       deleteData(
+//         `quizzes/${data.data[index].quiz_id}/question/${answer.questionId}/answer/${answer.answerId}`
+//       );
+//     });
+//     resolve("Answers deleted");
+//     return promise;
+//   });
+// };
 
 export const savingData = (data, index) => {
   console.log("INSIDE savingData Function", data);
@@ -166,16 +166,34 @@ export const savingData = (data, index) => {
       }
     });
     if (data.deletedAnswers.length > 0) {
-      deletingQuestions(data, index).then(() => {
-        if (data.deletedQuestions.length > 0) {
-          data.deletedQuestions.forEach((question) => {
-            console.log("QUESTION TO BE DELETED", question);
-            deleteData(
-              `quizzes/${data.data[index].quiz_id}/question/${question.questionId}`
-            ).then(console.log("QUESTION DELETED"));
-          });
-        }
-      });
+      deleteAnswers(data, index);
+    } else if (data.deletedQuestions.length > 0) {
+      deleteQuestions(data, index);
     }
+  }
+};
+
+const deleteAnswers = async (data, index) => {
+  await Promise.all(
+    data.deletedAnswers.map(async (answer) => {
+      console.log("ANSWER TO BE DELETED", answer);
+      await deleteData(
+        `quizzes/${data.data[index].quiz_id}/question/${answer.questionId}/answer/${answer.answerId}`
+      );
+    })
+  );
+  await deleteQuestions(data, index);
+};
+
+const deleteQuestions = async (data, index) => {
+  if (data.deletedQuestions.length > 0) {
+    await Promise.all(
+      data.deletedQuestions.map(async (question) => {
+        console.log("QUESTION TO BE DELETED", question);
+        await deleteData(
+          `quizzes/${data.data[index].quiz_id}/question/${question.questionId}`
+        ).then(console.log("QUESTION DELETED"));
+      })
+    );
   }
 };

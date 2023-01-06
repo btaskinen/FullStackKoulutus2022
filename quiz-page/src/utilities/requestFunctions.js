@@ -45,9 +45,11 @@ export const putData = async (url, data) => {
 
 export const deleteData = async (url) => {
   try {
-    await axios.delete(`https://localhost:8080/api/quiz-page/${url}`, {
-      headers: { Authorization: localStorage.getItem("loginToken") },
-    });
+    await axios
+      .delete(`https://localhost:8080/api/quiz-page/${url}`, {
+        headers: { Authorization: localStorage.getItem("loginToken") },
+      })
+      .then((result) => console.log(result.data));
   } catch (error) {
     console.log(error.response.data);
     return error;
