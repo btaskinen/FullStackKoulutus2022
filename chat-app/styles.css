@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  background-color: #adb5bd;
+  height: 100vh;
+}
+
+p {
+  margin: 10px;
+  font-size: 18px;
+}
+
+button {
+  cursor: pointer;
+  background-color: #087f5b;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  color: white;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+input {
+  outline: none;
+  margin: 10px;
+  font-size: 18px;
+  padding: 10px;
+  width: 600px;
+  border: 2px solid #087f5b;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  color: #495057;
+}
+
+input:focus {
+  outline: none;
+  border: 3px solid #087f5b;
+  background-color: #f8f9fa;
+}
+
+#chatbox {
+  height: 80vh;
+  margin: 10px;
+  border: 3px solid #087f5b;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  overflow: auto;
+}
