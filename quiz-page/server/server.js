@@ -48,6 +48,7 @@ app.get("/", (req, res) => {
 });
 
 // ------------------------------- LISTENING TO NEW EXAM EXECUTION ------------------------
+const WebSocket = require("ws");
 class MyStream extends EventEmitter {
   write(data) {
     this.emit("data", data);
@@ -56,15 +57,18 @@ class MyStream extends EventEmitter {
 
 const stream = new MyStream();
 
-// const DbEventEmitter = () => {
-//   EventEmitter.call(this);
-// };
+const wss = new WebSocket.Server({ port: 8081 });
 
-// util.includes(DbEventEmitter, EventEmitter);
+wss.on("connection", (socket) => {
+  socket.on("message", (message) => {
+    wss.clients.forEach((client) => {
+      if (client !== socket && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  });
+});
 
-// const dbEventEmitter = new DbEventEmitter();
-
-// reaction to event
 stream.on("quiz_execution_channel", (data) => {
   console.log(
     `New exame execution received: User  ${data.user_id} executed Quiz ${data.quiz_id}`
@@ -90,7 +94,7 @@ client.connect((error, client) => {
   client.query("LISTEN quiz_execution_channel");
 });
 
-// -------------------------------SENDING EMAIL FROM THE SERVER ---------------------------
+// ------------------------------- SENDING EMAIL FROM THE SERVER ---------------------------
 // const transporter = nodemailer.createTransport({
 //   service: "gmail",
 //   auth: {

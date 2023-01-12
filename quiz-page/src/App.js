@@ -5,6 +5,8 @@ import axios from "axios";
 import Footer from "./components/Footer";
 import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
+import Modal from "./components/Modal";
+import Backdrop from "./components/Backdrop";
 import { postData, deleteData } from "./utilities/requestFunctions";
 import { questionAnswerReformatting, savingData } from "./utilities/functions";
 
@@ -31,6 +33,8 @@ let quizData = {
   deletedAnswers: [],
   deletedQuestions: [],
 };
+
+const URL = "ws://localhost:8081";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -210,6 +214,33 @@ function reducer(state, action) {
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [adminMode, setAdminMode] = useState(true);
+  const [ws, setWs] = useState(new WebSocket(URL));
+  const [notification, setNotification] = useState("placeholder");
+  const [displayModal, setDisplayModal] = useState(false);
+
+  useEffect(() => {
+    ws.onopen = () => {
+      console.log("WebSocket Connected");
+    };
+
+    ws.onmessage = (data) => {
+      const newNotification = JSON.parse(data.data);
+      console.log("message received");
+      setNotification(newNotification);
+      setDisplayModal(true);
+    };
+
+    return () => {
+      ws.onclose = () => {
+        console.log("WebSocket Disconnected");
+        setWs(new WebSocket(URL));
+      };
+    };
+  }, [ws.onmessage, ws.onopen, ws.onclose, notification]);
+
+  const closeNodificationModalHandler = () => {
+    setDisplayModal(false);
+  };
 
   const [appData, dispatch] = useReducer(reducer, quizData);
   console.log("App Data", appData);
@@ -272,6 +303,17 @@ function App() {
 
   return (
     <div>
+      {isLoggedIn && displayModal && (
+        <Modal
+          modalText={notification}
+          modalButton="ok"
+          closeModalHandlerk={closeNodificationModalHandler}
+          confirmHandler={closeNodificationModalHandler}
+        />
+      )}
+      {isLoggedIn && displayModal && (
+        <Backdrop onClick={closeNodificationModalHandler} />
+      )}
       {!isLoggedIn && (
         <StartPage
           isLoggedIn={isLoggedIn}
