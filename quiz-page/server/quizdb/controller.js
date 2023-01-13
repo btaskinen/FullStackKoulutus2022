@@ -102,19 +102,35 @@ const updateQuiz = async (req, res) => {
 
 // deleting quiz
 // status 204 = no content
-const deleteWholeQuiz = async (req, res) => {
+// const deleteWholeQuiz = async (req, res) => {
+//   try {
+//     const quizId = parseInt(req.params.quiz_id);
+//     const questionId = parseInt(req.params.question_id);
+//     // let results = await pool.query(queries.getQuizById, [quizId]);
+//     // const noQuizFound = !results.rows.length;
+//     // if (noQuizFound) {
+//     //   res.send("Quiz does not exist in database");
+//     // }
+//     await pool.query(queries.deleteQuiz, [quizId, questionId]);
+//     res.status(204).send("Quiz has been successfully deleted.");
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// };
+
+const deleteQuiz = async (req, res) => {
   try {
     const quizId = parseInt(req.params.quiz_id);
-    const questionId = parseInt(req.params.question_id);
-    // let results = await pool.query(queries.getQuizById, [quizId]);
-    // const noQuizFound = !results.rows.length;
-    // if (noQuizFound) {
-    //   res.send("Quiz does not exist in database");
-    // }
-    await pool.query(queries.deleteQuiz, [quizId, questionId]);
+    let results = await pool.query(queries.getQuizById, [quizId]);
+    const noQuizFound = !results.rows.length;
+    if (noQuizFound) {
+      res.send("Quiz does not exist in database");
+      throw error;
+    }
+    await pool.query(queries.deleteQuiz, [quizId]);
     res.status(204).send("Quiz has been successfully deleted.");
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send("An error occured", error);
   }
 };
 
@@ -552,7 +568,8 @@ module.exports = {
   getQuizByQuizName,
   addNewQuiz,
   updateQuiz,
-  deleteWholeQuiz,
+  // deleteWholeQuiz,
+  deleteQuiz,
   getQuestionsByQuizId,
   getQuestionsByQuizIdUser,
   getQuestionByQuestionId,

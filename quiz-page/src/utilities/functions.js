@@ -197,3 +197,10 @@ const deleteQuestions = async (data, index) => {
     );
   }
 };
+
+export const deleteQuiz = async (data, index) => {
+  console.log("INSIDE deleteQuiz FUNCTION, index", data, index);
+  await deleteAnswers(data, index);
+  await deleteQuestions(data, index);
+  await deleteData(`quizzes/${data.data[index].quiz_id}`);
+};

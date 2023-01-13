@@ -6,12 +6,18 @@ import { MdDelete } from "react-icons/md";
 
 const AdminQuestions = (props) => {
   const deleteQuestionHandler = () => {
-    props.adminData.deletedAnswers =
-      props.adminData.questionAnswers[props.questionIndex].answers;
-    props.adminData.deletedAnswers.forEach((answer) => {
-      answer.questionId =
-        props.adminData.questionAnswers[props.questionIndex].questionId;
-    });
+    props.adminData.questionAnswers[props.questionIndex].answers.forEach(
+      (answer) => {
+        answer.questionId =
+          props.adminData.questionAnswers[props.questionIndex].questionId;
+        props.adminData.deletedAnswers.push(answer);
+      }
+    );
+
+    // props.adminData.deletedAnswers.forEach((answer) => {
+    //   answer.questionId =
+    //     props.adminData.questionAnswers[props.questionIndex].questionId;
+    // });
     console.log("deleted Answers", props.adminData.deletedAnswers);
     props.dispatchAdmin({
       type: "DELETE_QUESTION",

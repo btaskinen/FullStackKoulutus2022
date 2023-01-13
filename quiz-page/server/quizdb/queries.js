@@ -14,6 +14,8 @@ const updateQuiz =
 const deleteWholeQuiz =
   "DELETE FROM quizzes, question, answer WHERE quizzes.quiz_id = $1 AND question.question_id = $2 AND answer.question_id = $2";
 
+const deleteQuiz = "DELETE FROM quizzes WHERE quiz_id = $1";
+
 // ---------------------------- QUESTION QUERIES -------------------------------
 const getQuestionsByQuizIdUser = "SELECT * FROM question WHERE quiz_id = $1";
 
@@ -67,7 +69,8 @@ module.exports = {
   getQuizByQuizName,
   addNewQuiz,
   updateQuiz,
-  deleteWholeQuiz,
+  // deleteWholeQuiz,
+  deleteQuiz,
   getQuestionsByQuizId,
   getQuestionsByQuizIdUser,
   getQuestionByQuestionId,

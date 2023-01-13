@@ -152,6 +152,7 @@ function AdminQuizPage(props) {
                   type: "DELETE_QUIZ",
                   payload: {
                     quizIndex: props.adminData.quizIndex,
+                    data: props.adminData,
                   },
                 });
                 // props.dispatch({

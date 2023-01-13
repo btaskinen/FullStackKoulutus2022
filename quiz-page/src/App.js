@@ -7,8 +7,12 @@ import StartPage from "./components/login-register/StartPage";
 import MainPage from "./components/MainPage";
 import Modal from "./components/Modal";
 import Backdrop from "./components/Backdrop";
-import { postData, deleteData } from "./utilities/requestFunctions";
-import { questionAnswerReformatting, savingData } from "./utilities/functions";
+import { postData } from "./utilities/requestFunctions";
+import {
+  questionAnswerReformatting,
+  savingData,
+  deleteQuiz,
+} from "./utilities/functions";
 
 let quizData = {
   data: [
@@ -129,17 +133,41 @@ function reducer(state, action) {
       return dataCopy;
     }
     case "DELETE_QUIZ": {
-      console.log("delete quiz button clicked");
-      let { quizIndex } = action.payload;
+      console.log("DELETE QUIZ BUTTON CLICKED");
+      // console.log("STATE", state);
+      let { quizIndex, data } = action.payload;
       console.log("QUIZ INDEX", quizIndex);
-      let dataCopy = { ...state };
-      console.log("Data Copy", dataCopy);
-      console.log("quiz id", dataCopy.data[quizIndex].quiz_id);
+      console.log("DATA", data);
+      console.log("DATA Questions", data.questionAnswers);
+      let dataCopy = { ...data };
+      console.log("DATA COPY", dataCopy);
+      console.log("QUIZ ID", dataCopy.data[quizIndex].quiz_id);
       dataCopy.data.splice(quizIndex, 1);
-      console.log("DELETE QUIZ dataCOPY", dataCopy);
-      // deleteData(`quizzes/${dataCopy.data[quizIndex].quiz_id}`);
-      dataCopy.quizSelected = false;
-      dataCopy.quizIndex = -1;
+      console.log("DATA COPY WITHOUT DELETED QUIZ", dataCopy);
+      dataCopy.questionAnswers.forEach((question, index) => {
+        dataCopy.deletedQuestions.push(question);
+        question.answers.forEach((answer) => {
+          answer.questionId = data.questionAnswers[index].questionId;
+          dataCopy.deletedAnswers.push(answer);
+        });
+      });
+      console.log("DELETED ANWERS: ", dataCopy.deletedAnswers);
+      console.log("DELETED QUESTIONS: ", dataCopy.deletedQuestions);
+
+      const resetSettings = async () => {
+        dataCopy.deletedAnswers = [];
+        dataCopy.deletedQuestions = [];
+        dataCopy.quizSelected = false;
+        dataCopy.quizIndex = -1;
+      };
+
+      const executeDeleteQuiz = async (data, index) => {
+        await deleteQuiz(data, index);
+        await resetSettings();
+      };
+
+      executeDeleteQuiz(dataCopy, quizIndex);
+
       return dataCopy;
     }
     case "LOGGEDIN_USER": {
