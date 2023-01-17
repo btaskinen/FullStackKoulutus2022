@@ -3,7 +3,8 @@ import "./Quizzes.css";
 const Quizzes = (props) => {
   return (
     <div className="header">
-      <div className="quiz-title">{props.editedQuizName}</div>
+      {/* <div className="quiz-title">{props.editedQuizName}</div> */}
+
       <input
         className="quiz-head-text-field"
         type="text"

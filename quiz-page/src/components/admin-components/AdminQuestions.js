@@ -36,12 +36,12 @@ const AdminQuestions = (props) => {
         >
           <MdDelete className="delete-icon" />
         </button>
-        <p className="question-text-style">
+        <p className="admin-question-text-style">
           {props.questionIndex + 1}.{" "}
-          {props.adminData.questionAnswers[props.questionIndex].questionText}
+          {/* {props.adminData.questionAnswers[props.questionIndex].questionText} */}
         </p>
         <input
-          className="question-text-field"
+          className="admin-question-text-field"
           type="text"
           onChange={(event) => {
             props.dispatchAdmin({

@@ -11,20 +11,28 @@
   color: white;
 }
 
-.question-text-style {
+.admin-question-text-style {
   color: #fff;
-  margin: 10px;
-  padding: 0;
+  margin: 10px 5px;
+  padding: 5px;
 }
 
-.question-text-field {
+.admin-question-text-field {
   height: 10px;
   border-radius: 5px;
-  border: none;
-  padding: 5px;
-  margin-left: 20px;
+  border: 1px solid #fff;
+  padding: 12px;
+  margin-right: 10px;
   align-items: center;
   color: #495057;
+  width: 100%;
+  outline: none;
+  font-size: 20px;
+}
+
+.admin-question-text-field:focus {
+  border: 3px solid #fff;
+  font-weight: bold;
 }
 
 .answer-container {

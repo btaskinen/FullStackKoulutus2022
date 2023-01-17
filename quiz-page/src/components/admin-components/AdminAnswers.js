@@ -45,10 +45,10 @@ const AdminAnswers = (props) => {
         checked={checkboxChecked}
         onClick={answerCheckedHandler}
       />
-      <label htmlFor={props.answer.answerId}></label>
-      {props.answer.answerText}
+      {/* <label htmlFor={props.answer.answerId}></label>
+      {props.answer.answerText} */}
       <input
-        className="answer-text-field"
+        className="admin-answer-text-field"
         type="text"
         onChange={(event) => {
           props.dispatchAdmin({
