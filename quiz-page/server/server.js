@@ -1,8 +1,11 @@
 const bodyparser = require("body-parser");
 const express = require("express");
 const cors = require("cors");
-const quizRoutes = require("../src/quizdb/routes");
+const quizRoutes = require("./quizdb/routes");
 const https = require("https");
+const pg = require("pg");
+const EventEmitter = require("events");
+// const util = require('util');
 const fs = require("fs");
 // const nodemailer = require("nodemailer"); // to send email from the server
 
@@ -31,8 +34,8 @@ app.use("/api/quiz-page/", quizRoutes);
 https
   .createServer(
     {
-      key: fs.readFileSync("key.pem"),
-      cert: fs.readFileSync("cert.pem"),
+      key: fs.readFileSync("key.pem"), //key.pem
+      cert: fs.readFileSync("cert.pem"), //
     },
     app
   )
@@ -44,7 +47,54 @@ app.get("/", (req, res) => {
   res.send("Hello from https express server!");
 });
 
-// -------------------------------SENDING EMAIL FROM THE SERVER ---------------------------
+// ------------------------------- LISTENING TO NEW EXAM EXECUTION ------------------------
+const WebSocket = require("ws");
+class MyStream extends EventEmitter {
+  write(data) {
+    this.emit("data", data);
+  }
+}
+
+const stream = new MyStream();
+
+const wss = new WebSocket.Server({ port: 8081 });
+
+wss.on("connection", (socket) => {
+  socket.on("message", (message) => {
+    wss.clients.forEach((client) => {
+      if (client !== socket && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  });
+});
+
+stream.on("quiz_execution_channel", (data) => {
+  console.log(
+    `New exame execution received: User  ${data.user_id} executed Quiz ${data.quiz_id}`
+  );
+});
+
+// connect to Postgres
+const client = new pg.Client(
+  `postgres://postgres:${process.env.DB_CONNECT}@localhost:5432/quizdb`
+);
+
+client.connect((error, client) => {
+  if (error) {
+    console.log("An Error occured" + error);
+  }
+
+  // Listen for pg_notify channel messages
+  client.on("notification", (msg) => {
+    let data = JSON.parse(msg.payload);
+    stream.emit(msg.channel, data);
+  });
+
+  client.query("LISTEN quiz_execution_channel");
+});
+
+// ------------------------------- SENDING EMAIL FROM THE SERVER ---------------------------
 // const transporter = nodemailer.createTransport({
 //   service: "gmail",
 //   auth: {

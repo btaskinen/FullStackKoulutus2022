@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.quiz-title {
+  color: #343a40;
+  font-size: 40px;
+  padding-left: 10px;
+  font-weight: bold;
+  margin-right: 30px;
+}
+.quiz-head-text-field {
+  border-radius: 5px;
+  border: 1px solid #087f5b;
+  padding: 5px;
+  padding-left: 10px;
+  color: #495057;
+  font-size: 40px;
+  outline: none;
+  font-weight: bold;
+  margin: 10px;
+  width: 100%;
+}
+
+.quiz-head-text-field:focus {
+  border: 3px solid #087f5b;
+}

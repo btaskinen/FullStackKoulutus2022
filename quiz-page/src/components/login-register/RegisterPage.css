@@ -1,0 +1,83 @@
+body {
+  background-color: #ced4da;
+}
+
+h1 {
+  color: #343a40;
+  margin: 20px;
+}
+
+p {
+  color: #343a40;
+  margin: 25px;
+  font-size: 20px;
+}
+
+.register-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  color: #343a40;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.register-text-field {
+  height: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 2px;
+  margin-bottom: 10px;
+  color: #495057;
+  border: 1px solid #343a40;
+  font-size: 20px;
+}
+
+.button-container {
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-button {
+  background-color: #087f5b;
+  width: 100px;
+  border-radius: 5px;
+  border: none;
+  margin: 15px;
+  padding: 5px;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+}
+
+.login-button:hover {
+  background-color: #20c997;
+  color: black;
+}
+
+.login-button:active {
+  background-color: #20c997;
+  color: black;
+  border: 2px solid #343a40;
+}
+
+.checkbox {
+  color: #343a40;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.show-password {
+  display: flex;
+  align-items: center;
+}

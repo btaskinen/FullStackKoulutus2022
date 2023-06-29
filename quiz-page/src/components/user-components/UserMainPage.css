@@ -1,0 +1,31 @@
+body {
+  background-color: #e9ecef;
+}
+
+/* .user-main-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+} */
+
+h1 {
+  color: #343a40;
+  margin: 20px;
+}
+
+p {
+  color: #343a40;
+  margin: 25px;
+  font-size: 20px;
+}
+
+.quiz-container {
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  justify-content: center;
+  align-content: center;
+  margin-bottom: 200px;
+}

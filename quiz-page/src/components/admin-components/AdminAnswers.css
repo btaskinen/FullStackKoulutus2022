@@ -1,0 +1,48 @@
+.style-answers {
+  background-color: #ced4da;
+  display: flex;
+  padding: 10px;
+  justify-content: left;
+  font-size: 16px;
+  color: black;
+}
+
+.admin-answer-text-field {
+  height: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: 10px;
+  color: #495057;
+  border: 1px solid #087f5b;
+  font-size: 16px;
+  width: 100%;
+  outline: none;
+}
+
+.admin-answer-text-field:focus {
+  border: 3px solid #087f5b;
+  font-weight: bold;
+}
+
+.delete-button-answers {
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e9ecef;
+  border: none;
+  border-radius: 5px;
+}
+
+.delete-icon-answers {
+  color: #087f5b;
+  width: 24px;
+  height: 24px;
+}
+
+.delete-button-answers:hover,
+.delete-icon-answers:hover {
+  background-color: #087f5b;
+  color: #fff;
+}

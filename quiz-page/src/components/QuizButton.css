@@ -1,0 +1,23 @@
+.quiz-button {
+  background-color: #087f5b;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  /* margin: 25px; */
+  color: white;
+  border: none;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.quiz-button:hover {
+  background-color: #20c997;
+  color: #343a40;
+}
+
+.quiz-button:active {
+  background-color: #20c997;
+  color: #343a40;
+  border: 2px solid #343a40;
+}
