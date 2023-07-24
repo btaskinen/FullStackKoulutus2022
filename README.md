@@ -7,5 +7,6 @@ Due to the fast pace of the course, many projects are unfinished. My plan is to 
 #### Projects
 
 - [Calculator](https://github.com/btaskinen/FullStackKoulutus2022/tree/main/laskin)
-- [Random Chuck Norris Quotes](https://github.com/btaskinen/FullStackKoulutus2022/tree/main/omaappis)
+- [Random Chuck Norris Quotes](https://github.com/btaskinen/FullStackKoulutus2022/tree/main/chuck-norris-facts-app)
 - [Quiz Page](https://github.com/btaskinen/FullStackKoulutus2022/tree/main/quiz-page)
+- [Chat App](https://github.com/btaskinen/FullStackKoulutus2022/tree/main/chat-app)
