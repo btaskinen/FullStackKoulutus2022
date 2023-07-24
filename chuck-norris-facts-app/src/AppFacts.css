@@ -1,0 +1,47 @@
+.main-background {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url(Flames.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  padding: 100px;
+}
+
+.text-background {
+  font-size: xx-large;
+  font-weight: bolder;
+  background-image: url(ChuckNorris.webp);
+  background-repeat: no-repeat;
+  width: 600px;
+  min-height: 250px;
+  height: fit-content;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  color: white;
+  text-align: center;
+}
+
+.fact-display {
+  font-size: xx-large;
+  font-weight: bolder;
+  color: white;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.button-style {
+  margin: 50px;
+  height: 100px;
+  border-radius: 20px;
+  border: 5px solid red;
+  color: red;
+  background-color: yellow;
+  font-size: 20px;
+  font-weight: bolder;
+  align-self: center;
+  padding: 20px;
+}
