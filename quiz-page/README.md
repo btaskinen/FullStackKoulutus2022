@@ -7,3 +7,5 @@ The app connects React Frontend with a Postgres database through a Node.js Expre
 The app requires user authentication and has two types of users: basic user and admin. Basic users can take the quizzes. Admin users can create, edit and delete quizzes. The admin user also has the option to have basic user view.
 
 Data handling is done using useReducer.
+
+![Gif to show how Quiz app works](public/quiz-app-gif.gif)
